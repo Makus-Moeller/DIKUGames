@@ -20,6 +20,7 @@ namespace Galaga {
         private AnimationContainer enemyExplosion;
         private List<Image> explosionStrides;
         private const int EXPLOSION_LENGTH_MS = 500;
+        private List<Image> enemyStridesRed;
 
         public Game() {    
             window = new Window("Galaga", 500, 500);            
@@ -29,7 +30,7 @@ namespace Galaga {
             gameTimer = new GameTimer(30, 30);
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent}); 
-
+            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
             window.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
@@ -37,7 +38,7 @@ namespace Galaga {
             const int numEnemies = 8;
             enemies = new EntityContainer<Enemy>(numEnemies);
             for (int i = 0; i < numEnemies; i++) {
-                enemies.AddEntity(new Enemy(new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f , 0.1f)), new ImageStride(80, images)));
+                enemies.AddEntity(new Enemy(new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f , 0.1f)), new ImageStride(80, images), new ImageStride(80, enemyStridesRed)));
             } 
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
@@ -106,9 +107,10 @@ namespace Galaga {
                     enemies.Iterate(enemy => {
                         //if collision btw shot and enemy -> delete both
                         if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
-                            enemy.DeleteEntity();
+                            if(enemy.Enrage()) {
+                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                            }
                             shot.DeleteEntity();
-                            AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
                         }
                     });
                 }
