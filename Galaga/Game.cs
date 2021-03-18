@@ -11,6 +11,9 @@ using DIKUArcade.Physics;
 namespace Galaga {
     public class Game : IGameEventProcessor<object> {
         private EntityContainer<Enemy> enemies;
+        private DiagonaleSquad diagonaleSquad;
+        private VerticaleSquad verticaleSquad;
+        private KvadratiskSquad kvadratiskSquad;
         private GameEventBus<object> eventBus;
         private Player player;
         private Window window;
@@ -40,6 +43,12 @@ namespace Galaga {
             for (int i = 0; i < numEnemies; i++) {
                 enemies.AddEntity(new Enemy(new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f , 0.1f)), new ImageStride(80, images), new ImageStride(80, enemyStridesRed)));
             } 
+            diagonaleSquad = new DiagonaleSquad(4);
+            diagonaleSquad.CreateEnemies(images, enemyStridesRed);
+            verticaleSquad = new VerticaleSquad(4);
+            verticaleSquad.CreateEnemies(images, enemyStridesRed);
+            kvadratiskSquad = new KvadratiskSquad(4);
+            kvadratiskSquad.CreateEnemies(images, enemyStridesRed);
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
             enemyExplosion = new AnimationContainer(numEnemies);
@@ -104,7 +113,25 @@ namespace Galaga {
                     //Delete shot
                     shot.DeleteEntity();
                 } else {
-                    enemies.Iterate(enemy => {
+                    diagonaleSquad.Enemies.Iterate(enemy => {
+                        //if collision btw shot and enemy -> delete both
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
+                            if(enemy.Enrage()) {
+                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                            }
+                            shot.DeleteEntity();
+                        }
+                    }); 
+                    verticaleSquad.Enemies.Iterate(enemy => {
+                        //if collision btw shot and enemy -> delete both
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
+                            if(enemy.Enrage()) {
+                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                            }
+                            shot.DeleteEntity();
+                        }
+                    });
+                    kvadratiskSquad.Enemies.Iterate(enemy => {
                         //if collision btw shot and enemy -> delete both
                         if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
                             if(enemy.Enrage()) {
@@ -136,7 +163,9 @@ namespace Galaga {
                 if (gameTimer.ShouldRender()) {
                     window.Clear();
                     // render game entities here...
-                    enemies.RenderEntities();
+                    diagonaleSquad.Enemies.RenderEntities();
+                    verticaleSquad.Enemies.RenderEntities();
+                    kvadratiskSquad.Enemies.RenderEntities();
                     player.Render();
                     playerShots.RenderEntities();
                     enemyExplosion.RenderAnimations();
