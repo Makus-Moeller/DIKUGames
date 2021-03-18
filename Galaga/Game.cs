@@ -158,6 +158,7 @@ namespace Galaga {
                     eventBus.ProcessEvents();
                     player.Move();
                     IterateShots();
+                    diagonaleSquad.strat.MoveEnemies(diagonaleSquad.Enemies);
                 }
                 
                 if (gameTimer.ShouldRender()) {

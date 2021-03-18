@@ -5,6 +5,7 @@ using DIKUArcade.Math;
 using System;
 namespace Galaga {
     public class DiagonaleSquad : ISquadron {
+        public IMovementStrategy strat = new ZigZagDown();
         public DiagonaleSquad(int numOfEnemies) 
         {
             MaxEnemies = numOfEnemies;
@@ -23,6 +24,7 @@ namespace Galaga {
         }   
     }
     public class VerticaleSquad : ISquadron {
+        private IMovementStrategy strat = new Down();
         public VerticaleSquad(int numOfEnemies)
         {
             MaxEnemies = numOfEnemies;
@@ -41,6 +43,7 @@ namespace Galaga {
         }
     }
     public class KvadratiskSquad : ISquadron {
+        private IMovementStrategy strat = new Down();
         public KvadratiskSquad(int numOfEnemies)
         {
             MaxEnemies = numOfEnemies;
