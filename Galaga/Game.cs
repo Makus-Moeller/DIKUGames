@@ -28,10 +28,11 @@ namespace Galaga {
                 new Image(Path.Combine("Assets", "Images", "Player.png"))); 
             gameTimer = new GameTimer(30, 30);
             eventBus = new GameEventBus<object>();
-            eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent}); 
+            eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent}); 
 
             window.RegisterEventBus(eventBus);
             eventBus.Subscribe(GameEventType.InputEvent, this);
+            eventBus.Subscribe(GameEventType.PlayerEvent, player);
             var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             const int numEnemies = 8;
             enemies = new EntityContainer<Enemy>(numEnemies);
@@ -43,16 +44,19 @@ namespace Galaga {
             enemyExplosion = new AnimationContainer(numEnemies);
             explosionStrides = ImageStride.CreateStrides(8, 
                 Path.Combine("Assets", "Images", "Explosion.png"));
-            
+            //New movePlayer funktion
+                   
         }
 
         public void KeyPress(string key) {
             switch (key) {
                 case "KEY_LEFT":
-                    player.SetMoveLeft(true);
+                    //player.SetMoveLeft(true);
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_LEFT", "MoveLeft", "1"));
                     break;
                 case "KEY_RIGHT":
-                    player.SetMoveRight(true);
+                    //player.SetMoveRight(true);
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_RIGHT", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
                     window.CloseWindow();
@@ -63,10 +67,12 @@ namespace Galaga {
         public void KeyRelease(string key) {
             switch (key) {
                 case "KEY_LEFT":
-                    player.SetMoveLeft(false);
+                    //player.SetMoveLeft(false);
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_LEFT_RELEASED", "MoveLeft", "1"));
                     break;
                 case "KEY_RIGHT":
-                    player.SetMoveRight(false);
+                    //player.SetMoveRight(false);
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_RIGHT_RELEASED", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
                     window.CloseWindow();
@@ -91,14 +97,14 @@ namespace Galaga {
 
         private void IterateShots() {
             playerShots.Iterate(shot => {
-                //TODO: move the shots shape
+                //move the shots shape
                 shot.Shape.Move();
                 if (shot.Shape.Position.Y > 1.0f) {
-                    //TODO: Delet shot
+                    //Delete shot
                     shot.DeleteEntity();
                 } else {
                     enemies.Iterate(enemy => {
-                        //TODO: if collision btw shot and enemy -> delete both
+                        //if collision btw shot and enemy -> delete both
                         if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
                             enemy.DeleteEntity();
                             shot.DeleteEntity();
@@ -109,7 +115,7 @@ namespace Galaga {
             });
         }
         public void AddExplosion(Vec2F position, Vec2F extent) {
-            //TODO: add explosion to the Animationcontainer 
+            //add explosion to the Animationcontainer 
             enemyExplosion.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
 
 
@@ -132,7 +138,7 @@ namespace Galaga {
                     player.Render();
                     playerShots.RenderEntities();
                     enemyExplosion.RenderAnimations();
-                    //SKAL altid være nederst
+                    //window always in the buttom 
                     window.SwapBuffers();
                 }
 

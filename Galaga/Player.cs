@@ -1,9 +1,11 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.EventBus;
+using DIKUArcade.Physics;
 
 namespace Galaga {
-    public class Player {
+    public class Player : IGameEventProcessor<object> {
         private Entity entity;
         private DynamicShape shape;
         private float moveLeft, moveRight;
@@ -18,11 +20,10 @@ namespace Galaga {
             entity.RenderEntity();
         }
         public void Move() {
-            //Todo: Move the shape and guard against the window boarders
             shape.Move();   
         }
 
-        public void SetMoveLeft(bool val) {
+        private void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft -= 0.01f;
             }
@@ -31,7 +32,7 @@ namespace Galaga {
             }
             UpdateDirection();
         }    
-        public void SetMoveRight(bool val) {
+        private void SetMoveRight(bool val) {
             if (val) {
                 moveRight += 0.01f;               
             }      
@@ -56,6 +57,26 @@ namespace Galaga {
 
         public Vec2F getPosiiton() {
             return shape.Position;
+        }
+
+        //Implementer Processevent
+        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
+            if (eventType == GameEventType.PlayerEvent) {
+                switch (gameEvent.Message) {
+                    case "KEY_LEFT":
+                        SetMoveLeft(true);
+                        break;
+                    case "KEY_RIGHT":
+                        SetMoveRight(true);
+                        break;
+                    case "KEY_LEFT_RELEASED":
+                        SetMoveLeft(false);
+                        break;
+                    case "KEY_RIGHT_RELEASED":
+                        SetMoveRight(false);
+                        break;
+                }
+            }
         }
     }
 }
