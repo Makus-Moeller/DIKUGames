@@ -6,9 +6,9 @@ using System;
 namespace Galaga {
     public class DiagonaleSquad : ISquadron {
         public IMovementStrategy strat {get;}
-        public DiagonaleSquad(int numOfEnemies) 
+        public DiagonaleSquad(int numOfEnemies, IMovementStrategy moveStrat) 
         {
-            strat = new ZigZagDown();
+            strat = moveStrat;
             MaxEnemies = numOfEnemies;
         }
 
@@ -25,9 +25,9 @@ namespace Galaga {
     }
     public class VerticaleSquad : ISquadron {
         public IMovementStrategy strat {get;}
-        public VerticaleSquad(int numOfEnemies)
+        public VerticaleSquad(int numOfEnemies, IMovementStrategy moveStrat)
         {
-            strat = new Down();
+            strat = moveStrat;
             MaxEnemies = numOfEnemies;
         }
 
@@ -45,7 +45,7 @@ namespace Galaga {
     }
     public class KvadratiskSquad : ISquadron {
         public IMovementStrategy strat {get;}
-        public KvadratiskSquad(int numOfEnemies)
+        public KvadratiskSquad(int numOfEnemies, IMovementStrategy moveStrat)
         {
             strat = new NoMove(); 
             MaxEnemies = numOfEnemies;

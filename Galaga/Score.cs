@@ -31,7 +31,7 @@ namespace Galaga {
         }
 
         public void RenderScore() {
-            display.SetText(score.ToString());
+            display.SetText("Score : " + score.ToString());
             display.SetColor(new Vec3I(191, 0, 255));
             display.RenderText();
 

@@ -10,9 +10,6 @@ using DIKUArcade.Physics;
 
 namespace Galaga {
     public class Game : IGameEventProcessor<object> {
-        private DiagonaleSquad diagonaleSquad;
-        private VerticaleSquad verticaleSquad;
-        private KvadratiskSquad kvadratiskSquad;
         private GameEventBus<object> eventBus;
         private Player player;
         private Window window;
@@ -26,6 +23,8 @@ namespace Galaga {
         private Score gameScore;
         private List<Image> images;
         private List<ISquadron> AllSquadrons;
+        private Text gameOverText {get;}
+
 
         public Game() {    
             window = new Window("Galaga", 500, 500);            
@@ -33,8 +32,8 @@ namespace Galaga {
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))); 
             gameTimer = new GameTimer(30, 30);
-
-
+            gameOverText = new Text("GAMEOVER \n YOU LOOSE", (new Vec2F(0.4f, 0.4f)), (new Vec2F(0.3f,0.3f)));
+            gameOverText.SetColor(new Vec3I(192, 0, 255));
             enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
             images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
@@ -48,7 +47,6 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
             eventBus.Subscribe(GameEventType.GameStateEvent, gameScore);
-
             //Initialize enemy AllSquadrons
             CreateSquadrons();
 
@@ -63,19 +61,18 @@ namespace Galaga {
 
                    
         }
+        //Laver squads både i constructor og når alle er døde
         public void CreateSquadrons () {
             List<ISquadron> tempList = new List<ISquadron>();
-            diagonaleSquad = new DiagonaleSquad(4);
-            diagonaleSquad.CreateEnemies(images, enemyStridesRed);
-            verticaleSquad = new VerticaleSquad(4);
-            verticaleSquad.CreateEnemies(images, enemyStridesRed);
-            kvadratiskSquad = new KvadratiskSquad(4);
-            kvadratiskSquad.CreateEnemies(images, enemyStridesRed);
-            tempList.Add(diagonaleSquad);
-            tempList.Add(verticaleSquad);
-            tempList.Add(kvadratiskSquad);
+            var diagonale = new DiagonaleSquad(4, new ZigZagDown());
+            var Vertical = new VerticaleSquad(4, new Down());
+            var kavadrad = new KvadratiskSquad(4, new NoMove());
+            tempList.Add(diagonale);
+            tempList.Add(Vertical);
+            tempList.Add(kavadrad);
             AllSquadrons = tempList;
             foreach (ISquadron squad in AllSquadrons) {
+                squad.CreateEnemies(images, enemyStridesRed);
                 IncreaseDifficulty.IncreaseSpeedDown(squad.strat);
             }
         }
@@ -83,11 +80,9 @@ namespace Galaga {
         public void KeyPress(string key) {
             switch (key) {
                 case "KEY_LEFT":
-                    //player.SetMoveLeft(true);
                     eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_LEFT", "MoveLeft", "1"));
                     break;
                 case "KEY_RIGHT":
-                    //player.SetMoveRight(true);
                     eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_RIGHT", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
@@ -99,18 +94,16 @@ namespace Galaga {
         public void KeyRelease(string key) {
             switch (key) {
                 case "KEY_LEFT":
-                    //player.SetMoveLeft(false);
                     eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_LEFT_RELEASED", "MoveLeft", "1"));
                     break;
                 case "KEY_RIGHT":
-                    //player.SetMoveRight(false);
                     eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_RIGHT_RELEASED", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
                     window.CloseWindow();
                     break;
                 case "KEY_SPACE":
-                    playerShots.AddEntity(new PlayerShot((player.getPosiiton() + (player.ExtentX / 2)), playerShotImage));
+                    playerShots.AddEntity(new PlayerShot(new Vec2F(player.getPosiiton().X + (player.ExtentX / 2), player.getPosiiton().Y), playerShotImage));
                     break;
             }    
         }
@@ -126,6 +119,17 @@ namespace Galaga {
                     break;
             }
         }
+        private bool IterateEnemy() {
+            bool hasLost = false;
+            foreach (ISquadron squad in AllSquadrons) {
+                squad.Enemies.Iterate(enemy => {
+                    if (enemy.Shape.Position.Y < 0.2f) {
+                        hasLost = true;
+                    }
+                });
+            }
+            return hasLost;
+        }
 
         private void IterateShots() {
             playerShots.Iterate(shot => {
@@ -135,38 +139,25 @@ namespace Galaga {
                     //Delete shot
                     shot.DeleteEntity();
                 } else {
-                    diagonaleSquad.Enemies.Iterate(enemy => {
-                        //if collision btw shot and enemy -> delete both
-                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
-                            if(enemy.Enrage()) {
-                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                    foreach (ISquadron squad in AllSquadrons) {
+                        squad.Enemies.Iterate(enemy => {
+
+                            //if collision btw shot and enemy -> delete both
+                            if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                                //Tjekker om enemy skal dø  når den bliver ramt  
+                                if(enemy.Enrage()) {
+                                    AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                                }
+                                shot.DeleteEntity();
                             }
-                            shot.DeleteEntity();
-                        }
-                    }); 
-                    verticaleSquad.Enemies.Iterate(enemy => {
-                        //if collision btw shot and enemy -> delete both
-                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
-                            if(enemy.Enrage()) {
-                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
-                            }
-                            shot.DeleteEntity();
-                        }
-                    });
-                    kvadratiskSquad.Enemies.Iterate(enemy => {
-                        //if collision btw shot and enemy -> delete both
-                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {  
-                            if(enemy.Enrage()) {
-                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
-                            }
-                            shot.DeleteEntity();
-                        }
-                    });
+                        }); 
+                    }
                 }
             });
         }
         public void AddExplosion(Vec2F position, Vec2F extent) {
-            //add explosion to the Animationcontainer 
+            //add explosion to the Animationcontainer
+            //Event adds 1 to our score
             enemyExplosion.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
             eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.GameStateEvent, this, "INCREASE_SCORE", "MoveRight", "1"));
 
@@ -184,21 +175,28 @@ namespace Galaga {
                     if (Enemy.TOTAL_ENEMIES == 0) {
                         CreateSquadrons();
                     }
-
-                    diagonaleSquad.strat.MoveEnemies(diagonaleSquad.Enemies);
+                    foreach (ISquadron squad in AllSquadrons) {
+                        squad.strat.MoveEnemies(squad.Enemies);
+                    }
                 }
                 
                 if (gameTimer.ShouldRender()) {
                     window.Clear();
                     // render game entities here...
+                    if (!IterateEnemy()) {
+                        foreach (ISquadron squad in AllSquadrons) {
+                            squad.Enemies.RenderEntities();
+                        }
+                        player.Render();
+                        playerShots.RenderEntities();
+                        enemyExplosion.RenderAnimations();
+                        gameScore.RenderScore();
+                    } else {
+                        gameScore.RenderScore();
+                        gameOverText.RenderText();
+                    }
+
                     
-                    diagonaleSquad.Enemies.RenderEntities();
-                    verticaleSquad.Enemies.RenderEntities();
-                    kvadratiskSquad.Enemies.RenderEntities();
-                    player.Render();
-                    playerShots.RenderEntities();
-                    enemyExplosion.RenderAnimations();
-                    gameScore.RenderScore();
                     //window always in the buttom 
                     window.SwapBuffers();
                     

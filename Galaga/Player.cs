@@ -7,7 +7,7 @@ using DIKUArcade.Physics;
 namespace Galaga {
     public class Player : IGameEventProcessor<object> {
         private Entity entity;
-        public Vec2F ExtentX {get; private set;}
+        public float ExtentX {get; private set;}
         private DynamicShape shape;
         private float moveLeft, moveRight;
         private const float MOVEMENT_SPEED = 0.01f;
@@ -16,7 +16,7 @@ namespace Galaga {
             moveRight = 0.00f;
             entity = new Entity(shape, image);
             this.shape = shape;
-            ExtentX = shape.Extent;
+            ExtentX = shape.Extent.X;
         } 
         public void Render() {
             entity.RenderEntity();
