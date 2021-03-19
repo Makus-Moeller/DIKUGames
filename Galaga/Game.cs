@@ -96,7 +96,7 @@ namespace Galaga {
                     window.CloseWindow();
                     break;
                 case "KEY_SPACE":
-                    playerShots.AddEntity(new PlayerShot(player.getPosiiton(), playerShotImage));
+                    playerShots.AddEntity(new PlayerShot((player.getPosiiton() + (player.ExtentX / 2)), playerShotImage));
                     break;
             }    
         }
