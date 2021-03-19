@@ -65,6 +65,9 @@ namespace Galaga {
             //New movePlayer funktion
                    
         }
+        public void CreateSquadrons (){
+
+        }
 
         public void KeyPress(string key) {
             switch (key) {
