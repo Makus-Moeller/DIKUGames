@@ -5,16 +5,16 @@ using DIKUArcade.Math;
 using System;
 namespace Galaga {
     public class DiagonaleSquad : ISquadron {
-        public IMovementStrategy strat = new ZigZagDown();
+        public IMovementStrategy strat {get;}
         public DiagonaleSquad(int numOfEnemies) 
         {
+            strat = new ZigZagDown();
             MaxEnemies = numOfEnemies;
         }
 
         public EntityContainer<Enemy> Enemies {get; private set;}
 
         public int MaxEnemies {get;}
-
         public void CreateEnemies(List<Image> enemyStrides, List<Image> alternativeEnemytStrides)
         {
             Enemies = new EntityContainer<Enemy>(MaxEnemies);
@@ -24,9 +24,10 @@ namespace Galaga {
         }   
     }
     public class VerticaleSquad : ISquadron {
-        private IMovementStrategy strat = new Down();
+        public IMovementStrategy strat {get;}
         public VerticaleSquad(int numOfEnemies)
         {
+            strat = new Down();
             MaxEnemies = numOfEnemies;
         }
 
@@ -43,9 +44,10 @@ namespace Galaga {
         }
     }
     public class KvadratiskSquad : ISquadron {
-        private IMovementStrategy strat = new Down();
+        public IMovementStrategy strat {get;}
         public KvadratiskSquad(int numOfEnemies)
         {
+            strat = new NoMove(); 
             MaxEnemies = numOfEnemies;
         }
 

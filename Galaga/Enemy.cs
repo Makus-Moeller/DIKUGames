@@ -8,12 +8,14 @@ namespace Galaga {
         private int hitpoints;
         private IBaseImage redImage;
         public readonly Vec2F startposition;
+        public static int TOTAL_ENEMIES{get; private set;}
 
         public Enemy(DynamicShape shape, IBaseImage image, IBaseImage enemyStridesRed) : base(shape, image) {
             hitpoints = 10;
             redImage = enemyStridesRed;
             startposition = shape.Position;
             isEnraged = false;
+            TOTAL_ENEMIES++;
         }
         public bool Enrage (){
             hitpoints--;
@@ -24,6 +26,7 @@ namespace Galaga {
             }
             else if (hitpoints == 0) {
                 this.DeleteEntity();
+                TOTAL_ENEMIES--;
                 return true;
             }
             else

@@ -10,7 +10,6 @@ using DIKUArcade.Physics;
 
 namespace Galaga {
     public class Game : IGameEventProcessor<object> {
-        private EntityContainer<Enemy> enemies;
         private DiagonaleSquad diagonaleSquad;
         private VerticaleSquad verticaleSquad;
         private KvadratiskSquad kvadratiskSquad;
@@ -25,6 +24,8 @@ namespace Galaga {
         private const int EXPLOSION_LENGTH_MS = 500;
         private List<Image> enemyStridesRed;
         private Score gameScore;
+        private List<Image> images;
+        private List<ISquadron> AllSquadrons;
 
         public Game() {    
             window = new Window("Galaga", 500, 500);            
@@ -32,9 +33,14 @@ namespace Galaga {
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))); 
             gameTimer = new GameTimer(30, 30);
+
+
+            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
+            images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+
+            //Events
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent}); 
-            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
             window.RegisterEventBus(eventBus);
             gameScore = new Score(new Vec2F(0.05f, 0.05f), new Vec2F(0.2f, 0.2f));
             
@@ -43,30 +49,35 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
             eventBus.Subscribe(GameEventType.GameStateEvent, gameScore);
 
+            //Initialize enemy AllSquadrons
+            CreateSquadrons();
+
+            //EntityContainer og Grafiske objekter
+            int numEnemies = 8;
+            playerShots = new EntityContainer<PlayerShot>();
+            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+            enemyExplosion = new AnimationContainer(numEnemies);
+            explosionStrides = ImageStride.CreateStrides(8, 
+                Path.Combine("Assets", "Images", "Explosion.png"));
 
 
-            var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            const int numEnemies = 8;
-            enemies = new EntityContainer<Enemy>(numEnemies);
-            for (int i = 0; i < numEnemies; i++) {
-                enemies.AddEntity(new Enemy(new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f , 0.1f)), new ImageStride(80, images), new ImageStride(80, enemyStridesRed)));
-            } 
+                   
+        }
+        public void CreateSquadrons () {
+            List<ISquadron> tempList = new List<ISquadron>();
             diagonaleSquad = new DiagonaleSquad(4);
             diagonaleSquad.CreateEnemies(images, enemyStridesRed);
             verticaleSquad = new VerticaleSquad(4);
             verticaleSquad.CreateEnemies(images, enemyStridesRed);
             kvadratiskSquad = new KvadratiskSquad(4);
             kvadratiskSquad.CreateEnemies(images, enemyStridesRed);
-            playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-            enemyExplosion = new AnimationContainer(numEnemies);
-            explosionStrides = ImageStride.CreateStrides(8, 
-                Path.Combine("Assets", "Images", "Explosion.png"));
-            //New movePlayer funktion
-                   
-        }
-        public void CreateSquadrons (){
-
+            tempList.Add(diagonaleSquad);
+            tempList.Add(verticaleSquad);
+            tempList.Add(kvadratiskSquad);
+            AllSquadrons = tempList;
+            foreach (ISquadron squad in AllSquadrons) {
+                IncreaseDifficulty.IncreaseSpeedDown(squad.strat);
+            }
         }
 
         public void KeyPress(string key) {
@@ -164,18 +175,23 @@ namespace Galaga {
         public void Run() {
             while(window.IsRunning()) {
                 gameTimer.MeasureTime();
-
                 while (gameTimer.ShouldUpdate()) {
                     window.PollEvents();
                     eventBus.ProcessEvents();
                     player.Move();
                     IterateShots();
+
+                    if (Enemy.TOTAL_ENEMIES == 0) {
+                        CreateSquadrons();
+                    }
+
                     diagonaleSquad.strat.MoveEnemies(diagonaleSquad.Enemies);
                 }
                 
                 if (gameTimer.ShouldRender()) {
                     window.Clear();
                     // render game entities here...
+                    
                     diagonaleSquad.Enemies.RenderEntities();
                     verticaleSquad.Enemies.RenderEntities();
                     kvadratiskSquad.Enemies.RenderEntities();

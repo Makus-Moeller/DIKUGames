@@ -4,6 +4,7 @@ using DIKUArcade.Graphics;
 namespace Galaga {
     public interface ISquadron {
         EntityContainer<Enemy> Enemies {get;}
+        IMovementStrategy strat {get;}
         int MaxEnemies {get; }
         void CreateEnemies(List<Image> enemyStrides, List<Image> alternativeEnemytStrides);
     }

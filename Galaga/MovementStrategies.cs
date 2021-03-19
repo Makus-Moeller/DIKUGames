@@ -66,7 +66,7 @@ namespace Galaga {
         }
     }
     public static class IncreaseDifficulty {
-        static void IncreaseSpeedDown(IMovementStrategy squadron) {
+        public static void IncreaseSpeedDown(IMovementStrategy squadron) {
             squadron.speedY += 0.0001f;
         }
     }
