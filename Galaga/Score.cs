@@ -15,7 +15,7 @@ namespace Galaga {
 
         public void AddPoint() {
             score++;
-            display.SetText(score.ToString());
+           
         }
 
         //Implementation of Processevent
@@ -31,7 +31,10 @@ namespace Galaga {
         }
 
         public void RenderScore() {
+            display.SetText(score.ToString());
+            display.SetColor(new Vec3I(191, 0, 255));
             display.RenderText();
+
         } 
     }
 }

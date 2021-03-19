@@ -36,7 +36,7 @@ namespace Galaga {
             eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent}); 
             enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
             window.RegisterEventBus(eventBus);
-            gameScore = new Score(new Vec2F(0.1f, 0.1f), new Vec2F(0.1f, 0.01f));
+            gameScore = new Score(new Vec2F(0.05f, 0.05f), new Vec2F(0.2f, 0.2f));
             
             //subscribing objects and eventtypes
             eventBus.Subscribe(GameEventType.InputEvent, this);
@@ -179,9 +179,10 @@ namespace Galaga {
                     player.Render();
                     playerShots.RenderEntities();
                     enemyExplosion.RenderAnimations();
+                    gameScore.RenderScore();
                     //window always in the buttom 
                     window.SwapBuffers();
-                    gameScore.RenderScore();
+                    
                 }
 
                 if (gameTimer.ShouldReset()) {

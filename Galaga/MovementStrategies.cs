@@ -39,11 +39,14 @@ namespace Galaga {
             float s = 0.0003f;
             float p = 0.045f;
             float a = 0.05f;
-            enemy.Shape.MoveY(-s);
-            var ToDouble = (double)((2.00f*Math.PI*(startY-enemy.Shape.Position.Y)) / p);
-            var radians = Math.PI * ToDouble / 180.0;
-            var sin = (float)(Math.Sin(radians));
-            enemy.Shape.MoveX((startX + a * sin) - enemy.Shape.Position.X);
+
+            // Lav det om til enemy.shape.position
+            //enemy.Shape.MoveY(s);
+            var newY = enemy.Shape.Position.Y - s;
+            var newX = (float) (Math.Sin((2.00f*Math.PI*(startY-newY)) / p));
+            //var radians = Math.PI * ToDouble / 180.0;
+            //var sin = (float)(Math.Sin(ToDouble));
+            enemy.Shape.Position = new Vec2F((startX + a * newX), (newY));
         }
     }
 }
