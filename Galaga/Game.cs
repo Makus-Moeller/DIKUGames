@@ -24,6 +24,7 @@ namespace Galaga {
         private List<Image> explosionStrides;
         private const int EXPLOSION_LENGTH_MS = 500;
         private List<Image> enemyStridesRed;
+        private Score gameScore;
 
         public Game() {    
             window = new Window("Galaga", 500, 500);            
@@ -32,11 +33,18 @@ namespace Galaga {
                 new Image(Path.Combine("Assets", "Images", "Player.png"))); 
             gameTimer = new GameTimer(30, 30);
             eventBus = new GameEventBus<object>();
-            eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent}); 
+            eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent}); 
             enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
             window.RegisterEventBus(eventBus);
+            gameScore = new Score(new Vec2F(0.1f, 0.1f), new Vec2F(0.1f, 0.01f));
+            
+            //subscribing objects and eventtypes
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
+            eventBus.Subscribe(GameEventType.GameStateEvent, gameScore);
+
+
+
             var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             const int numEnemies = 8;
             enemies = new EntityContainer<Enemy>(numEnemies);
@@ -146,6 +154,7 @@ namespace Galaga {
         public void AddExplosion(Vec2F position, Vec2F extent) {
             //add explosion to the Animationcontainer 
             enemyExplosion.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
+            eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.GameStateEvent, this, "INCREASE_SCORE", "MoveRight", "1"));
 
 
         }
@@ -172,6 +181,7 @@ namespace Galaga {
                     enemyExplosion.RenderAnimations();
                     //window always in the buttom 
                     window.SwapBuffers();
+                    gameScore.RenderScore();
                 }
 
                 if (gameTimer.ShouldReset()) {
