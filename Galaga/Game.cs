@@ -71,7 +71,7 @@ namespace Galaga {
 
                    
         }
-        //Laver når alle er døde
+        //Create new squadrons when all enemies are dead
         public void CreateSquadrons () {
             foreach (ISquadron squad in AllSquadrons) {
                 squad.CreateEnemies(images, enemyStridesRed);
