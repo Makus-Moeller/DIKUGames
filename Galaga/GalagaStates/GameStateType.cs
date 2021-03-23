@@ -19,9 +19,9 @@ namespace GalagaStates {
                     return GameStateType.MainMenu;
                 default:
                     throw new ArgumentException("Not valid State"); 
-            }      
+            }
+        }      
 
-        }
         public static string TransformStateToString(GameStateType state) {
             switch (state) {
                 case GameStateType.GameRunning:
@@ -36,4 +36,3 @@ namespace GalagaStates {
         }
     }
 }
-
