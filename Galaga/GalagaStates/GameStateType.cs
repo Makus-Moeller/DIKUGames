@@ -13,13 +13,10 @@ namespace GalagaStates {
             switch (state) {
                 case "GAME_RUNNING":
                     return GameStateType.GameRunning;
-                    break;
                 case "GAME_PAUSED":
                     return GameStateType.GamePaused;
-                    break;
                 case "MAINMENU":
                     return GameStateType.MainMenu;
-                    break;
                 default:
                     throw new ArgumentException("Not valid State"); 
             }      
@@ -29,13 +26,10 @@ namespace GalagaStates {
             switch (state) {
                 case GameStateType.GameRunning:
                     return "GAME_RUNNING";
-                    break;
                 case GameStateType.GamePaused:
                     return "GAME_PAUSED";
-                    break;
                 case GameStateType.MainMenu:
                     return "MAINMENU";
-                    break;
                 default:
                     throw new ArgumentException("Not valid State");
             }
