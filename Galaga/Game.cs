@@ -41,7 +41,7 @@ namespace Galaga {
             images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
             //Events
-            eventBus = new GameEventBus<object>();
+            eventBus = GalagaBus.GetBus();
             eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent}); 
             window.RegisterEventBus(eventBus);
             gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
