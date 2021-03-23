@@ -32,7 +32,7 @@ namespace Galaga {
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))); 
             gameTimer = new GameTimer(30, 30);
-            gameOverText = new Text("GAMEOVER \n YOU LOOSE", (new Vec2F(0.4f, 0.4f)), (new Vec2F(0.3f,0.3f)));
+            gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), (new Vec2F(0.3f,0.3f)));
             gameOverText.SetColor(new Vec3I(192, 0, 255));
             enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
             images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
@@ -41,7 +41,7 @@ namespace Galaga {
             eventBus = new GameEventBus<object>();
             eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent}); 
             window.RegisterEventBus(eventBus);
-            gameScore = new Score(new Vec2F(0.05f, 0.05f), new Vec2F(0.2f, 0.2f));
+            gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
             
             //subscribing objects and eventtypes
             eventBus.Subscribe(GameEventType.InputEvent, this);
@@ -66,10 +66,8 @@ namespace Galaga {
             List<ISquadron> tempList = new List<ISquadron>();
             var diagonale = new DiagonaleSquad(4, new ZigZagDown());
             var Vertical = new VerticaleSquad(4, new Down());
-            var kavadrad = new KvadratiskSquad(4, new NoMove());
-            tempList.Add(diagonale);
-            tempList.Add(Vertical);
-            tempList.Add(kavadrad);
+            var kavadrad = new KvadratiskSquad(4, new ZigZagDown());
+            tempList.Add(diagonale); tempList.Add(Vertical); tempList.Add(kavadrad);
             AllSquadrons = tempList;
             foreach (ISquadron squad in AllSquadrons) {
                 squad.CreateEnemies(images, enemyStridesRed);

@@ -1,9 +1,9 @@
-using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.EventBus;
 
-namespace Galaga {
+namespace Galaga
+{
     public class Score : IGameEventProcessor<object> {
 
         private int score;

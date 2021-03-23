@@ -47,7 +47,7 @@ namespace Galaga {
         public IMovementStrategy strat {get;}
         public KvadratiskSquad(int numOfEnemies, IMovementStrategy moveStrat)
         {
-            strat = new NoMove(); 
+            strat = moveStrat; 
             MaxEnemies = numOfEnemies;
         }
 
