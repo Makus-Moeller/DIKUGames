@@ -11,7 +11,7 @@ namespace Galaga {
         public static int TOTAL_ENEMIES{get; private set;}
 
         public Enemy(DynamicShape shape, IBaseImage image, IBaseImage enemyStridesRed) : base(shape, image) {
-            hitpoints = 10;
+            hitpoints = 1;
             redImage = enemyStridesRed;
             startposition = shape.Position;
             isEnraged = false;

@@ -68,8 +68,8 @@ namespace Galaga {
     //Statics klasse der står for opgradering af sværhedsgrader
     //Kan udvides til at ændre bevægelsesmønstre
     public static class IncreaseDifficulty {
-        public static void IncreaseSpeedDown(IMovementStrategy squadron) {
-            squadron.speedY += 0.0002f;
+        public static void IncreaseSpeedDown(IMovementStrategy strategy) {
+            strategy.speedY += 0.0002f;
         }
     }
 }

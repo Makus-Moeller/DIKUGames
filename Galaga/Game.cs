@@ -24,6 +24,9 @@ namespace Galaga {
         private List<Image> images;
         private List<ISquadron> AllSquadrons;
         private Text gameOverText {get;}
+        private DiagonaleSquad diagonal;
+        private KvadratiskSquad kvadratisk;
+        private VerticaleSquad vertical;
 
 
         public Game() {    
@@ -47,9 +50,16 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
             eventBus.Subscribe(GameEventType.GameStateEvent, gameScore);
+            
             //Initialize enemy AllSquadrons
-            CreateSquadrons();
-
+            diagonal = new DiagonaleSquad(4, new ZigZagDown());
+            vertical = new VerticaleSquad(4, new Down());
+            kvadratisk = new KvadratiskSquad(4, new ZigZagDown());
+            AllSquadrons = new List<ISquadron>();
+            AllSquadrons.Add(diagonal); AllSquadrons.Add(vertical); AllSquadrons.Add(kvadratisk);
+            foreach (ISquadron squad in AllSquadrons) {
+                squad.CreateEnemies(images, enemyStridesRed);
+            }
             //EntityContainer og Grafiske objekter
             int numEnemies = 8;
             playerShots = new EntityContainer<PlayerShot>();
@@ -61,14 +71,8 @@ namespace Galaga {
 
                    
         }
-        //Laver squads både i constructor og når alle er døde
+        //Laver når alle er døde
         public void CreateSquadrons () {
-            List<ISquadron> tempList = new List<ISquadron>();
-            var diagonale = new DiagonaleSquad(4, new ZigZagDown());
-            var Vertical = new VerticaleSquad(4, new Down());
-            var kavadrad = new KvadratiskSquad(4, new ZigZagDown());
-            tempList.Add(diagonale); tempList.Add(Vertical); tempList.Add(kavadrad);
-            AllSquadrons = tempList;
             foreach (ISquadron squad in AllSquadrons) {
                 squad.CreateEnemies(images, enemyStridesRed);
                 IncreaseDifficulty.IncreaseSpeedDown(squad.strat);
