@@ -61,7 +61,7 @@ namespace Galaga {
             return shape.Position;
         }
 
-        //Implementer Processevent
+        //Implements Processevent from IGameEventProcessor
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
             if (eventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {

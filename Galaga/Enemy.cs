@@ -10,12 +10,13 @@ namespace Galaga {
         public readonly Vec2F startposition;
         public static int TOTAL_ENEMIES{get; private set;}
 
-        public Enemy(DynamicShape shape, IBaseImage image, IBaseImage enemyStridesRed) : base(shape, image) {
-            hitpoints = 5;
-            redImage = enemyStridesRed;
-            startposition = shape.Position;
-            isEnraged = false;
-            TOTAL_ENEMIES++;
+        public Enemy(DynamicShape shape, IBaseImage image, IBaseImage enemyStridesRed) : 
+            base(shape, image) {
+                hitpoints = 5;
+                redImage = enemyStridesRed;
+                startposition = shape.Position;
+                isEnraged = false;
+                TOTAL_ENEMIES++;
         }
         public bool Enrage (){
             hitpoints--;

@@ -1,5 +1,6 @@
 using DIKUArcade.Entities;
-namespace Galaga {
+
+namespace Galaga.MovementStrategy {
     public interface IMovementStrategy {
         float speedY {get; set;}
         void MoveEnemy(Enemy enemy);

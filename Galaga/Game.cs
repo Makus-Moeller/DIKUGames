@@ -7,6 +7,8 @@ using DIKUArcade.Math;
 using System.Collections.Generic;
 using DIKUArcade.EventBus;
 using DIKUArcade.Physics;
+using Galaga.Squadrons;
+using Galaga.MovementStrategy;
 
 namespace Galaga {
     public class Game : IGameEventProcessor<object> {
@@ -26,7 +28,7 @@ namespace Galaga {
         private Text gameOverText {get;}
         private DiagonaleSquad diagonal;
         private KvadratiskSquad kvadratisk;
-        private VerticaleSquad vertical;
+        private VerticalSquad vertical;
 
 
         public Game() {    
@@ -35,14 +37,20 @@ namespace Galaga {
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))); 
             gameTimer = new GameTimer(30, 30);
-            gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), (new Vec2F(0.3f,0.3f)));
+            gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), 
+                (new Vec2F(0.3f,0.3f)));
             gameOverText.SetColor(new Vec3I(192, 0, 255));
-            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
-            images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+            enemyStridesRed = ImageStride.CreateStrides(
+                2, Path.Combine("Assets", "Images", "RedMonster.png"));
+            images = ImageStride.CreateStrides(
+                4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
             //Events
             eventBus = GalagaBus.GetBus();
-            eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent}); 
+            eventBus.InitializeEventBus(new List<GameEventType> { 
+                GameEventType.InputEvent, 
+                GameEventType.PlayerEvent, 
+                GameEventType.GameStateEvent}); 
             window.RegisterEventBus(eventBus);
             gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
             
@@ -53,7 +61,7 @@ namespace Galaga {
             
             //Initialize enemy AllSquadrons
             diagonal = new DiagonaleSquad(4, new ZigZagDown());
-            vertical = new VerticaleSquad(4, new Down());
+            vertical = new VerticalSquad(4, new Down());
             kvadratisk = new KvadratiskSquad(4, new ZigZagDown());
             AllSquadrons = new List<ISquadron>();
             AllSquadrons.Add(diagonal); AllSquadrons.Add(vertical); AllSquadrons.Add(kvadratisk);
@@ -71,8 +79,8 @@ namespace Galaga {
 
                    
         }
-        //Create new squadrons when all enemies are dead
-        public void CreateSquadrons () {
+        //Creates new enemies in AllSquadrons 
+        public void CreateNewEnemiesInSquadrons() {
             foreach (ISquadron squad in AllSquadrons) {
                 squad.CreateEnemies(images, enemyStridesRed);
                 IncreaseDifficulty.IncreaseSpeedDown(squad.strat);
@@ -82,10 +90,12 @@ namespace Galaga {
         public void KeyPress(string key) {
             switch (key) {
                 case "KEY_LEFT":
-                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_LEFT", "MoveLeft", "1"));
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_LEFT", "MoveLeft", "1"));
                     break;
                 case "KEY_RIGHT":
-                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_RIGHT", "MoveRight", "1"));
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_RIGHT", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
                     window.CloseWindow();
@@ -96,16 +106,20 @@ namespace Galaga {
         public void KeyRelease(string key) {
             switch (key) {
                 case "KEY_LEFT":
-                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_LEFT_RELEASED", "MoveLeft", "1"));
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_LEFT_RELEASED", "MoveLeft", "1"));
                     break;
                 case "KEY_RIGHT":
-                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.PlayerEvent, this, "KEY_RIGHT_RELEASED", "MoveRight", "1"));
+                    eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.PlayerEvent, this, "KEY_RIGHT_RELEASED", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
                     window.CloseWindow();
                     break;
                 case "KEY_SPACE":
-                    playerShots.AddEntity(new PlayerShot(new Vec2F(player.getPosiiton().X + (player.ExtentX / 2), player.getPosiiton().Y), playerShotImage));
+                    playerShots.AddEntity(new PlayerShot(
+                        new Vec2F(player.getPosiiton().X + (player.ExtentX / 2), 
+                        player.getPosiiton().Y), playerShotImage));
                     break;
             }    
         }
@@ -145,7 +159,8 @@ namespace Galaga {
                         squad.Enemies.Iterate(enemy => {
 
                             //if collision btw shot and enemy -> delete both
-                            if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                            if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), 
+                            enemy.Shape).Collision) {
                                 //Tjekker om enemy skal dø  når den bliver ramt  
                                 if(enemy.Enrage()) {
                                     AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
@@ -157,14 +172,16 @@ namespace Galaga {
                 }
             });
         }
+        
         public void AddExplosion(Vec2F position, Vec2F extent) {
             //add explosion to the Animationcontainer
             //Event adds 1 to our score
-            enemyExplosion.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
-            eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(GameEventType.GameStateEvent, this, "INCREASE_SCORE", "MoveRight", "1"));
-
-
+            enemyExplosion.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, 
+                new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
+            eventBus.RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                GameEventType.GameStateEvent, this, "INCREASE_SCORE", "MoveRight", "1"));
         }
+
         public void Run() {
             while(window.IsRunning()) {
                 gameTimer.MeasureTime();
@@ -175,7 +192,7 @@ namespace Galaga {
                     IterateShots();
 
                     if (Enemy.TOTAL_ENEMIES == 0) {
-                        CreateSquadrons();
+                        CreateNewEnemiesInSquadrons();
                     }
                     foreach (ISquadron squad in AllSquadrons) {
                         squad.strat.MoveEnemies(squad.Enemies);
@@ -206,7 +223,8 @@ namespace Galaga {
 
                 if (gameTimer.ShouldReset()) {
                     // this update happens once every second
-                    window.Title = $"Galaga | (UPS,FPS): ({gameTimer.CapturedUpdates},{gameTimer.CapturedFrames})";
+                    window.Title = 
+                        $"Galaga | (UPS,FPS): ({gameTimer.CapturedUpdates},{gameTimer.CapturedFrames})";
                 }
             }
         }            

@@ -1,7 +1,9 @@
 using DIKUArcade.Entities;
 using System.Collections.Generic;
 using DIKUArcade.Graphics;
-namespace Galaga {
+using Galaga.MovementStrategy;
+
+namespace Galaga.Squadrons {
     public interface ISquadron {
         EntityContainer<Enemy> Enemies {get;}
         IMovementStrategy strat {get;}
