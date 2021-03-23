@@ -7,6 +7,7 @@ namespace GalagaTests
         [SetUp]
         public void Setup()
         {
+            DIKUArcade.Window.CreateOpenGLContext();
         }
 
         [Test]
