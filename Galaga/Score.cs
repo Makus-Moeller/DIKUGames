@@ -26,6 +26,8 @@ namespace Galaga
                     case "INCREASE_SCORE":
                         AddPoint();
                         break;
+                    default:
+                        break;
                }
             }
         }

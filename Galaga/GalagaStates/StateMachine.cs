@@ -1,7 +1,7 @@
 using DIKUArcade.EventBus;
 using DIKUArcade.State;
 using Galaga;
-
+using System;
 namespace GalagaStates {
     public class StateMachine : IGameEventProcessor<object> {
         public IGameState ActiveState {get; private set;}
@@ -14,13 +14,13 @@ namespace GalagaStates {
 
         private void SwitchState(GameStateType stateType) {
             switch (stateType) {
-                case GameStateType.GameRunning:
-                    ActiveState = ;
+                case GameStateType.MainMenu:
+                    ActiveState = MainMenu.GetInstance();
                     break;
                 case GameStateType.GamePaused:
-                    return "GAME_PAUSED";
-                case GameStateType.MainMenu:
-                    return "MAINMENU";
+                    break;
+                case GameStateType.GameRunning:
+                    break;
                 default:
                     throw new ArgumentException("Not valid State");
 
@@ -31,6 +31,7 @@ namespace GalagaStates {
         public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent)
         {
             throw new System.NotImplementedException();
+            //SwitchState(gameEvent.message.statetostring())
         }
     }
 }
