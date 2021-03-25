@@ -49,7 +49,7 @@ namespace GalagaStates {
                     }
                     else {
                         GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.InputEvent, this, "KEY_ESCAPE", keyAction, "");
+                            GameEventType.InputEvent, this, "KEY_ESCAPE", "KEY_ESCAPE", "");
                     }
                     break;
             }
@@ -83,7 +83,7 @@ namespace GalagaStates {
 
         public void UpdateGameLogic()
         {
-            throw new System.NotImplementedException();
+            this.RenderState();
         }
     }
 }

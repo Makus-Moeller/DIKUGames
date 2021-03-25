@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Galaga;
-
+using GalagaStates;
 namespace GalagaTests {
     [TestFixture]
     public class StateMachineTesting {
@@ -10,6 +10,7 @@ namespace GalagaTests {
         public StateMachineTesting() {
             DIKUArcade.Window.CreateOpenGLContext();
             GalagaBus.GetBus();
+
 
 
         }
@@ -50,7 +51,7 @@ namespace GalagaTests {
                     "CHANGE_STATE",
                     "GAME_RUNNING", ""));
             GalagaBus.GetBus().ProcessEventsSequentially();
-            Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
+            Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
         }
     }
 }
