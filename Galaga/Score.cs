@@ -19,9 +19,8 @@ namespace Galaga
         }
 
         //Implementation of Processevent
-        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent)
-        {
-            if (eventType == GameEventType.GameStateEvent) {
+        public void ProcessEvent(GameEventType eventType, GameEvent<object> gameEvent) {
+            if (eventType == GameEventType.StatusEvent) {
                 switch (gameEvent.Message) {
                     case "INCREASE_SCORE":
                         AddPoint();

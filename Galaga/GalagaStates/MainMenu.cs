@@ -6,18 +6,17 @@ using System.IO;
 using System;
 using DIKUArcade.EventBus;
 using GalagaStates;
+using Galaga;
 namespace GalagaStates {
     public class MainMenu : IGameState {
         private static MainMenu instance = null;
         private Entity backGroundImage;
         private Text[] menuButtons = new Text[2];
         private int activeMenuButton;
-        private int maxMenuButtons;
 
-        private MainMenu()
-        {
-            Text newgame = (new Text("New Game", new Vec2F(0.4f, 0.4f), new Vec2F(0.2f, 0.2f)));
-            Text quit = (new Text("Quit", (new Vec2F(0.4f, 0.2f)), new Vec2F(0.2f, 0.2f)));
+        private MainMenu() {
+            Text newgame = (new Text("New Game", new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
+            Text quit = (new Text("Quit", (new Vec2F(0.4f, 0.3f)), new Vec2F(0.3f, 0.3f)));
             menuButtons[0] = newgame;
             menuButtons[1] = quit;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
@@ -29,11 +28,7 @@ namespace GalagaStates {
             
             return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
         }
-        public void GameLoop()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public void HandleKeyEvent(string keyValue, string keyAction) {
             switch (keyValue) {
                 case "KEY_UP":
@@ -44,24 +39,19 @@ namespace GalagaStates {
                     break;
                 case "KEY_ENTER":
                     if (activeMenuButton == 0) {
-                        GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.GameStateEvent, this, "CHANGE_STATE", "GAME_RUNNING", "");
+                        GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.GameStateEvent, this, "CHANGE_STATE", "GAME_RUNNING", ""));
+                            Console.WriteLine("EFTER REGISTER EVENT1");
                     }
                     else {
-                        GameEventFactory<object>.CreateGameEventForAllProcessors(
-                            GameEventType.InputEvent, this, "KEY_ESCAPE", "KEY_ESCAPE", "");
+                        GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.WindowEvent, this, "QUIT_GAME", "KEY_RELEASE", ""));
                     }
                     break;
             }
         }
-
-        public void InitializeGameState()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RenderState()
-        {
+        public void RenderState() {
+            backGroundImage.RenderEntity();
             switch (activeMenuButton) {
                 case (0):
                     menuButtons[0].SetColor(120, 255, 0, 0);
@@ -78,12 +68,19 @@ namespace GalagaStates {
                 default:
                     throw new ArgumentException("Ingen Buttons");
             }
-            backGroundImage.RenderEntity();
         }
 
         public void UpdateGameLogic()
         {
-            this.RenderState();
+           
+        }
+        public void GameLoop()
+        {
+            throw new System.NotImplementedException();
+        }
+         public void InitializeGameState()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using Galaga;
 using GalagaStates;
+using DIKUArcade.EventBus;
+using GalagaStates;
 namespace GalagaTests {
     [TestFixture]
     public class StateMachineTesting {
@@ -10,9 +12,6 @@ namespace GalagaTests {
         public StateMachineTesting() {
             DIKUArcade.Window.CreateOpenGLContext();
             GalagaBus.GetBus();
-
-
-
         }
         [SetUp]
         public void SetUpMethod() {
@@ -29,7 +28,7 @@ namespace GalagaTests {
         public void TestInitialState() {
             Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
         }
-        
+        /*
         [Test]
         public void TestEventGamePaused() {
             GalagaBus.GetBus().RegisterEvent(
@@ -41,8 +40,8 @@ namespace GalagaTests {
             GalagaBus.GetBus().ProcessEventsSequentially();
             Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
         }
-
-         [Test]
+        */
+        [Test]
         public void TestEventGameRunning() {
             GalagaBus.GetBus().RegisterEvent(
                 GameEventFactory<object>.CreateGameEventForAllProcessors(
