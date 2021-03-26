@@ -16,8 +16,8 @@ namespace GalagaStates {
         private int activeMenuButton;
 
         private GamePaused() {
-            Text MainMenu = (new Text("MainMenu", new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
-            Text Countinue = (new Text("Continue", (new Vec2F(0.4f, 0.3f)), new Vec2F(0.3f, 0.3f)));
+            Text Countinue = (new Text("Continue", new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
+            Text MainMenu = (new Text("MainMenu", (new Vec2F(0.4f, 0.3f)), new Vec2F(0.3f, 0.3f)));
             menuButtons[0] = Countinue;
             menuButtons[1] = MainMenu;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
