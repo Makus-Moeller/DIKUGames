@@ -22,7 +22,7 @@ namespace GalagaStates {
             menuButtons[1] = MainMenu;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
                 new Vec2F(1.0f, 1.0f)), 
-                new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
+                new Image(Path.Combine("..", "Galaga", "Assets", "Images", "TitleImage.png")));
         }
 
         public static GamePaused GetInstance() {

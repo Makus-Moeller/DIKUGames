@@ -152,16 +152,16 @@ namespace GalagaStates
             Enemy.ResetEnemyCount();
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "Player.png"))); 
+                new Image(Path.Combine("..", "Galaga", "Assets", "Images", "Player.png"))); 
 
             //Grafik
             gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), 
                 (new Vec2F(0.3f,0.3f)));
             gameOverText.SetColor(new Vec3I(192, 0, 255));
             enemyStridesRed = ImageStride.CreateStrides(
-                2, Path.Combine("Assets", "Images", "RedMonster.png"));
+                2, Path.Combine("..", "Galaga", "Assets", "Images", "RedMonster.png"));
             images = ImageStride.CreateStrides(
-                4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+                4, Path.Combine("..", "Galaga", "Assets", "Images", "BlueMonster.png"));
 
             //Score
             gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
@@ -182,10 +182,10 @@ namespace GalagaStates
             //Player and explosions
             int numEnemies = 8;
             playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+            playerShotImage = new Image(Path.Combine("..", "Galaga", "Assets", "Images", "BulletRed2.png"));
             enemyExplosion = new AnimationContainer(numEnemies);
             explosionStrides = ImageStride.CreateStrides(8, 
-                Path.Combine("Assets", "Images", "Explosion.png"));
+                Path.Combine("..", "Galaga", "Assets", "Images", "Explosion.png"));
         }
 
         public void RenderState() {
