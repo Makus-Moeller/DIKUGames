@@ -5,13 +5,14 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using DIKUArcade.EventBus;
-using GalagaStates;
 using Galaga;
 using System.Collections.Generic;
 using Galaga.Squadrons;
 using Galaga.MovementStrategy;
 using DIKUArcade.Physics;
-namespace GalagaStates {
+
+namespace GalagaStates
+{
     public class GameRunning : IGameState {
         private Player player;
         private EntityContainer<PlayerShot> playerShots;
@@ -23,67 +24,20 @@ namespace GalagaStates {
         private Score gameScore;
         private List<Image> images;
         private List<ISquadron> AllSquadrons;
-        private Text gameOverText {get;}
+        private Text gameOverText {get; set;}
         private DiagonaleSquad diagonal;
         private KvadratiskSquad kvadratisk;
         private VerticalSquad vertical;
         private static GameRunning instance = null;
         public GameRunning() {
-            player = new Player(
-                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("Assets", "Images", "Player.png"))); 
-
-            //Grafik
-            gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), 
-                (new Vec2F(0.3f,0.3f)));
-            gameOverText.SetColor(new Vec3I(192, 0, 255));
-            enemyStridesRed = ImageStride.CreateStrides(
-                2, Path.Combine("Assets", "Images", "RedMonster.png"));
-            images = ImageStride.CreateStrides(
-                4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-
-            //Score
-            gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
-
-            //EventBus
-            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            GalagaBus.GetBus().Subscribe(GameEventType.StatusEvent, gameScore);
-            
-            
-
-            //Enemies
-            diagonal = new DiagonaleSquad(4, new ZigZagDown());
-            vertical = new VerticalSquad(4, new Down());
-            kvadratisk = new KvadratiskSquad(4, new ZigZagDown());
-            AllSquadrons = new List<ISquadron>();
-            AllSquadrons.Add(diagonal); AllSquadrons.Add(vertical); AllSquadrons.Add(kvadratisk);
-            foreach (ISquadron squad in AllSquadrons) {
-                squad.CreateEnemies(images, enemyStridesRed);
-            }
-            //Player and explosions
-            int numEnemies = 8;
-            playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-            enemyExplosion = new AnimationContainer(numEnemies);
-            explosionStrides = ImageStride.CreateStrides(8, 
-                Path.Combine("Assets", "Images", "Explosion.png"));
+            InitializeGameState();
         }
 
         public static GameRunning GetInstance() {
             
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
-        public void ResetGame() {
-            foreach (ISquadron squad in AllSquadrons) {
-                squad.Enemies.Iterate(enemy => {
-                    enemy.DeleteEntity();
-                });
-            }
-            CreateNewEnemiesInSquadrons();
-            GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
-                GameEventType.StatusEvent, this, "INCREASE_SCORE", "MoveRight", "-" + gameScore.score.ToString()));
-        }
-
+        
         public void HandleKeyEvent(string keyValue, string keyAction) {
             switch (keyAction) {
                 case "KEY_RELEASE":
@@ -192,9 +146,46 @@ namespace GalagaStates {
         {
             throw new NotImplementedException();
         } 
-        public void InitializeGameState()
-        {
-            throw new NotImplementedException();
+        public void InitializeGameState() {
+            //Sætter Enemy count til 0 for at sikre den ikke tæller enemys fra tidligere spil
+            //når vi siger new game efter at have initializeret GameRunning første gang.
+            Enemy.ResetEnemyCount();
+            player = new Player(
+                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new Image(Path.Combine("Assets", "Images", "Player.png"))); 
+
+            //Grafik
+            gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), 
+                (new Vec2F(0.3f,0.3f)));
+            gameOverText.SetColor(new Vec3I(192, 0, 255));
+            enemyStridesRed = ImageStride.CreateStrides(
+                2, Path.Combine("Assets", "Images", "RedMonster.png"));
+            images = ImageStride.CreateStrides(
+                4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+
+            //Score
+            gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
+
+            //EventBus
+            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            GalagaBus.GetBus().Subscribe(GameEventType.StatusEvent, gameScore);
+            
+            //Enemies
+            diagonal = new DiagonaleSquad(4, new ZigZagDown());
+            vertical = new VerticalSquad(4, new Down());
+            kvadratisk = new KvadratiskSquad(4, new ZigZagDown());
+            AllSquadrons = new List<ISquadron>();
+            AllSquadrons.Add(diagonal); AllSquadrons.Add(vertical); AllSquadrons.Add(kvadratisk);
+            foreach (ISquadron squad in AllSquadrons) {
+                squad.CreateEnemies(images, enemyStridesRed);
+            }
+            //Player and explosions
+            int numEnemies = 8;
+            playerShots = new EntityContainer<PlayerShot>();
+            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+            enemyExplosion = new AnimationContainer(numEnemies);
+            explosionStrides = ImageStride.CreateStrides(8, 
+                Path.Combine("Assets", "Images", "Explosion.png"));
         }
 
         public void RenderState() {
@@ -216,7 +207,6 @@ namespace GalagaStates {
         public void UpdateGameLogic() { 
             player.Move();
             IterateShots();
-
             if (Enemy.TOTAL_ENEMIES == 0) {
                 CreateNewEnemiesInSquadrons();
             }

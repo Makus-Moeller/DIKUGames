@@ -19,7 +19,7 @@ namespace GalagaStates {
                     break;
                 case GameStateType.GameRunning:
                     if (sender == "MAINMENU") {
-                        GameRunning.GetInstance().ResetGame();
+                        GameRunning.GetInstance().InitializeGameState();
                     }
                     ActiveState = GameRunning.GetInstance();
                     break;

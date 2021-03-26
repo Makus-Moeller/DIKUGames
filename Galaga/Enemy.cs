@@ -33,5 +33,8 @@ namespace Galaga {
             else
                 return false;
         }
+        public static void ResetEnemyCount() {
+            TOTAL_ENEMIES = 0;
+        }
     } 
 }
