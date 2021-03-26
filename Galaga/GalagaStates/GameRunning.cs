@@ -27,10 +27,6 @@ namespace GalagaStates {
         private DiagonaleSquad diagonal;
         private KvadratiskSquad kvadratisk;
         private VerticalSquad vertical;
-        
-        
-        
-        
         private static GameRunning instance = null;
         public GameRunning() {
             player = new Player(
@@ -101,7 +97,8 @@ namespace GalagaStates {
                         GameEventType.PlayerEvent, this, "KEY_RIGHT", "MoveRight", "1"));
                     break;
                 case "KEY_ESCAPE":
-                    //TIL PAUSE
+                    GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                        GameEventType.GameStateEvent, this, "CHANGE_STATE", "GAME_PAUSED", ""));
                     break;
                 default:
                     break;

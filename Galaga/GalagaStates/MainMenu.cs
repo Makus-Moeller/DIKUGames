@@ -38,12 +38,12 @@ namespace GalagaStates {
                     activeMenuButton = 1;
                     break;
                 case "KEY_ENTER":
-                    if (activeMenuButton == 0) {
+                    if (keyAction == "KEY_PRESS" && activeMenuButton == 0) {
                         GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.GameStateEvent, this, "CHANGE_STATE", "GAME_RUNNING", ""));
                             Console.WriteLine("EFTER REGISTER EVENT1");
                     }
-                    else {
+                    else if (keyAction == "KEY_PRESS"){
                         GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
                             GameEventType.WindowEvent, this, "QUIT_GAME", "KEY_RELEASE", ""));
                     }

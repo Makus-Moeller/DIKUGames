@@ -21,6 +21,7 @@ namespace GalagaStates {
                     ActiveState = GameRunning.GetInstance();
                     break;
                 case GameStateType.GamePaused:
+                    ActiveState = GamePaused.GetInstance();
                     break;
                 default:
                     throw new ArgumentException("Not valid State");

@@ -1,3 +1,4 @@
+
 using DIKUArcade.State;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -15,10 +16,10 @@ namespace GalagaStates {
         private int activeMenuButton;
 
         private GamePaused() {
-            Text newgame = (new Text("New Game", new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
-            Text quit = (new Text("Quit", (new Vec2F(0.4f, 0.3f)), new Vec2F(0.3f, 0.3f)));
-            menuButtons[0] = newgame;
-            menuButtons[1] = quit;
+            Text MainMenu = (new Text("MainMenu", new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
+            Text Countinue = (new Text("Continue", (new Vec2F(0.4f, 0.3f)), new Vec2F(0.3f, 0.3f)));
+            menuButtons[0] = Countinue;
+            menuButtons[1] = MainMenu;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
                 new Vec2F(1.0f, 1.0f)), 
                 new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
@@ -34,9 +35,25 @@ namespace GalagaStates {
             throw new NotImplementedException();
         }
 
-        public void HandleKeyEvent(string keyValue, string keyAction)
-        {
-            throw new NotImplementedException();
+        public void HandleKeyEvent(string keyValue, string keyAction) {
+            switch (keyValue) {
+                case "KEY_UP":
+                    activeMenuButton = 0;
+                    break;
+                case "KEY_DOWN":
+                    activeMenuButton = 1;
+                    break;
+                case "KEY_ENTER":
+                    if (activeMenuButton == 0) {
+                        GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.GameStateEvent, this, "CHANGE_STATE", "GAME_RUNNING", ""));
+                    }
+                    else {
+                        GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                            GameEventType.GameStateEvent, this, "CHANGE_STATE", "MAINMENU", ""));
+                    }
+                    break;
+            }
         }
 
         public void InitializeGameState()
@@ -66,6 +83,7 @@ namespace GalagaStates {
 
         public void UpdateGameLogic()
         {
-            throw new NotImplementedException();
+            
         }
     }
+}
