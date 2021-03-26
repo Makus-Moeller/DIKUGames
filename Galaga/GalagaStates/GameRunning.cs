@@ -73,6 +73,16 @@ namespace GalagaStates {
             
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
+        public void ResetGame() {
+            foreach (ISquadron squad in AllSquadrons) {
+                squad.Enemies.Iterate(enemy => {
+                    enemy.DeleteEntity();
+                });
+            }
+            CreateNewEnemiesInSquadrons();
+            GalagaBus.GetBus().RegisterEvent(GameEventFactory<object>.CreateGameEventForAllProcessors(
+                GameEventType.StatusEvent, this, "INCREASE_SCORE", "MoveRight", "-" + gameScore.score.ToString()));
+        }
 
         public void HandleKeyEvent(string keyValue, string keyAction) {
             switch (keyAction) {

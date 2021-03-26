@@ -12,12 +12,15 @@ namespace GalagaStates {
             ActiveState = MainMenu.GetInstance();
         }
 
-        public void SwitchState(GameStateType stateType) {
+        public void SwitchState(GameStateType stateType, string sender) {
             switch (stateType) {
                 case GameStateType.MainMenu:
                     ActiveState = MainMenu.GetInstance();
                     break;
                 case GameStateType.GameRunning:
+                    if (sender == "MAINMENU") {
+                        GameRunning.GetInstance().ResetGame();
+                    }
                     ActiveState = GameRunning.GetInstance();
                     break;
                 case GameStateType.GamePaused:
@@ -34,7 +37,8 @@ namespace GalagaStates {
             if (eventType == GameEventType.GameStateEvent) {
                 switch (gameEvent.Message) {
                     case "CHANGE_STATE":
-                        SwitchState(StateTransformer.TransformStringToState(gameEvent.Parameter1));
+                        SwitchState(StateTransformer.TransformStringToState(gameEvent.Parameter1), 
+                                (gameEvent.Parameter2));
                         break;
                     default:
                         break;

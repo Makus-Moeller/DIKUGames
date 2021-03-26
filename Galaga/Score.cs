@@ -6,15 +6,15 @@ namespace Galaga
 {
     public class Score : IGameEventProcessor<object> {
 
-        private int score;
+        public int score {get; private set;}
         private Text display;
         public Score(Vec2F position, Vec2F extent) {
             score = 0;
             display = new Text(score.ToString(), position, extent);        
         }
 
-        public void AddPoint() {
-            score++;
+        public void AddPoint(int addPoint) {
+            score += addPoint;
            
         }
 
@@ -23,7 +23,7 @@ namespace Galaga
             if (eventType == GameEventType.StatusEvent) {
                 switch (gameEvent.Message) {
                     case "INCREASE_SCORE":
-                        AddPoint();
+                        AddPoint(System.Convert.ToInt32(gameEvent.Parameter2));
                         break;
                     default:
                         break;
