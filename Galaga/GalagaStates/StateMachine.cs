@@ -18,6 +18,7 @@ namespace GalagaStates {
                     ActiveState = MainMenu.GetInstance();
                     break;
                 case GameStateType.GameRunning:
+                    //Hvis afsender er MainMenu skal den genstarte spillet
                     if (sender == "MAINMENU") {
                         GameRunning.GetInstance().InitializeGameState();
                     }
