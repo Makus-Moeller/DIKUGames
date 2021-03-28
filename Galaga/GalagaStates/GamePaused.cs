@@ -6,9 +6,9 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using DIKUArcade.EventBus;
-using GalagaStates;
 using Galaga;    
-namespace GalagaStates {
+
+namespace Galaga.GalagaStates {
     public class GamePaused : IGameState {
         private static GamePaused instance = null;
         private Entity backGroundImage;

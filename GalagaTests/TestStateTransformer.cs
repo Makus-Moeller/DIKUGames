@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using GalagaStates;
+using Galaga.GalagaStates;
 
 namespace GalagaTests
 {

@@ -1,8 +1,7 @@
 using NUnit.Framework;
 using Galaga;
-using GalagaStates;
 using DIKUArcade.EventBus;
-using GalagaStates;
+using Galaga.GalagaStates;
 using System.Collections.Generic;
 
 namespace GalagaTests {
@@ -10,7 +9,6 @@ namespace GalagaTests {
     public class StateMachineTesting {
         private StateMachine stateMachine;
         
-
         public StateMachineTesting() {
             DIKUArcade.Window.CreateOpenGLContext();
            

@@ -5,7 +5,7 @@ using DIKUArcade.Math;
 namespace Galaga {
     public class Enemy : Entity {
         public bool isEnraged {get; private set;}
-        private int hitpoints;
+        public int hitpoints {get; private set;}
         private IBaseImage redImage;
         public readonly Vec2F startposition;
         public static int TOTAL_ENEMIES{get; private set;}
@@ -18,7 +18,7 @@ namespace Galaga {
                 isEnraged = false;
                 TOTAL_ENEMIES++;
         }
-        public bool Enrage (){
+        public bool Enrage() {
             hitpoints--;
             if (hitpoints <= 3 && hitpoints > 0) {
                 this.Image = redImage;

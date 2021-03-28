@@ -44,5 +44,11 @@ namespace Galaga.Squadrons {
                 }
             }
         }
+
+        //overrides ToString. Used in Nunittesting 
+        public override string ToString() {
+            return string.Format("Strategy: {0}", 
+                strat);
+        }
     }
 }

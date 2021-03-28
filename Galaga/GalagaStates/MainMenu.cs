@@ -5,9 +5,9 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using DIKUArcade.EventBus;
-using GalagaStates;
 using Galaga;
-namespace GalagaStates {
+
+namespace Galaga.GalagaStates {
     public class MainMenu : IGameState {
         private static MainMenu instance = null;
         private Entity backGroundImage;

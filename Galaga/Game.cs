@@ -2,7 +2,7 @@ using DIKUArcade;
 using DIKUArcade.Timers;
 using System.Collections.Generic;
 using DIKUArcade.EventBus;
-using GalagaStates;
+using Galaga.GalagaStates;
 
 namespace Galaga {
     public class Game : IGameEventProcessor<object> {
@@ -53,7 +53,6 @@ namespace Galaga {
                 if (gameTimer.ShouldRender()) {
                     window.Clear();
                     // render game entities here...
-                    //Func fra her skal i running
                     stateMachine.ActiveState.RenderState();
                     window.SwapBuffers();
                     

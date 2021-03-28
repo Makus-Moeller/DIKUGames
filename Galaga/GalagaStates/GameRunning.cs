@@ -11,8 +11,8 @@ using Galaga.Squadrons;
 using Galaga.MovementStrategy;
 using DIKUArcade.Physics;
 
-namespace GalagaStates
-{
+
+namespace Galaga.GalagaStates{
     public class GameRunning : IGameState {
         private Player player;
         private EntityContainer<PlayerShot> playerShots;

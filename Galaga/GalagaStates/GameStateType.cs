@@ -1,7 +1,7 @@
 using Galaga;
 using System;
 
-namespace GalagaStates {
+namespace Galaga.GalagaStates {
     public enum GameStateType {
         GameRunning, 
         GamePaused,
