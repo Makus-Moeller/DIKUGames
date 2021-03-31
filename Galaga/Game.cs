@@ -46,7 +46,7 @@ namespace Galaga {
                 gameTimer.MeasureTime();
                 while (gameTimer.ShouldUpdate()) {
                     window.PollEvents();
-                    GalagaBus.GetBus().ProcessEventsSequentially();
+                    GalagaBus.GetBus().ProcessEvents();
                     stateMachine.ActiveState.UpdateGameLogic();
                 }
                 

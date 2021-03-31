@@ -17,6 +17,7 @@ namespace Galaga {
             entity = new Entity(shape, image);
             this.shape = shape;
             ExtentX = shape.Extent.X;
+            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
         } 
         public void Render() {
             entity.RenderEntity();
@@ -57,7 +58,7 @@ namespace Galaga {
             }
         }
 
-        public Vec2F getPosiiton() {
+        public Vec2F getPosition() {
             return shape.Position;
         }
 

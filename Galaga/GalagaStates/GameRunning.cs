@@ -81,8 +81,8 @@ namespace Galaga.GalagaStates{
                     break;
                 case "KEY_SPACE":
                     playerShots.AddEntity(new PlayerShot(
-                        new Vec2F(player.getPosiiton().X + (player.ExtentX / 2), 
-                        player.getPosiiton().Y), playerShotImage));
+                        new Vec2F(player.getPosition().X + (player.ExtentX / 2), 
+                        player.getPosition().Y), playerShotImage));
                     break;
                 default:
                     break;
@@ -165,10 +165,6 @@ namespace Galaga.GalagaStates{
 
             //Score
             gameScore = new Score(new Vec2F(0.05f, 0.01f), new Vec2F(0.2f, 0.2f));
-
-            //EventBus
-            GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            GalagaBus.GetBus().Subscribe(GameEventType.StatusEvent, gameScore);
             
             //Enemies
             diagonal = new DiagonaleSquad(4, new ZigZagDown());

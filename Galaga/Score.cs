@@ -11,11 +11,11 @@ namespace Galaga
         public Score(Vec2F position, Vec2F extent) {
             score = 0;
             display = new Text(score.ToString(), position, extent);        
+            GalagaBus.GetBus().Subscribe(GameEventType.StatusEvent, this);
         }
 
-        public void AddPoint(int addPoint) {
+        private void AddPoint(int addPoint) {
             score += addPoint;
-           
         }
 
         //Implementation of Processevent
