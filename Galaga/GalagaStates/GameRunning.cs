@@ -155,7 +155,7 @@ namespace Galaga.GalagaStates{
                 new Image(Path.Combine("..", "Galaga", "Assets", "Images", "Player.png"))); 
 
             //Grafik
-            gameOverText = new Text("GAMEOVER \nYOU LOOSE", (new Vec2F(0.35f, 0.3f)), 
+            gameOverText = new Text("GAMEOVER \nYOU LOSE", (new Vec2F(0.35f, 0.3f)), 
                 (new Vec2F(0.3f,0.3f)));
             gameOverText.SetColor(new Vec3I(192, 0, 255));
             enemyStridesRed = ImageStride.CreateStrides(
