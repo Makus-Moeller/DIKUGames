@@ -15,7 +15,6 @@ namespace Galaga.Squadrons {
         }
 
         public EntityContainer<Enemy> Enemies {get; private set;}
-
         public int MaxEnemies {get;}
         public void CreateEnemies(List<Image> enemyStrides, List<Image> alternativeEnemytStrides) {
             Enemies = new EntityContainer<Enemy>(MaxEnemies);
