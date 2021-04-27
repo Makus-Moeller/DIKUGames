@@ -9,7 +9,18 @@ namespace Breakout.Players {
     public class Player : Entity{
         private float moveLeft, moveRight;
         private const float MOVEMENT_SPEED = 0.015f; 
-        private IPlayerBuffState playerBuffState {get; set;}
+        private IPlayerBuffState playerBuffState 
+        {
+            get
+            {
+            return playerBuffState;
+            }
+            set
+            {
+            playerBuffState = value;
+            value.AddBuffs(this);
+            }
+        }
         public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image){
 
             moveLeft = 0.00f;

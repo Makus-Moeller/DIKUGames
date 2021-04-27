@@ -14,9 +14,9 @@ namespace Breakout.Players  {
             return MOVEMENT_SPEED;
         }
 
-        public void ChangeExtent(Shape shape)
+        public void AddBuffs(Player player)
         {
-            shape.Extent = EXTENT;
+
         }
     }
 }
