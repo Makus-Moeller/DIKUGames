@@ -78,7 +78,7 @@ namespace Breakout {
         }
         public override void Render()
         {
-            player.RenderEntity();
+            player.Render();
         }
 
         public override void Update()
