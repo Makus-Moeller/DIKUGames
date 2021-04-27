@@ -31,9 +31,14 @@ namespace Breakout {
             //Instantiate player object etc. 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
+<<<<<<< HEAD
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png"))); 
             atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
+=======
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")),
+                (new RegularBuffState())); 
+>>>>>>> cd9f335f7b175ec37d3b8a100f0ed04dfc39a4c8
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
