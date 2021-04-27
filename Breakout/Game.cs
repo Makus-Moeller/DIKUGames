@@ -29,7 +29,7 @@ namespace Breakout {
             //Instantiate player object etc. 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png"))); 
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), new RegularBuffState()); 
             atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
 
