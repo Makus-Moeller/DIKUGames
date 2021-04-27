@@ -6,10 +6,11 @@ using System;
 
 
 namespace Breakout.Players {
-    public class Player : IPlayer {
+    public class Player {
         private Entity entity;
         private float moveLeft, moveRight;
         private const float MOVEMENT_SPEED = 0.015f; 
+        private IPlayerBuffState playerBuffState {get; set}
 
        
         public Player(DynamicShape shape, IBaseImage image) {
@@ -19,6 +20,7 @@ namespace Breakout.Players {
         }
 
         //Methods for movement. Render and update is in the entity baseclass
+        
 
         public void Render() {
             entity.RenderEntity();
@@ -30,7 +32,11 @@ namespace Breakout.Players {
             else {
                 entity.Shape.AsDynamicShape().Move();
             } 
+            //Ensure at ændrignen er indenfor intervallet
         }
+        //Strategy pattern til movement måske. Derved kan vi udvide med powerups og hastihed og længde osv.
+        //Uses extent. Har forskellige movementspeed.
+        ///Istrat skal have en change metode.
 
         public void SetMoveLeft(bool val) {
             if (val) {
@@ -49,9 +55,7 @@ namespace Breakout.Players {
             else {
                 moveRight = 0.00f;
             }
-            UpdateDirection();
-            
-            
+            UpdateDirection(); 
         }
 
         private void UpdateDirection() {
