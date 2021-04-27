@@ -6,19 +6,17 @@ using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using DIKUArcade.Timers;
 using Breakout.Players;
-using Breakout.Blocks;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
+using Breakout.Blocks;
 
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
         private GameEventBus eventBus; 
-
         private AtomBlock atomBlock;
-
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
             window.SetClearColor(System.Drawing.Color.Black);
@@ -31,14 +29,10 @@ namespace Breakout {
             //Instantiate player object etc. 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
-<<<<<<< HEAD
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png"))); 
             atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
-=======
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")),
-                (new RegularBuffState())); 
->>>>>>> cd9f335f7b175ec37d3b8a100f0ed04dfc39a4c8
+
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -49,9 +43,6 @@ namespace Breakout {
                         break;
                     case KeyboardKey.Num_2:
                         window.SetClearColor(System.Drawing.Color.Coral);
-                        break;
-                    case KeyboardKey.Num_3:
-                        atomBlock.HitBlock();
                         break;
                     case KeyboardKey.Left:
                         player.SetMoveLeft(true);
@@ -92,7 +83,6 @@ namespace Breakout {
         public override void Render()
         {
             player.Render();
-            atomBlock.RenderEntity();
         }
 
         public override void Update()

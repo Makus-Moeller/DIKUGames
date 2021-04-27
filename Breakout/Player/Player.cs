@@ -8,16 +8,10 @@ using System;
 namespace Breakout.Players {
     public class Player : Entity{
         private float moveLeft, moveRight;
-<<<<<<< HEAD
         private const float MOVEMENT_SPEED = 0.015f; 
         private IPlayerBuffState playerBuffState {get; set;}
-
-       
-        public Player(DynamicShape shape, IBaseImage image) {
-=======
-        public IPlayerBuffState playerBuffState {get; set;}
         public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image){
->>>>>>> cd9f335f7b175ec37d3b8a100f0ed04dfc39a4c8
+
             moveLeft = 0.00f;
             moveRight = 0.00f;
             playerBuffState = buffState;
@@ -37,7 +31,7 @@ namespace Breakout.Players {
             } 
             //Ensure at ændrignen er indenfor intervallet
         }
-        
+
         public void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft = -(playerBuffState.Getspeed());
