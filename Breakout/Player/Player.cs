@@ -6,19 +6,19 @@ using System;
 
 
 namespace Breakout.Players {
-    public class Player : Entity{
+    public class Player : Entity {
         private float moveLeft, moveRight;
         private const float MOVEMENT_SPEED = 0.015f; 
-        private IPlayerBuffState playerBuffState 
+        private IPlayerBuffState playerBuffState;
+        public IPlayerBuffState PlayerBuffState 
         {
             get
             {
-            return playerBuffState;
+                return playerBuffState;
             }
-            set
-            {
-            playerBuffState = value;
+        set {
             value.AddBuffs(this);
+            playerBuffState = value;
             }
         }
         public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image){

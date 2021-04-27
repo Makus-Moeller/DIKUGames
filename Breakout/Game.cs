@@ -11,12 +11,13 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
 using Breakout.Blocks;
-
+using Breakout.Levelloader;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
         private GameEventBus eventBus; 
         private AtomBlock atomBlock;
+        private StreamReaderClass streamReader;
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
             window.SetClearColor(System.Drawing.Color.Black);
@@ -32,7 +33,21 @@ namespace Breakout {
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), new RegularBuffState()); 
             atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
+            
+            streamReader = new StreamReaderClass();
 
+            var stringArray3 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level3.txt"));
+            foreach (string blocks in stringArray3) {
+                Console.WriteLine(blocks);
+            }
+            var stringArray2 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level2.txt"));
+            foreach (string blocks in stringArray2) {
+                Console.WriteLine(blocks);
+            }
+            var stringArray1 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level1.txt"));
+            foreach (string blocks in stringArray1) {
+                Console.WriteLine(blocks);
+            }
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
