@@ -36,15 +36,15 @@ namespace Breakout {
             
             streamReader = new StreamReaderClass();
 
-            var stringArray3 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level3.txt"));
+            var stringArray3 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level3.txt"), "Legend:", "Legend/");
             foreach (string blocks in stringArray3) {
                 Console.WriteLine(blocks);
             }
-            var stringArray2 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level2.txt"));
+            var stringArray2 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level2.txt"), "Meta:", "Meta/");
             foreach (string blocks in stringArray2) {
                 Console.WriteLine(blocks);
             }
-            var stringArray1 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level1.txt"));
+            var stringArray1 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level1.txt"), "Map:", "Map/");
             foreach (string blocks in stringArray1) {
                 Console.WriteLine(blocks);
             }
