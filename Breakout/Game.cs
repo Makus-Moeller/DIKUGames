@@ -12,17 +12,18 @@ using DIKUArcade.Math;
 using System.IO;
 using Breakout.Blocks;
 using Breakout.Levelloader;
+
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
         private GameEventBus eventBus; 
-        private AtomBlock atomBlock;
         private LevelLoader levelLoader;
 
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
             window.SetClearColor(System.Drawing.Color.Black);
 
+            //In case we want to use the eventbus later to implement gamestates
             eventBus = new GameEventBus();
             eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.WindowEvent, GameEventType.TimedEvent});
             eventBus.Subscribe(GameEventType.WindowEvent, this);
@@ -32,22 +33,16 @@ namespace Breakout {
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), new RegularBuffState()); 
-            atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
-            
+            //Instantiates levelloader    
             levelLoader = new LevelLoader();
-            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
+            //Levelloader can set level
+            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level2.txt"), 
+                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             if (action == KeyboardAction.KeyPress) {
                 switch (key) {
-                    case KeyboardKey.Num_1:
-                        window.SetClearColor(System.Drawing.Color.Beige);
-                        break;
-                    case KeyboardKey.Num_2:
-                        window.SetClearColor(System.Drawing.Color.Coral);
-                        break;
                     case KeyboardKey.Left:
                         player.SetMoveLeft(true);
                         break;
@@ -66,6 +61,7 @@ namespace Breakout {
                             EventType = GameEventType.WindowEvent, Message = "CLOSE_WINDOW"});
                         //window.CloseWindow();
                         break;
+                    //Used to count the time spent on a specific level 
                     case KeyboardKey.Space:
                         eventBus.RegisterTimedEvent(
                             new GameEvent {EventType = GameEventType.TimedEvent, Message = "HELLO"},
@@ -94,6 +90,7 @@ namespace Breakout {
         {   
             player.Move();
             eventBus.ProcessEvents();
+           
         }
 
         public void ProcessEvent(GameEvent gameEvent)

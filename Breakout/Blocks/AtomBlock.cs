@@ -3,39 +3,36 @@ using DIKUArcade.Graphics;
 using System;
 
 namespace Breakout.Blocks {
+
+    //Superclass which have the basic functionality
     public class AtomBlock : Entity, IBlocks  {
-        private int hitpoints;
+        protected int hitpoints;
+        protected bool unbreakable;
 
-        
-        public AtomBlock(DynamicShape shape, IBaseImage image) : base(shape, image) {
+        public AtomBlock(Shape shape, IBaseImage image) : base(shape, image) {
             hitpoints = 10;
-        }
-
-        public int Hitpoints {get;}
-
-        public void CreateBlocks()
-        {
-            throw new NotImplementedException();
         }
 
         public int GetHitpoints()
         {
-            throw new NotImplementedException();
+            return hitpoints;
         }
 
 
         public void HitBlock()
         {
-            if (hitpoints == 1) {
-                DeleteEntity();
-            }
-            else 
-                hitpoints -= 1;
+            if (!unbreakable) {
+                if (hitpoints == 1) {
+                    DeleteEntity();
+                }
+                else 
+                    hitpoints -= 1;
+           }
         }
 
-        public int AddHitpoint()
+        public void AddHitpoint(int amount)
         {
-            throw new NotImplementedException();
+            hitpoints += amount;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Breakout.Blocks {
     public interface IBlocks {
         int GetHitpoints();
 
-        int AddHitpoint();
+        void AddHitpoint(int amount);
     
     }
 }
