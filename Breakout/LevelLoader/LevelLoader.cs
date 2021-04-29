@@ -30,9 +30,6 @@ namespace Breakout.Levelloader {
         }
     }
 
-
-
-
     public interface IBlockCreator {
         List<AtomBlock> CreateBlocks(CharDefiners[] charDefiners);
     }
@@ -42,9 +39,7 @@ namespace Breakout.Levelloader {
     //generator der vil lave anden størelse eller hente billeder 
     //fran en anden stig
     public class BlockCreator : IBlockCreator {
-       
         private List<AtomBlock> blocks = new List<AtomBlock>();  
-
         public List<AtomBlock> CreateBlocks(CharDefiners[] charDefiners)
         {
             
@@ -59,10 +54,9 @@ namespace Breakout.Levelloader {
                 }
             }
             return blocks;
-        }
-
-        
+        } 
     }
+
     public interface IStringInterpreter {
         void DefineSpecialAttributes();
         void GeneratePosition(CharDefiners[] arrayOfCharDefiners);
