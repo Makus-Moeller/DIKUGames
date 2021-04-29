@@ -13,6 +13,7 @@ namespace Breakout.Blocks {
             hitpoints = 10;
         }
 
+        public int HitPoints {get;}
         public int GetHitpoints()
         {
             return hitpoints;

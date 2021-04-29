@@ -1,12 +1,11 @@
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-
-namespace Breakout.Blocks {
+namespace Breakout.Blocks
+{
     public interface IBlocks {
+        int HitPoints {
+            get;
+        }
         int GetHitpoints();
 
         void AddHitpoint(int amount);
-    
     }
 }
