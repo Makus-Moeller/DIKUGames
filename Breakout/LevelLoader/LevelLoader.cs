@@ -4,25 +4,28 @@ using System.Collections.Generic;
 using Breakout.Blocks;
 using DIKUArcade.Math;
 namespace Breakout.Levelloader {
-    public class Levelloader {
+    public class LevelLoader {
 
+        private StringInterpreter stringInterpreter;
 
-
-
+        public LevelLoader()
+        {
+        }
     }
     public interface IBlockCreator {
         IBlocks createblock(string pathToImage, Vec2F position);
     }
-    public class BlockCreator : IBlockCreator {
+    public class BlockCreator {
         private StringInterpreter stringInterpreter;
 
         public BlockCreator(string txtFile) {
             stringInterpreter = new StringInterpreter(txtFile);
         }
-
-        public IBlocks createBlock(string pathToImage, Vec2F position) {
+        /*
+        public IBlocks createblock(string pathToImage, Vec2F position) {
             IBlocks thisblock = new();
         }
+        */
     }
 
 
@@ -33,35 +36,45 @@ namespace Breakout.Levelloader {
         private string[] legendData;
         private string[] mapData;
         private string[] metaData;
-        private List<IBlocks[]> listOfBlocks;
-        private IBlockCreator blockCreator;
+        public CharDefiners[] arrayOfCharDefiners {get; private set;}
         public StringInterpreter(string txtFile) {
             reader = new StreamReaderClass();
             mapData = reader.txtToArray(txtFile, "Map:", "Map/");
             legendData = reader.txtToArray(txtFile, "Legend:", "Legend/");
             metaData = reader.txtToArray(txtFile, "Meta:", "Meta/");
         }
-        private void defineCharacthers() {
-            
-        }
-        private IBlocks[] lineToBlockCreator (string lineToLoad) {
-            IBlocks[] lineOfBlocks = new IBlocks[12];
-            
-
-
-
-
-            for (int i = 0; i < 13; i++)
-            {
-                lineOfBlocks[i] = blockCreator.createblock();
+        public void CreateCharDefiners() {
+            int amountOfChars = legendData.Length;
+            char powerup = ' ';
+            char harden = ' ';
+            char unbreakable = ' ';
+            arrayOfCharDefiners = new CharDefiners[amountOfChars];
+            for (int i = 0; i < metaData.Length; i++) {
+                if (metaData[i][0] == 'P') {
+                    powerup = metaData[i][9];
+                }
+                if (metaData[i][0] == 'H') {
+                    harden = metaData[i][10];
+                }
+                if (metaData[i][0] == 'U') {
+                    unbreakable = metaData[i][13];
+                }
             }
-        }
-        public List<IBlocks[]> MakeLevel(){
-            foreach (string line in mapData)
-            {
-                listOfBlocks.Add(lineToBlockCreator(line));
-            }
-            return listOfBlocks;
+            for (int i = 0; i < amountOfChars; i++) {
+                arrayOfCharDefiners[i] = new CharDefiners();
+                arrayOfCharDefiners[i].character = legendData[i][0];
+                arrayOfCharDefiners[i].imagePath = legendData[i].Remove(0, 2);
+                if (arrayOfCharDefiners[i].character == powerup) {
+                    arrayOfCharDefiners[i].powerUp = true;
+                } 
+                if (arrayOfCharDefiners[i].character == harden) {
+                    arrayOfCharDefiners[i].hardened = true;
+                } 
+                if (arrayOfCharDefiners[i].character == unbreakable) {
+                    arrayOfCharDefiners[i].unbreakable = true;
+                } 
+                
+            } 
         }
     }
 

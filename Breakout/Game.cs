@@ -17,7 +17,6 @@ namespace Breakout {
         private Player player;
         private GameEventBus eventBus; 
         private AtomBlock atomBlock;
-        private StreamReaderClass streamReader;
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
             window.SetClearColor(System.Drawing.Color.Black);
@@ -34,20 +33,51 @@ namespace Breakout {
             atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
             
-            streamReader = new StreamReaderClass();
 
-            var stringArray3 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level3.txt"), "Legend:", "Legend/");
-            foreach (string blocks in stringArray3) {
-                Console.WriteLine(blocks);
+            StringInterpreter interpreter1 = new StringInterpreter(Path.Combine("Assets", "Levels", "Level1.txt"));
+            interpreter1.CreateCharDefiners();
+            Console.WriteLine("Level1: \n");
+            foreach (CharDefiners chardefiners in interpreter1.arrayOfCharDefiners)  
+            {
+                Console.WriteLine(chardefiners);
             }
-            var stringArray2 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level2.txt"), "Meta:", "Meta/");
-            foreach (string blocks in stringArray2) {
-                Console.WriteLine(blocks);
+            
+            StringInterpreter interpreter2 = new StringInterpreter(Path.Combine("Assets", "Levels", "Level2.txt"));
+            interpreter2.CreateCharDefiners();
+            Console.WriteLine("Level2: \n");
+            foreach (CharDefiners chardefiners in interpreter2.arrayOfCharDefiners)  
+            {
+                Console.WriteLine(chardefiners);
             }
-            var stringArray1 = streamReader.txtToArray(Path.Combine("Assets", "Levels", "Level1.txt"), "Map:", "Map/");
-            foreach (string blocks in stringArray1) {
-                Console.WriteLine(blocks);
+            StringInterpreter interpreter3 = new StringInterpreter(Path.Combine("Assets", "Levels", "Level3.txt"));
+            interpreter3.CreateCharDefiners();
+            Console.WriteLine("Level3: \n");
+            foreach (CharDefiners chardefiners in interpreter3.arrayOfCharDefiners)  
+            {
+                Console.WriteLine(chardefiners);
             }
+            StringInterpreter interpreter4 = new StringInterpreter(Path.Combine("Assets", "Levels", "Central-mass.txt"));
+            interpreter4.CreateCharDefiners();
+            Console.WriteLine("Centralmass: \n");
+            foreach (CharDefiners chardefiners in interpreter4.arrayOfCharDefiners)  
+            {
+                Console.WriteLine(chardefiners);
+            }
+            StringInterpreter interpreter5 = new StringInterpreter(Path.Combine("Assets", "Levels", "columns.txt"));
+            interpreter5.CreateCharDefiners();
+            Console.WriteLine("collumns: \n");
+            foreach (CharDefiners chardefiners in interpreter5.arrayOfCharDefiners)  
+            {
+                Console.WriteLine(chardefiners);
+            }
+            StringInterpreter interpreter6 = new StringInterpreter(Path.Combine("Assets", "Levels", "wall.txt"));
+            interpreter6.CreateCharDefiners();
+            Console.WriteLine("WALL: \n");
+            foreach (CharDefiners chardefiners in interpreter6.arrayOfCharDefiners)  
+            {
+                Console.WriteLine(chardefiners);
+            }
+            
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
