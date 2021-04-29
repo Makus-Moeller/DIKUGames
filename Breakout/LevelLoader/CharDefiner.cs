@@ -10,6 +10,7 @@ namespace Breakout.Levelloader {
         public bool powerUp;
         public bool hardened;
         public bool unbreakable;
+        public  List<Vec2F> listOfPostions;
     
 
         public CharDefiners() {
@@ -17,11 +18,11 @@ namespace Breakout.Levelloader {
             hardened = false;
             unbreakable = false;
             character = ' ';
-            imagePath = "";
+            listOfPostions = new List<Vec2F>();
         }
         public override string ToString()
         {
-            return "char: " + character + " image: " + imagePath + " powerUp: " + powerUp.ToString() +  " harden: " + hardened.ToString() + " unbreakable:  " + unbreakable.ToString();
+            return "char: " + character + "positions" + listOfPostions;
         }
     }
 

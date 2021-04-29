@@ -17,6 +17,8 @@ namespace Breakout {
         private Player player;
         private GameEventBus eventBus; 
         private AtomBlock atomBlock;
+        private LevelLoader levelLoader;
+
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
             window.SetClearColor(System.Drawing.Color.Black);
@@ -33,51 +35,8 @@ namespace Breakout {
             atomBlock = new AtomBlock(new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
             
-
-            StringInterpreter interpreter1 = new StringInterpreter(Path.Combine("Assets", "Levels", "Level1.txt"));
-            interpreter1.CreateCharDefiners();
-            Console.WriteLine("Level1: \n");
-            foreach (CharDefiners chardefiners in interpreter1.arrayOfCharDefiners)  
-            {
-                Console.WriteLine(chardefiners);
-            }
-            
-            StringInterpreter interpreter2 = new StringInterpreter(Path.Combine("Assets", "Levels", "Level2.txt"));
-            interpreter2.CreateCharDefiners();
-            Console.WriteLine("Level2: \n");
-            foreach (CharDefiners chardefiners in interpreter2.arrayOfCharDefiners)  
-            {
-                Console.WriteLine(chardefiners);
-            }
-            StringInterpreter interpreter3 = new StringInterpreter(Path.Combine("Assets", "Levels", "Level3.txt"));
-            interpreter3.CreateCharDefiners();
-            Console.WriteLine("Level3: \n");
-            foreach (CharDefiners chardefiners in interpreter3.arrayOfCharDefiners)  
-            {
-                Console.WriteLine(chardefiners);
-            }
-            StringInterpreter interpreter4 = new StringInterpreter(Path.Combine("Assets", "Levels", "Central-mass.txt"));
-            interpreter4.CreateCharDefiners();
-            Console.WriteLine("Centralmass: \n");
-            foreach (CharDefiners chardefiners in interpreter4.arrayOfCharDefiners)  
-            {
-                Console.WriteLine(chardefiners);
-            }
-            StringInterpreter interpreter5 = new StringInterpreter(Path.Combine("Assets", "Levels", "columns.txt"));
-            interpreter5.CreateCharDefiners();
-            Console.WriteLine("collumns: \n");
-            foreach (CharDefiners chardefiners in interpreter5.arrayOfCharDefiners)  
-            {
-                Console.WriteLine(chardefiners);
-            }
-            StringInterpreter interpreter6 = new StringInterpreter(Path.Combine("Assets", "Levels", "wall.txt"));
-            interpreter6.CreateCharDefiners();
-            Console.WriteLine("WALL: \n");
-            foreach (CharDefiners chardefiners in interpreter6.arrayOfCharDefiners)  
-            {
-                Console.WriteLine(chardefiners);
-            }
-            
+            levelLoader = new LevelLoader();
+            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -128,6 +87,7 @@ namespace Breakout {
         public override void Render()
         {
             player.Render();
+            levelLoader.RenderBlocks();
         }
 
         public override void Update()

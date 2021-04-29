@@ -3,51 +3,94 @@ using System;
 using System.Collections.Generic;
 using Breakout.Blocks;
 using DIKUArcade.Math;
+using DIKUArcade.Graphics;
 namespace Breakout.Levelloader {
+
+    //Inderholder funktionalitet til at 
     public class LevelLoader {
 
-        private StringInterpreter stringInterpreter;
-
-        public LevelLoader()
-        {
+        private IStringInterpreter stringInterpreter;
+        private CharDefiners[] charDefiners;
+        private IBlockCreator blockCreator;
+        private List<AtomBlock> allBlocks;
+        public void RenderBlocks() {
+            foreach (AtomBlock block in allBlocks) {
+                block.RenderEntity();
+            }
+        }
+        //Hvis du vil sætte levelet skal du fortælle den :
+        //Hvad det er baseret på, hvordan den skal læse og fortolke den
+        //Og hvordan den skal genere entities ud fra det den læser.
+        public void SetLevel(string file, IStringInterpreter interpreter, IBlockCreator blockCreator) {
+            stringInterpreter = interpreter;
+            this.blockCreator = blockCreator;
+            stringInterpreter.ReadFile(file);
+            charDefiners = stringInterpreter.CreateCharDefiners();
+            allBlocks = blockCreator.CreateBlocks(charDefiners);
         }
     }
+
+
+
+
     public interface IBlockCreator {
-        IBlocks createblock(string pathToImage, Vec2F position);
+        List<AtomBlock> CreateBlocks(CharDefiners[] charDefiners);
     }
-    public class BlockCreator {
-        private StringInterpreter stringInterpreter;
+    
+    //Laver en liste af blocks
+    //Fordi vi laver et interface er fordi det kan være man vil lave en 
+    //generator der vil lave anden størelse eller hente billeder 
+    //fran en anden stig
+    public class BlockCreator : IBlockCreator {
+       
+        private List<AtomBlock> blocks = new List<AtomBlock>();  
 
-        public BlockCreator(string txtFile) {
-            stringInterpreter = new StringInterpreter(txtFile);
+        public List<AtomBlock> CreateBlocks(CharDefiners[] charDefiners)
+        {
+            
+            foreach (CharDefiners charDefiner in charDefiners)
+            {
+                foreach (Vec2F position in charDefiner.listOfPostions)
+                {
+                    blocks.Add(new AtomBlock(new DIKUArcade.Entities.DynamicShape(position, 
+                        new Vec2F(0.07f, 0.03f)), 
+                        new Image(Path.Combine("..", "Breakout", "Assets", "Images", charDefiner.imagePath))
+                        ));
+                }
+            }
+            return blocks;
         }
-        /*
-        public IBlocks createblock(string pathToImage, Vec2F position) {
-            IBlocks thisblock = new();
-        }
-        */
+
+        
+    }
+    public interface IStringInterpreter {
+        void DefineSpecialAttributes();
+        void GeneratePosition(CharDefiners[] arrayOfCharDefiners);
+        void ReadFile(string File);
+        CharDefiners[] CreateCharDefiners();
     }
 
-
-
-    ///Bruger streamreader til at lave 3 datastrukturer og udvælger det vigtige
-    public class StringInterpreter {
-        private StreamReaderClass reader;
+    ///Laver Chardefinernse ved hjælp af en filereader.
+    public class StringTxtInterpreter : IStringInterpreter {
+        private IFileReader reader;
         private string[] legendData;
         private string[] mapData;
         private string[] metaData;
+        private char powerup = ' ';
+        private char harden = ' ';
+        private char unbreakable = ' ';
         public CharDefiners[] arrayOfCharDefiners {get; private set;}
-        public StringInterpreter(string txtFile) {
-            reader = new StreamReaderClass();
-            mapData = reader.txtToArray(txtFile, "Map:", "Map/");
-            legendData = reader.txtToArray(txtFile, "Legend:", "Legend/");
-            metaData = reader.txtToArray(txtFile, "Meta:", "Meta/");
+        public StringTxtInterpreter(IFileReader reader) {
+            this.reader = reader;
+            
         }
-        public void CreateCharDefiners() {
+        public void ReadFile(string txtFile) {
+            mapData = reader.ToStringArray(txtFile, "Map:", "Map/");
+            legendData = reader.ToStringArray(txtFile, "Legend:", "Legend/");
+            metaData = reader.ToStringArray(txtFile, "Meta:", "Meta/");
+        }
+        public void DefineSpecialAttributes() {
             int amountOfChars = legendData.Length;
-            char powerup = ' ';
-            char harden = ' ';
-            char unbreakable = ' ';
             arrayOfCharDefiners = new CharDefiners[amountOfChars];
             for (int i = 0; i < metaData.Length; i++) {
                 if (metaData[i][0] == 'P') {
@@ -60,10 +103,15 @@ namespace Breakout.Levelloader {
                     unbreakable = metaData[i][13];
                 }
             }
+        }
+
+        public CharDefiners[] CreateCharDefiners() {
+            DefineSpecialAttributes();
+            int amountOfChars = legendData.Length;
             for (int i = 0; i < amountOfChars; i++) {
                 arrayOfCharDefiners[i] = new CharDefiners();
                 arrayOfCharDefiners[i].character = legendData[i][0];
-                arrayOfCharDefiners[i].imagePath = legendData[i].Remove(0, 2);
+                arrayOfCharDefiners[i].imagePath = legendData[i].Remove(0, 3);
                 if (arrayOfCharDefiners[i].character == powerup) {
                     arrayOfCharDefiners[i].powerUp = true;
                 } 
@@ -73,15 +121,36 @@ namespace Breakout.Levelloader {
                 if (arrayOfCharDefiners[i].character == unbreakable) {
                     arrayOfCharDefiners[i].unbreakable = true;
                 } 
-                
-            } 
+            }
+            GeneratePosition(arrayOfCharDefiners);
+            return arrayOfCharDefiners; 
+
+        }
+
+        public void GeneratePosition(CharDefiners[] arrayOfCharDefiners) {
+            char currChar;
+            for (int i = 0; i < mapData.Length; i++) {
+                for (int j = 0; j < 12; j++) { 
+                    if ((currChar = mapData[i][j]) != '-') {
+                        foreach (CharDefiners charDefiner in arrayOfCharDefiners) {                   
+                            if (currChar == charDefiner.character) {
+                                charDefiner.listOfPostions.Add(new Vec2F(0.0f + (float)j * (1.0f/12.0f), 1.0f - (float)i * (1.0f/mapData.Length)));
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
 
 
-    ///Læste en txtfil og returnere det brugbare i et array af strings        
-    public class StreamReaderClass {
+    ///Læste en txtfil og returnere det brugbare i et array af strings
+
+    public interface IFileReader {
+        string[] ToStringArray(string File, string startingpoint, string breakpoint);
+    }        
+    public class StreamReaderClass : IFileReader {
         private int countNumberOfValidLines(string txtFile, string startingpoint, string breakpoint) {
             int numberOfLines = 0;
             string line;
@@ -97,12 +166,12 @@ namespace Breakout.Levelloader {
             return numberOfLines;
         }
         
-        public string[] txtToArray(string txtFile, string startingpoint, string breakpoint) {
-            string[] stringArray = new string[countNumberOfValidLines(txtFile, startingpoint, breakpoint)];
+        public string[] ToStringArray(string File, string startingpoint, string breakpoint) {
+            string[] stringArray = new string[countNumberOfValidLines(File, startingpoint, breakpoint)];
             string line;
             int lineNumber = 0;
             System.IO.StreamReader file =
-                new System.IO.StreamReader(txtFile);
+                new System.IO.StreamReader(File);
             while (startingpoint != (line = file.ReadLine())) {
             }
             while((line = file.ReadLine()) != breakpoint)  
