@@ -13,17 +13,23 @@ namespace BreakoutTests
         [SetUp]
         public void Setup() {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
+
+            StreamReader = new StreamReaderClass();
+
+            StringTxtInterpreter = new StringTxtInterpreter();
+
             levelLoader = new levelLoader();
-            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
-                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
+            
+
         }
 
 
         [Test]
         public void StreamReaderClassTest() {
-            
+            Assert.AreEqual(new string[0], StreamReader.ToStringArray("empty.txt"));
+            Assert.AreEqual(new string[24], StreamReader.ToStringArray("level1.txt"));
         }
-        
+
         [Test]
         public void StringTxtInterpreterTest() {
             
@@ -31,7 +37,8 @@ namespace BreakoutTests
 
         [Test]
         public void LevelLoaderTest() {
-            
+            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
+                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
         }
         
     }
