@@ -52,26 +52,26 @@ namespace BreakoutTests {
         public void TestHitBlock()
         {
             testBlock.HitBlock();
-            Assert.True(testBlock.GetHitpoints() = 9);
+            Assert.True(testBlock.GetHitpoints() == 9);
         }
 
         [Test]
         public void TestAddHP()
         {
-            testBlock.AddHitPoint(2);
-            Assert.True(testBlock.GetHitpoints() = 12);
+            testBlock.AddHitpoint(2);
+            Assert.True(testBlock.GetHitpoints() == 12);
         }
 
         [Test]
         public void TestHardenedBlockHP()
         {
-            Assert.True(testHardenedBlock.GetHitpoints() = 14);
+            Assert.True(testHardenedBlock.GetHitpoints() == 14);
         }
 
         [Test]
         public void TestHardenedBlockIsHardened()
         {
-            Assert.True(testHardenedBlock.IsHardened() = true);
+            Assert.True(testHardenedBlock.IsHardened() == true);
         }  
 
         [Test]
@@ -81,9 +81,7 @@ namespace BreakoutTests {
             testUnbreakableBlock.HitBlock();
             testUnbreakableBlock.HitBlock();
             testUnbreakableBlock.HitBlock();
-            Assert.True(testUnbreakableBlock.GetHitpoints() = 10);
+            Assert.True(testUnbreakableBlock.GetHitpoints() == 10);
         } 
-
-
     }
 }
