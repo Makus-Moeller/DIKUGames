@@ -21,7 +21,7 @@ namespace Breakout.Levelloader {
             legendData = reader.ToStringArray(txtFile, "Legend:", "Legend/");
             metaData = reader.ToStringArray(txtFile, "Meta:", "Meta/");
         }
-        public void DefineSpecialAttributes() {
+        private void DefineSpecialAttributes() {
             int amountOfChars = legendData.Length;
             arrayOfCharDefiners = new CharDefiners[amountOfChars];
             for (int i = 0; i < metaData.Length; i++) {
@@ -59,7 +59,7 @@ namespace Breakout.Levelloader {
 
         }
 
-        public void GeneratePosition(CharDefiners[] arrayOfCharDefiners) {
+        private void GeneratePosition(CharDefiners[] arrayOfCharDefiners) {
             char currChar;
             for (int i = 0; i < mapData.Length; i++) {
                 for (int j = 0; j < 12; j++) { 
