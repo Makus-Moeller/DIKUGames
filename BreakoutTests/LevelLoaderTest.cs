@@ -35,20 +35,23 @@ namespace BreakoutTests
             levelLoader = new LevelLoader();
         }
 
-
+        //
         [Test]
         public void StreamReaderClassTest() {
+            //Vi tester at den med constraints kan generere en korrekt længde array
             Assert.AreEqual((new string[0]).Length, StreamReader.ToStringArray("empty.txt", "Map:", "Map/").Length);
             Assert.AreEqual((new string[22]).Length, StreamReader.ToStringArray("level1.txt", "Map:", "Legend/").Length);
         }
 
         [Test]
+        //Tjekker at hvis den får en tom string kan den stadig godt bruges
         public void StringTxtInterpreterOnEmptyArrayTest() {
-            StringTxtInterpreterOnEmptyArray.ReadFile(new string[0]);
+            StringTxtInterpreterOnEmptyArray.ReadFile("empty.txt");
             Assert.AreEqual(new CharDefiners[0], StringTxtInterpreterOnEmptyArray.CreateCharDefiners());
         }
         
         [Test]
+        //Tjekker at den laver chardefiners baseret på arrayets fortolkning
         public void StringTxtInterpreterOnFullArrayTest() {
         //Loading
         StringTxtInterpreterOnPowerUpAndHardened.ReadFile("level1");
@@ -57,7 +60,7 @@ namespace BreakoutTests
         //Checking that attributes are atributed accuratly using Level 1
         Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[0].hardened);
         Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[1].hardened);
-        Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[2].powerup);
+        Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[2].powerUp);
         Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[3].hardened);
 
 
@@ -65,7 +68,7 @@ namespace BreakoutTests
         Assert.False(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[0].unbreakable);
         Assert.False(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[1].unbreakable);
         Assert.False(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[2].unbreakable);
-        Assert.True(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[3].powerup);
+        Assert.True(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[3].powerUp);
         Assert.True(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[4].unbreakable);
         Assert.False(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[5].unbreakable);
         }
