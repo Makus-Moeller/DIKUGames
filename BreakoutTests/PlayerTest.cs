@@ -13,6 +13,9 @@ namespace BreakoutTests
     public class PlayerTests
     {
         private Player player;
+        private Player TestRightLimitPlayer;
+
+        private Player TestLeftLimitPlayer;
 
         [SetUp]
         public void Setup()
@@ -22,11 +25,11 @@ namespace BreakoutTests
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")),
                 new RegularBuffState()); 
-            TestRightLimitPlayer = new player(
+            TestRightLimitPlayer = new Player(
                 new DynamicShape(new Vec2F(1.0f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")),
                 new RegularBuffState()); 
-            TestLeftLimitPlayer = new player (
+            TestLeftLimitPlayer = new Player (
                 new DynamicShape(new Vec2F(0.0f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")),
                 new RegularBuffState()); 

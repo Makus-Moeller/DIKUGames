@@ -1,40 +1,50 @@
 using NUnit.Framework;
 using Breakout.Players;
 using Breakout;
+using Breakout.Blocks;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
 using System.Diagnostics.Contracts;
 
-namespace BreakoutTests
-{
-    public class BlockTests
-    {
+namespace BreakoutTests {
+
+    public class BlockTests {
+    
+        private AtomBlock testBlock;
+
+        private PowerUpBlock testPowerBlock;
+
+        private UnbreakableBlock testUnbreakableBlock;
+
+        private HardenedBlock testHardenedBlock;
+
+
         [SetUp]
         public void Setup()
         {
-            testBlock = new AtomBlock (new DynamicShape(position, 
+            testBlock = new AtomBlock (new DynamicShape(new Vec2F(0.5f, 0.08f), 
                 new Vec2F(1.0f/12.0f, 1.0f/24f)), 
                 new Image(
                     Path.Combine("..", "Breakout", "Assets", "Images", 
                         charDefiner.imagePath))
             );
-            testPowerBlock = new PowerUpBlock(new DynamicShape(position, 
+            testPowerBlock = new PowerUpBlock(new DynamicShape(new Vec2F(0.5f, 0.06f), 
                 new Vec2F(1.0f/12.0f, 1.0f/24f)), 
                 new Image(
                     Path.Combine("..", "Breakout", "Assets", "Images", 
                         charDefiner.imagePath))
             );
             testUnbreakableBlock = new UnbreakableBlock(
-                new DynamicShape(position, 
+                new DynamicShape(new Vec2F(0.5f, 0.07f), 
                 new Vec2F(1.0f/12.0f, 1.0f/24f)), 
                 new Image(
                     Path.Combine("..", "Breakout", "Assets", "Images",
                         charDefiner.imagePath))
             );
             testHardenedBlock = new HardenedBlock(
-                new DynamicShape(position, 
+                new DynamicShape(new Vec2F(0.4f, 0.08f), 
                 new Vec2F(1.0f/12.0f, 1.0f/24f)), 
                 new Image(
                     Path.Combine("..", "Breakout", "Assets", "Images", 
