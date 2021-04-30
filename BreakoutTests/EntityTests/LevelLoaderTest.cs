@@ -19,10 +19,20 @@ namespace BreakoutTests
         }
 
 
-        
         [Test]
-        public void TestSetLevel() {
+        public void StreamReaderClassTest() {
             
         }
+        
+        [Test]
+        public void StringTxtInterpreterTest() {
+            
+        }
+
+        [Test]
+        public void LevelLoaderTest() {
+            
+        }
+        
     }
 }

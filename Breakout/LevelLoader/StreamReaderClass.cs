@@ -1,3 +1,4 @@
+using System;
 namespace Breakout.Levelloader {
     public class StreamReaderClass : IFileReader {
         private int countNumberOfValidLines(string txtFile, string startingpoint, string breakpoint) {
@@ -5,11 +6,9 @@ namespace Breakout.Levelloader {
             string line;
             System.IO.StreamReader file =
                 new System.IO.StreamReader(txtFile);
-            while ((line = file.ReadLine()) != startingpoint) {
-
+            while ((line = file.ReadLine()) != startingpoint && !file.EndOfStream) {
             }
-            while((line = file.ReadLine()) != breakpoint)  
-            {    
+            while((line = file.ReadLine()) != breakpoint && !file.EndOfStream) {    
                 numberOfLines++;
             }
             return numberOfLines;
@@ -21,9 +20,9 @@ namespace Breakout.Levelloader {
             int lineNumber = 0;
             System.IO.StreamReader file =
                 new System.IO.StreamReader(File);
-            while (startingpoint != (line = file.ReadLine())) {
+            while (startingpoint != (line = file.ReadLine()) && !file.EndOfStream) {
             }
-            while((line = file.ReadLine()) != breakpoint)  
+            while((line = file.ReadLine()) != breakpoint && !file.EndOfStream)  
             {  
                 if (line == startingpoint) {}
                 else {
