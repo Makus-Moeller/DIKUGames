@@ -15,7 +15,7 @@ namespace BreakoutTests
         public void Setup()
         {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
-            levelLoader = new levelLoader;
+            levelLoader = new levelLoader();
             levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
         }
