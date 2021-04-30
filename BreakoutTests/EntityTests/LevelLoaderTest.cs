@@ -9,23 +9,20 @@ using System.Diagnostics.Contracts;
 
 namespace BreakoutTests
 {
-    public class LevelLoaderTests
-    {
+    public class LevelLoaderTests {
         [SetUp]
-        public void Setup()
-        {
+        public void Setup() {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
-            levelLoader = new levelLoader;
+            levelLoader = new levelLoader();
             levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
         }
 
+
+        
         [Test]
-        public void TestSetLevel()
-        {
-            /*levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
-                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
-            Assert.true(levelLoader);*/
+        public void TestSetLevel() {
+            
         }
     }
 }
