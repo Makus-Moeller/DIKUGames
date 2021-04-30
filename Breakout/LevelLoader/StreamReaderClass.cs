@@ -1,12 +1,4 @@
-using System.IO;
-using System;
-using System.Collections.Generic;
-using Breakout.Blocks;
-using DIKUArcade.Math;
-using DIKUArcade.Graphics;
-
 namespace Breakout.Levelloader {
-
     public class StreamReaderClass : IFileReader {
         private int countNumberOfValidLines(string txtFile, string startingpoint, string breakpoint) {
             int numberOfLines = 0;

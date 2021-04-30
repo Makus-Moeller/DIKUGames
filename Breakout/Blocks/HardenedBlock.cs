@@ -1,8 +1,8 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using System;
 
 namespace Breakout.Blocks {
+
     public class HardenedBlock : AtomBlock {
         private bool isHardened;
 

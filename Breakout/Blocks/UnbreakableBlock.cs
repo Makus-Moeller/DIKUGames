@@ -1,6 +1,5 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using System;
 
 namespace Breakout.Blocks {
     public class UnbreakableBlock : AtomBlock {
