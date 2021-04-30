@@ -67,7 +67,7 @@ namespace Breakout.Players {
                 Shape.AsDynamicShape().Direction.X = moveLeft + moveRight;
         }
 
-        private Vec2F GetPosition() {
+        public Vec2F GetPosition() {
             return Shape.AsDynamicShape().Position;
         }
 
