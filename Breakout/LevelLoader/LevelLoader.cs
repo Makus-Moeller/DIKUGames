@@ -9,10 +9,10 @@ namespace Breakout.Levelloader {
         private IStringInterpreter stringInterpreter;
         private CharDefiners[] charDefiners;
         private IBlockCreator blockCreator;
-        private List<AtomBlock> allBlocks;
+        public List<AtomBlock> AllBlocks{get; private set;}
         
         public void RenderBlocks() {
-            foreach (AtomBlock block in allBlocks) {
+            foreach (AtomBlock block in AllBlocks) {
                 block.RenderEntity();
             }
         }
@@ -24,7 +24,7 @@ namespace Breakout.Levelloader {
             this.blockCreator = blockCreator;
             stringInterpreter.ReadFile(file);
             charDefiners = stringInterpreter.CreateCharDefiners();
-            allBlocks = blockCreator.CreateBlocks(charDefiners);
+            AllBlocks = blockCreator.CreateBlocks(charDefiners);
         }
     }
 }

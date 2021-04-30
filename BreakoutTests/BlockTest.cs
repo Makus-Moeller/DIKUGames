@@ -24,6 +24,7 @@ namespace BreakoutTests {
         [SetUp]
         public void Setup()
         {
+            DIKUArcade.GUI.Window.CreateOpenGLContext();
             testBlock = new AtomBlock (new DynamicShape(new Vec2F(0.5f, 0.08f), 
                 new Vec2F(1.0f/12.0f, 1.0f/24f)), 
                 new Image(
@@ -51,7 +52,7 @@ namespace BreakoutTests {
         [Test]
         public void TestHitBlock()
         {
-            testBlock.HitBlock();
+            testBlock.HitBlock(1);
             Assert.True(testBlock.GetHitpoints() == 9);
         }
 
@@ -77,11 +78,11 @@ namespace BreakoutTests {
         [Test]
         public void TestUnbreakableBlock()
         {
-            testUnbreakableBlock.HitBlock();
-            testUnbreakableBlock.HitBlock();
-            testUnbreakableBlock.HitBlock();
-            testUnbreakableBlock.HitBlock();
-            Assert.True(testUnbreakableBlock.GetHitpoints() == 10);
+            testUnbreakableBlock.HitBlock(1);
+            testUnbreakableBlock.HitBlock(1);
+            testUnbreakableBlock.HitBlock(1);
+            testUnbreakableBlock.HitBlock(2);
+            Assert.AreEqual(10, testUnbreakableBlock.GetHitpoints());
         } 
     }
 }
