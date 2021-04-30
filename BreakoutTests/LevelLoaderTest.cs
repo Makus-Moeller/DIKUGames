@@ -30,9 +30,11 @@ namespace BreakoutTests
 
             StringTxtInterpreterOnEmptyArray = new StringTxtInterpreter(new StreamReaderClass());
 
-            StringTxtInterpreterOnPowerUpAndHardened = new StringTxtInterpreter(new StreamReaderClass());
+            StringTxtInterpreterOnPowerUpAndHardened = 
+                new StringTxtInterpreter(new StreamReaderClass());
 
-            StringTxtInterpreterOnPowerUpAndUnbreakable = new StringTxtInterpreter(new StreamReaderClass());
+            StringTxtInterpreterOnPowerUpAndUnbreakable = 
+                new StringTxtInterpreter(new StreamReaderClass());
 
             levelLoader = new LevelLoader();
         }
@@ -41,23 +43,31 @@ namespace BreakoutTests
         [Test]
         public void StreamReaderClassTest() {
             //Vi tester at den med constraints kan generere en korrekt længde array
-            Assert.AreEqual((new string[0]).Length, StreamReader.ToStringArray((Path.Combine("C:", "Users", "JHK", "DIKUGames", "Breakout", "Assets", "Levels", "empty.txt")), "Map:", "Map/").Length);
-            Assert.AreEqual((new string[39]).Length, StreamReader.ToStringArray(Path.Combine("C:", "Users", "JHK", "DIKUGames", "Breakout", "Assets", "Levels", "level1.txt"), "Map:", "Legend/").Length);
+            Assert.AreEqual((new string[0]).Length, StreamReader.ToStringArray(
+                Path.Combine("..", "Breakout", "Assets", "Levels", "empty.txt"), 
+                    "Map:", "Map/").Length);
+            Assert.AreEqual((new string[39]).Length, StreamReader.ToStringArray(
+                Path.Combine("..", "Breakout", "Assets", "Levels", "level1.txt"), 
+                    "Map:", "Legend/").Length);
         }
 
         [Test]
         //Tjekker at hvis den får en tom string kan den stadig godt bruges
         public void StringTxtInterpreterOnEmptyArrayTest() {
-            StringTxtInterpreterOnEmptyArray.ReadFile(Path.Combine("C:", "Users", "JHK", "DIKUGames", "Breakout", "Assets", "Levels", "empty.txt"));
-            Assert.AreEqual(new CharDefiners[0], StringTxtInterpreterOnEmptyArray.CreateCharDefiners());
+            StringTxtInterpreterOnEmptyArray.ReadFile(
+                Path.Combine("..", "Breakout", "Assets", "Levels", "empty.txt"));
+            Assert.AreEqual(
+                new CharDefiners[0], StringTxtInterpreterOnEmptyArray.CreateCharDefiners());
         }
         
         [Test]
         //Tjekker at den laver chardefiners baseret på arrayets fortolkning
         public void StringTxtInterpreterOnFullArrayTest() {
         //Loading
-        StringTxtInterpreterOnPowerUpAndHardened.ReadFile(Path.Combine("C:", "Users", "JHK", "DIKUGames", "Breakout", "Assets", "Levels", "level1.txt"));
-        StringTxtInterpreterOnPowerUpAndUnbreakable.ReadFile(Path.Combine("C:", "Users", "JHK", "DIKUGames", "Breakout", "Assets", "Levels", "level3.txt"));
+        StringTxtInterpreterOnPowerUpAndHardened.ReadFile(
+            Path.Combine("..", "Breakout", "Assets", "Levels", "level1.txt"));
+        StringTxtInterpreterOnPowerUpAndUnbreakable.ReadFile(
+            Path.Combine("..", "Breakout", "Assets", "Levels", "level3.txt"));
         
         //Checking that attributes are atributed accuratly using Level 1
         Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[0].hardened);
@@ -77,8 +87,8 @@ namespace BreakoutTests
 
         [Test]
         public void LevelLoaderTest() {
-            levelLoader.SetLevel(Path.Combine(Path.Combine("C:", "Users", "JHK", "DIKUGames", "Breakout", "Assets", "Levels", "level3.txt")), 
-               new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
+            levelLoader.SetLevel(Path.Combine("..", "Breakout", "Assets", "Levels", "level3.txt"),
+                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
             int amountOfBLocks = 0;
             foreach (AtomBlock block in levelLoader.AllBlocks) {
                 amountOfBLocks++;

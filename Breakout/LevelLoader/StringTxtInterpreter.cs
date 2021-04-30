@@ -56,7 +56,6 @@ namespace Breakout.Levelloader {
             }
             GeneratePosition(arrayOfCharDefiners);
             return arrayOfCharDefiners; 
-
         }
 
         private void GeneratePosition(CharDefiners[] arrayOfCharDefiners) {
@@ -66,7 +65,9 @@ namespace Breakout.Levelloader {
                     if ((currChar = mapData[i][j]) != '-') {
                         foreach (CharDefiners charDefiner in arrayOfCharDefiners) {                   
                             if (currChar == charDefiner.character) {
-                                charDefiner.listOfPostions.Add(new Vec2F(0.0f + (float)j * (1.0f/12.0f), 1.0f - (float)i * (1.0f/mapData.Length)));
+                                charDefiner.listOfPostions.Add(
+                                    new Vec2F(0.0f + (float)j * (1.0f/12.0f), 
+                                        1.0f - (float)i * (1.0f/mapData.Length)));
                             }
                         }
                     }

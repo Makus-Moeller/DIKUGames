@@ -1,7 +1,8 @@
 using System;
 namespace Breakout.Levelloader {
     public class StreamReaderClass : IFileReader {
-        private int countNumberOfValidLines(string txtFile, string startingpoint, string breakpoint) {
+        private int CountNumberOfValidLines(string txtFile, 
+            string startingpoint, string breakpoint) {
             int numberOfLines = 0;
             string line;
             System.IO.StreamReader file =
@@ -16,7 +17,8 @@ namespace Breakout.Levelloader {
         
         public string[] ToStringArray(string File, string startingpoint, string breakpoint) {
             try {
-                string[] stringArray = new string[countNumberOfValidLines(File, startingpoint, breakpoint)];
+                string[] stringArray = new string[CountNumberOfValidLines(File, 
+                    startingpoint, breakpoint)];
             string line;
             int lineNumber = 0;
             System.IO.StreamReader file =

@@ -24,14 +24,16 @@ namespace Breakout {
 
             //In case we want to use the eventbus later to implement gamestates
             eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> {GameEventType.WindowEvent, GameEventType.TimedEvent});
+            eventBus.InitializeEventBus(new List<GameEventType> {
+                GameEventType.WindowEvent, GameEventType.TimedEvent});
             eventBus.Subscribe(GameEventType.WindowEvent, this);
             eventBus.Subscribe(GameEventType.TimedEvent, this);
 
             //Instantiate player object etc. 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), new RegularBuffState()); 
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
+                    new RegularBuffState()); 
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             //Levelloader can set level
@@ -64,7 +66,7 @@ namespace Breakout {
                     case KeyboardKey.Space:
                         eventBus.RegisterTimedEvent(
                             new GameEvent {EventType = GameEventType.TimedEvent, Message = "HELLO"},
-                            TimePeriod.NewSeconds(2.0));
+                                TimePeriod.NewSeconds(2.0));
                         break;
                     case KeyboardKey.Left:
                         player.SetMoveLeft(false);
@@ -76,8 +78,6 @@ namespace Breakout {
                         break;
                 }
             }
-            
-
         }
         public override void Render()
         {

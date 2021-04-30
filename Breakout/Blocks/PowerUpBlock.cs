@@ -9,8 +9,10 @@ namespace Breakout.Blocks {
     public class PowerUpBlock : AtomBlock {
         private Entity PowerUpItem;
         public PowerUpBlock(Shape shape, IBaseImage image) : base(shape, image) {
-            PowerUpItem = new Entity(new DynamicShape(Shape.Position, new Vec2F(0.02f, 0.02f), new Vec2F(0.0f, -0.01f)), 
-            new Image(Path.Combine("..", "Breakout", "Assets", "Images", "BigPowerUp.png")));
+            PowerUpItem = new Entity(new DynamicShape(Shape.Position, new Vec2F(0.02f, 0.02f), 
+                new Vec2F(0.0f, -0.01f)), 
+                    new Image(Path.Combine("..", "Breakout", 
+                        "Assets", "Images", "BigPowerUp.png")));
         } 
     }   
 }
