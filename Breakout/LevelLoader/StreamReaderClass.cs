@@ -15,7 +15,8 @@ namespace Breakout.Levelloader {
         }
         
         public string[] ToStringArray(string File, string startingpoint, string breakpoint) {
-            string[] stringArray = new string[countNumberOfValidLines(File, startingpoint, breakpoint)];
+            try {
+                string[] stringArray = new string[countNumberOfValidLines(File, startingpoint, breakpoint)];
             string line;
             int lineNumber = 0;
             System.IO.StreamReader file =
@@ -31,6 +32,11 @@ namespace Breakout.Levelloader {
                 }
             }
             return stringArray;
+            }
+            catch (System.IO.FileNotFoundException) {
+                string[] emptyArr  = {};
+                return emptyArr;
+            }
         }
     }
 }
