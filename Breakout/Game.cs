@@ -10,7 +10,6 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
-using Breakout.Blocks;
 using Breakout.Levelloader;
 
 namespace Breakout {

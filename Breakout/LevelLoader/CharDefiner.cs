@@ -1,9 +1,7 @@
-using System.IO;
-using System;
 using System.Collections.Generic;
-using Breakout.Blocks;
 using DIKUArcade.Math;
 namespace Breakout.Levelloader {
+
     public class CharDefiners {
         public char character;
         public string imagePath;

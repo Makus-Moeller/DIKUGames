@@ -1,5 +1,4 @@
 using System.IO;
-using System;
 using System.Collections.Generic;
 using Breakout.Blocks;
 using DIKUArcade.Math;
@@ -7,6 +6,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 
 namespace Breakout.Levelloader {
+
     //Laver en liste af blocks
     //Fordi vi laver et interface er fordi det kan være man vil lave en 
     //generator der vil lave anden størelse eller hente billeder 

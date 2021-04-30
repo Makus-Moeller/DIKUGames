@@ -1,8 +1,8 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using System;
 
 namespace Breakout.Blocks {
+
 
     //Superclass which have the basic functionality
     public class AtomBlock : Entity, IBlocks  {

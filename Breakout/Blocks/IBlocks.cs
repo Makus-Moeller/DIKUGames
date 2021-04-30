@@ -1,5 +1,5 @@
-namespace Breakout.Blocks
-{
+namespace Breakout.Blocks {
+
     public interface IBlocks {
         int HitPoints {
             get;

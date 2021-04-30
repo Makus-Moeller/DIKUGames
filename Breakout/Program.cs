@@ -1,8 +1,7 @@
 ﻿using System;
 using DIKUArcade.GUI;
 
-namespace Breakout
-{
+namespace Breakout {
     class Program
     {
         static void Main(string[] args)

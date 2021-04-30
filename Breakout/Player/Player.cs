@@ -1,8 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using System.Diagnostics.Contracts;
-using System;
 
 
 namespace Breakout.Players {

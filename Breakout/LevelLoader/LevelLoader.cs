@@ -1,11 +1,8 @@
-using System.IO;
-using System;
 using System.Collections.Generic;
 using Breakout.Blocks;
-using DIKUArcade.Math;
-using DIKUArcade.Graphics;
 
 namespace Breakout.Levelloader {
+
 
     //Inderholder funktionalitet til at 
     public class LevelLoader {
@@ -13,6 +10,7 @@ namespace Breakout.Levelloader {
         private CharDefiners[] charDefiners;
         private IBlockCreator blockCreator;
         private List<AtomBlock> allBlocks;
+        
         public void RenderBlocks() {
             foreach (AtomBlock block in allBlocks) {
                 block.RenderEntity();
