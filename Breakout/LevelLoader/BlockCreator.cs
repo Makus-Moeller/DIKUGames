@@ -19,26 +19,26 @@ namespace Breakout.Levelloader {
                     if (charDefiner.hardened) {
                         blocks.Add(new HardenedBlock(new DynamicShape(position, 
                         new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                        new Image(Path.Combine("..", "Breakout", "Assets", "Images", charDefiner.imagePath))
-                        ));
+                        new Image(Path.Combine("..", "Breakout", 
+                            "Assets", "Images", charDefiner.imagePath))));
                     }
                     else if (charDefiner.powerUp) {
                         blocks.Add(new PowerUpBlock(new DynamicShape(position, 
                         new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                        new Image(Path.Combine("..", "Breakout", "Assets", "Images", charDefiner.imagePath))
-                        ));
+                        new Image(Path.Combine("..", "Breakout", 
+                            "Assets", "Images", charDefiner.imagePath))));
                     }
                     else if (charDefiner.unbreakable) {
                         blocks.Add(new UnbreakableBlock(new DynamicShape(position, 
                         new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                        new Image(Path.Combine("..", "Breakout", "Assets", "Images", charDefiner.imagePath))
-                        ));
+                        new Image(Path.Combine("..", "Breakout", 
+                            "Assets", "Images", charDefiner.imagePath))));
                      }
                     else {
                         blocks.Add(new AtomBlock(new DynamicShape(position, 
                             new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                            new Image(Path.Combine("..", "Breakout", "Assets", "Images", charDefiner.imagePath))
-                            ));
+                            new Image(Path.Combine("..", "Breakout", 
+                                "Assets", "Images", charDefiner.imagePath))));
                     }
                 }
             }

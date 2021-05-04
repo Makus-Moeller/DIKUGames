@@ -16,14 +16,12 @@ namespace Breakout.Blocks {
         }
 
         public int HitPoints {get;}
-        public int GetHitpoints()
-        {
+        public int GetHitpoints() {
             return hitpoints;
         }
 
 
-        public void HitBlock(int decrementValue)
-        {
+        public void HitBlock(int decrementValue) {
             if (!unbreakable) {
                 if (hitpoints < 1) {
                     DeleteEntity();
@@ -33,8 +31,7 @@ namespace Breakout.Blocks {
            }
         }
 
-        public void AddHitpoint(int amount)
-        {
+        public void AddHitpoint(int amount) {
             hitpoints += amount;
         }
         public bool IsHardened() {

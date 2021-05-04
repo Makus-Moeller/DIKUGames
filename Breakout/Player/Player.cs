@@ -6,7 +6,7 @@ using DIKUArcade.Math;
 namespace Breakout.Players {
     public class Player : Entity {
         private float moveLeft, moveRight;
-        private const float MOVEMENT_SPEED = 0.015f; 
+        private float speed; 
         private IPlayerBuffState playerBuffState;
         public IPlayerBuffState PlayerBuffState 
         {
@@ -15,8 +15,8 @@ namespace Breakout.Players {
                 return playerBuffState;
             }
         set {
-            value.AddBuffs(this);
             playerBuffState = value;
+            Shape.Extent = value.GetExtent();
             }
         }
         public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image) {
