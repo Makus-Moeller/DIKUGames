@@ -23,6 +23,8 @@ namespace Breakout.Levelloader {
         }
         private void DefineSpecialAttributes() {
             int amountOfChars = legendData.Length;
+            System.Console.WriteLine(legendData.Length);
+            System.Console.WriteLine(legendData[0]);
             arrayOfCharDefiners = new CharDefiners[amountOfChars];
             for (int i = 0; i < metaData.Length; i++) {
                 if (metaData[i][0] == 'P') {

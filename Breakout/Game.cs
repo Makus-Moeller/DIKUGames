@@ -37,7 +37,7 @@ namespace Breakout {
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             //Levelloader can set level
-            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
+            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level4.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
         }
         
