@@ -3,7 +3,7 @@ using DIKUArcade.Math;
 namespace Breakout.Levelloader {
 
     public class CharDefiners {
-        public char character;
+        public char character = '-';
         public string imagePath;
         public bool powerUp;
         public bool hardened;

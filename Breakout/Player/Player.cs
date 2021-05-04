@@ -19,7 +19,7 @@ namespace Breakout.Players {
             playerBuffState = value;
             }
         }
-        public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image){
+        public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image) {
 
             moveLeft = 0.00f;
             moveRight = 0.00f;

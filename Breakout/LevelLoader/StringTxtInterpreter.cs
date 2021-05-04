@@ -1,4 +1,5 @@
 using DIKUArcade.Math;
+using System;
 
 namespace Breakout.Levelloader {
 
@@ -23,8 +24,6 @@ namespace Breakout.Levelloader {
         }
         private void DefineSpecialAttributes() {
             int amountOfChars = legendData.Length;
-            System.Console.WriteLine(legendData.Length);
-            System.Console.WriteLine(legendData[0]);
             arrayOfCharDefiners = new CharDefiners[amountOfChars];
             for (int i = 0; i < metaData.Length; i++) {
                 if (metaData[i][0] == 'P') {
@@ -44,8 +43,10 @@ namespace Breakout.Levelloader {
             int amountOfChars = legendData.Length;
             for (int i = 0; i < amountOfChars; i++) {
                 arrayOfCharDefiners[i] = new CharDefiners();
-                arrayOfCharDefiners[i].character = legendData[i][0];
-                arrayOfCharDefiners[i].imagePath = legendData[i].Remove(0, 3);
+                if (legendData[i].Length != 0) {
+                    arrayOfCharDefiners[i].character = legendData[i][0];
+                    arrayOfCharDefiners[i].imagePath = legendData[i].Remove(0, 3);
+                }
                 if (arrayOfCharDefiners[i].character == powerup) {
                     arrayOfCharDefiners[i].powerUp = true;
                 } 
