@@ -1,7 +1,9 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-
+using DIKUArcade.Events;
+using Breakout;
+using System;
 
 namespace Breakout.Players {
     public class Player : Entity {
@@ -53,7 +55,8 @@ namespace Breakout.Players {
 
         public void SetMoveRight(bool val) {
             if (val) {
-                moveRight = playerBuffState.Getspeed();               
+                
+                moveRight = playerBuffState.Getspeed();       
             }      
             else {
                 moveRight = 0.00f;
@@ -68,6 +71,5 @@ namespace Breakout.Players {
         public Vec2F GetPosition() {
             return Shape.AsDynamicShape().Position;
         }
-
     }
 } 
