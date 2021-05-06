@@ -6,9 +6,7 @@ using System;
 using Breakout.Blocks;
 namespace Breakout.Players {
     public class Ball : Entity {
-        private Random MovementRandomizer;
         public Ball(Shape shape, IBaseImage image) : base(shape, image) {
-            MovementRandomizer = new Random();
         }
 
         private void HitWall() {
@@ -31,11 +29,7 @@ namespace Breakout.Players {
                 this.DeleteEntity();
             }
         }
-        private float createRandomFloat() {
-            int randomInt = MovementRandomizer.Next(-10, 10);
-            float randomfloat = ((float) randomInt) / 10000.0f;
-            return randomfloat;
-        }
+
         private AtomBlock ifBlockHit(Entity possibleblock) {
             AtomBlock block = null;
             if ((block = (possibleblock as AtomBlock)) != null) {
@@ -46,6 +40,7 @@ namespace Breakout.Players {
                 return null;
             }
         }
+
         private void HandleCollision(Entity comparator) {
             var dynamicDownCast = this.Shape.AsDynamicShape();
             CollisionData collisiondata = CollisionDetection.Aabb(dynamicDownCast, comparator.Shape);
@@ -59,7 +54,7 @@ namespace Breakout.Players {
             switch (collisiondata.CollisionDir) {
                 case (CollisionDirection.CollisionDirUp):
                 case (CollisionDirection.CollisionDirDown):
-                    this.Shape.AsDynamicShape().Direction.Y = -Shape.AsDynamicShape().Direction.Y + createRandomFloat();
+                    this.Shape.AsDynamicShape().Direction.Y = -Shape.AsDynamicShape().Direction.Y;
                     break;
                 case (CollisionDirection.CollisionDirLeft):
                 case (CollisionDirection.CollisionDirRight):
@@ -69,18 +64,21 @@ namespace Breakout.Players {
                     break;
             }
         }
+
         private void MoveBall() {
             if (!IsDeleted()) {
                 Shape.AsDynamicShape().Move();
                 HitWall();
             }
         }
+
         public void UpdateBall(EntityContainer<AtomBlock> comparator, Player player) { 
             MoveBall();
             comparator.Iterate(block => HandleCollision(block));
             HandleCollision(player);  
                
         }
+
         public void RenderBall() {
             if (!IsDeleted()) {
                 RenderEntity();
