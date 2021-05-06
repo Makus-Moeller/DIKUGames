@@ -68,6 +68,5 @@ namespace Breakout.Players {
         public Vec2F GetPosition() {
             return Shape.AsDynamicShape().Position;
         }
-
     }
 } 

@@ -11,12 +11,14 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
 using Breakout.Levelloader;
-
+using Breakout.Blocks;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
         private GameEventBus eventBus; 
         private LevelLoader levelLoader;
+        private EntityContainer<AtomBlock> AllBlocks;
+        private Ball ball;
 
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
@@ -37,8 +39,11 @@ namespace Breakout {
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             //Levelloader can set level
-            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level4.txt"), 
+            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level2.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
+
+            ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.0f, 0.004f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -82,14 +87,19 @@ namespace Breakout {
         public override void Render()
         {
             player.Render();
-            levelLoader.RenderBlocks();
+            foreach (AtomBlock block in AllBlocks)
+            {
+                block.RenderEntity();
+            }
+            ball.RenderEntity();
         }
 
-        public override void Update()
-        {   
+        public override void Update() {   
             player.Move();
             eventBus.ProcessEvents();
-           
+            ball.MoveBall();
+            AllBlocks.Iterate(block => ball.HandleCollision(block));
+            ball.HandleCollision(player);
         }
 
         public void ProcessEvent(GameEvent gameEvent)

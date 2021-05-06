@@ -1,6 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-
+using System;
 namespace Breakout.Blocks {
 
 
@@ -23,11 +23,10 @@ namespace Breakout.Blocks {
 
         public void HitBlock(int decrementValue) {
             if (!unbreakable) {
-                if (hitpoints < 1) {
-                    DeleteEntity();
+                if ((hitpoints -= decrementValue) < 1) {
+                    this.DeleteEntity();
+                    Console.WriteLine("HEr");
                 }
-                else 
-                    hitpoints -= decrementValue;
            }
         }
 
