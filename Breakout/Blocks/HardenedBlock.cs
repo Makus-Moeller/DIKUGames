@@ -9,6 +9,7 @@ namespace Breakout.Blocks {
         public HardenedBlock(Shape shape, IBaseImage image) : base(shape, image) {
             isHardened = true;
             hitpoints += 4; 
+            value += 1;
         }
     }
 }

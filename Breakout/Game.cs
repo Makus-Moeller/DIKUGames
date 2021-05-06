@@ -12,7 +12,7 @@ using DIKUArcade.Math;
 using System.IO;
 using Breakout.Levelloader;
 using Breakout.Blocks;
-using DIKUArcade.Entities;
+
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
