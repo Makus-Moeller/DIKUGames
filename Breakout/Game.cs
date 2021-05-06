@@ -17,24 +17,21 @@ using Breakout.Blocks;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         
-
         private StateMachine stateMachine;
         public Game(WindowArgs winArgs) : base(winArgs)  {
             window.SetKeyEventHandler(KeyHandler);
             window.SetClearColor(System.Drawing.Color.Black);
 
-            //In case we want to use the eventbus later to implement gamestates
+            //Intializing eventBus
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent, GameEventType.InputEvent});
+                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent, GameEventType.InputEvent, GameEventType.GameStateEvent});
+            
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
 
             //Statemachine
 
             stateMachine = new StateMachine();
-
-
-            
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
