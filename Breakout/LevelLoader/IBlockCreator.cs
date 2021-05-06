@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Breakout.Blocks;
-
+using DIKUArcade.Entities;
 namespace Breakout.Levelloader
 {
     public interface IBlockCreator {
-        List<AtomBlock> CreateBlocks(CharDefiners[] charDefiners);
+        EntityContainer<AtomBlock> CreateBlocks(CharDefiners[] charDefiners);
     }
 }

@@ -9,8 +9,8 @@ namespace Breakout.Players {
             return MOVEMENT_SPEED;
         }
 
-        public void AddBuffs(Player player) {
-
+        public Vec2F GetExtent() {
+            return EXTENT;
         }
     }
 }

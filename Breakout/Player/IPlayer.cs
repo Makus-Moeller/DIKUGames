@@ -1,7 +1,8 @@
+using DIKUArcade.Math;
 namespace Breakout.Players {
     public interface IPlayerBuffState {
-        //void ChangeSpeed();
-        void AddBuffs(Player player);
+        
+        Vec2F GetExtent();
         float Getspeed();   
     }
 }

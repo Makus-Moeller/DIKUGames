@@ -12,6 +12,7 @@ namespace Breakout.Blocks {
                 new Vec2F(0.0f, -0.01f)), 
                     new Image(Path.Combine("..", "Breakout", 
                         "Assets", "Images", "BigPowerUp.png")));
+            value += 2;
         } 
     }   
 }

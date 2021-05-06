@@ -12,12 +12,17 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
 using Breakout.Levelloader;
+using Breakout.Blocks;
 
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
-        //private Player player;
-    
-        //private LevelLoader levelLoader;
+        private Player player;
+        private Rewards gamescore;
+        private GameEventBus eventBus; 
+        private LevelLoader levelLoader;
+        private EntityContainer<Entity> AllEntities;
+        private EntityContainer<AtomBlock> AllBlocks;
+        private Ball ball;
 
         private StateMachine stateMachine;
         public Game(WindowArgs winArgs) : base(winArgs)  {
@@ -25,29 +30,21 @@ namespace Breakout {
             window.SetClearColor(System.Drawing.Color.Black);
 
             //In case we want to use the eventbus later to implement gamestates
-            
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.GameStateEvent, 
-                    GameEventType.InputEvent, GameEventType.PlayerEvent});
+                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent});
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
+
 
             //Statemachine
 
             stateMachine = new StateMachine();
 
-            /* 
-            //Instantiate player object etc. 
-            player = new Player(
-                new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
-                    new RegularBuffState()); 
-            //Instantiates levelloader    
-            levelLoader = new LevelLoader();
-            //Levelloader can set level
-            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level2.txt"), 
-                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
-            */
+
+            ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.005f, 0.006f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
+
+            gamescore = new Rewards(new Vec2F(0.01f, 0.9f), new Vec2F(0.1f,0.1f));
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -108,20 +105,18 @@ namespace Breakout {
                 }
             } 
         }
-        
-        public override void Render()
-        {
-            //player.Render();
-            //levelLoader.RenderBlocks();
-            stateMachine.ActiveState.RenderState();
+        public override void Render() {
+            gamescore.RenderScore();
+            player.Render();
+            AllBlocks.RenderEntities();
+            ball.RenderBall();
         }
 
-        public override void Update()
-        {   
-            //player.Move();
+        public override void Update() {   
+            player.Move();
             BreakoutBus.GetBus().ProcessEvents();
-            stateMachine.ActiveState.UpdateState();
-           
+            ball.UpdateBall(AllBlocks, player);
+            
         }
 
         public void ProcessEvent(GameEvent gameEvent)
