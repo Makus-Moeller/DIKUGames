@@ -15,33 +15,27 @@ namespace Breakout.Blocks {
         protected Entity PowerUpItem;
         protected int value;
 
-
         public AtomBlock(Shape shape, IBaseImage image) : base(shape, image) {
             hitpoints = 10;
             value = 1;
         }
 
-        public int HitPoints {get;}
         public int GetHitpoints() {
             return hitpoints;
         }
 
-        public int Value {get;}
-        public int GetValue() {
-            return value;
-        }
 
         public void HitBlock(int decrementValue) {
             if (!unbreakable) {
                 if ((hitpoints -= decrementValue) < 1) {
                     this.DeleteEntity();
+                    Console.WriteLine(isHardened);
                     BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.StatusEvent,
                         Message = "INCREASE_SCORE",
-                        StringArg2 = System.Convert.ToString(value),
+                        StringArg2 = value.ToString(),
                         });
-                    Console.WriteLine("HEr");
                 }
-           }
+            }
         }
 
         public void AddHitpoint(int amount) {

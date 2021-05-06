@@ -16,6 +16,7 @@ using Breakout.Blocks;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
+        private Rewards gamescore;
         private GameEventBus eventBus; 
         private LevelLoader levelLoader;
         private EntityContainer<Entity> AllEntities;
@@ -27,11 +28,11 @@ namespace Breakout {
             window.SetClearColor(System.Drawing.Color.Black);
 
             //In case we want to use the eventbus later to implement gamestates
-            eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> {
-                GameEventType.WindowEvent, GameEventType.TimedEvent});
-            eventBus.Subscribe(GameEventType.WindowEvent, this);
-            eventBus.Subscribe(GameEventType.TimedEvent, this);
+            BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
+                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent});
+            BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
+
 
             //Instantiate player object etc. 
             player = new Player(
@@ -41,11 +42,13 @@ namespace Breakout {
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             //Levelloader can set level
-            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level1.txt"), 
+            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level3.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
 
             ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.005f, 0.006f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
+
+            gamescore = new Rewards(new Vec2F(0.01f, 0.9f), new Vec2F(0.1f,0.1f));
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -87,6 +90,7 @@ namespace Breakout {
             }
         }
         public override void Render() {
+            gamescore.RenderScore();
             player.Render();
             AllBlocks.RenderEntities();
             ball.RenderBall();
@@ -94,7 +98,7 @@ namespace Breakout {
 
         public override void Update() {   
             player.Move();
-            eventBus.ProcessEvents();
+            BreakoutBus.GetBus().ProcessEvents();
             ball.UpdateBall(AllBlocks, player);
             
         }
