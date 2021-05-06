@@ -12,11 +12,13 @@ using DIKUArcade.Math;
 using System.IO;
 using Breakout.Levelloader;
 using Breakout.Blocks;
+using DIKUArcade.Entities;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
         private Player player;
         private GameEventBus eventBus; 
         private LevelLoader levelLoader;
+        private EntityContainer<Entity> AllEntities;
         private EntityContainer<AtomBlock> AllBlocks;
         private Ball ball;
 
@@ -39,10 +41,10 @@ namespace Breakout {
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             //Levelloader can set level
-            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level2.txt"), 
+            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level1.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
 
-            ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.0f, 0.004f)),
+            ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.005f, 0.006f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
         }
         
@@ -84,22 +86,17 @@ namespace Breakout {
                 }
             }
         }
-        public override void Render()
-        {
+        public override void Render() {
             player.Render();
-            foreach (AtomBlock block in AllBlocks)
-            {
-                block.RenderEntity();
-            }
-            ball.RenderEntity();
+            AllBlocks.RenderEntities();
+            ball.RenderBall();
         }
 
         public override void Update() {   
             player.Move();
             eventBus.ProcessEvents();
-            ball.MoveBall();
-            AllBlocks.Iterate(block => ball.HandleCollision(block));
-            ball.HandleCollision(player);
+            ball.UpdateBall(AllBlocks, player);
+            
         }
 
         public void ProcessEvent(GameEvent gameEvent)

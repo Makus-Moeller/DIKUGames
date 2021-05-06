@@ -25,9 +25,8 @@ namespace Breakout.Blocks {
             if (!unbreakable) {
                 if ((hitpoints -= decrementValue) < 1) {
                     this.DeleteEntity();
-                    Console.WriteLine("HEr");
                 }
-           }
+            }
         }
 
         public void AddHitpoint(int amount) {
