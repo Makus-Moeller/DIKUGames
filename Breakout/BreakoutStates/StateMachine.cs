@@ -8,9 +8,9 @@ namespace Breakout.BreakoutStates {
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState {get; private set;}
         public StateMachine() {
+            ActiveState = MainMenu.GetInstance();
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-            ActiveState = MainMenu.GetInstance();
         }
 
         public void SwitchState(GameStateType stateType, string sender) {

@@ -16,13 +16,7 @@ using Breakout.Blocks;
 
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor  {
-        private Player player;
-        private Rewards gamescore;
-        private GameEventBus eventBus; 
-        private LevelLoader levelLoader;
-        private EntityContainer<Entity> AllEntities;
-        private EntityContainer<AtomBlock> AllBlocks;
-        private Ball ball;
+        
 
         private StateMachine stateMachine;
         public Game(WindowArgs winArgs) : base(winArgs)  {
@@ -31,20 +25,16 @@ namespace Breakout {
 
             //In case we want to use the eventbus later to implement gamestates
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent});
+                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent, GameEventType.InputEvent});
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
-
 
             //Statemachine
 
             stateMachine = new StateMachine();
 
 
-            ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.005f, 0.006f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
-
-            gamescore = new Rewards(new Vec2F(0.01f, 0.9f), new Vec2F(0.1f,0.1f));
+            
         }
         
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -106,27 +96,17 @@ namespace Breakout {
             } 
         }
         public override void Render() {
-            gamescore.RenderScore();
-            player.Render();
-            AllBlocks.RenderEntities();
-            ball.RenderBall();
+            stateMachine.ActiveState.RenderState();
         }
 
         public override void Update() {   
-            player.Move();
             BreakoutBus.GetBus().ProcessEvents();
-            ball.UpdateBall(AllBlocks, player);
-            
+            stateMachine.ActiveState.UpdateState();
         }
 
-        public void ProcessEvent(GameEvent gameEvent)
-        {
+        public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.Message == "CLOSE_WINDOW") {
-                Console.WriteLine("Received close window event");
                 window.CloseWindow();
-            }
-            else if (gameEvent.Message == "HELLO") {
-                Console.WriteLine("Received HELLO message");
             }
         }
     }

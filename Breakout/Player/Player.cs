@@ -8,7 +8,6 @@ using System;
 namespace Breakout.Players {
     public class Player : Entity {
         private float moveLeft, moveRight;
-        private float speed; 
         private IPlayerBuffState playerBuffState;
         public IPlayerBuffState PlayerBuffState 
         {

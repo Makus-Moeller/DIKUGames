@@ -11,13 +11,15 @@ using Breakout.Levelloader;
 using System.Collections.Generic;
 using DIKUArcade.Physics;
 using DIKUArcade.Input;
-
+using Breakout.Blocks;
 namespace Breakout.BreakoutStates{
     public class GameRunning : IGameState {
         private Player player;
-        private static GameRunning instance = null;
-        //private GameEventBus eventBus; 
+        private Rewards gamescore;
         private LevelLoader levelLoader;
+        private EntityContainer<AtomBlock> AllBlocks;
+        private Ball ball;
+        private static GameRunning instance = null;
         public GameRunning() {
             InitializeGameState();
         }
@@ -41,13 +43,19 @@ namespace Breakout.BreakoutStates{
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             //Levelloader can set level
-            levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level2.txt"), 
+            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", "level2.txt"), 
                 new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
+            ball = new Ball(new DynamicShape(new Vec2F(0.30f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.005f, 0.006f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
+
+            gamescore = new Rewards(new Vec2F(0.01f, 0.9f), new Vec2F(0.1f,0.1f));
         }
 
         public void RenderState() {
+            gamescore.RenderScore();
             player.Render();
-            levelLoader.RenderBlocks();
+            AllBlocks.RenderEntities();
+            ball.RenderBall();
         }
 
 
@@ -59,6 +67,9 @@ namespace Breakout.BreakoutStates{
         public void UpdateState()
         {
             player.Move();
+            BreakoutBus.GetBus().ProcessEvents();
+            ball.UpdateBall(AllBlocks, player);
+            
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
