@@ -20,7 +20,6 @@ namespace Breakout.BreakoutStates
         private LevelLoader levelLoader;
         private EntityContainer<AtomBlock> AllBlocks;
         private Ball ball;
-        private List<string> filenames;
         private static GameRunning instance = null;
         public GameRunning() {
             InitializeGameState();
@@ -50,11 +49,8 @@ namespace Breakout.BreakoutStates
 
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
 
-            filenames = new DirectoryReader().Readfiles(Path.Combine("Assets", "Levels"));
-
             //Levelloader can set level
-            AllBlocks = levelLoader.SetLevel(Path.Combine("Assets", "Levels", filenames[3]), 
-                new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
+            AllBlocks = levelLoader.Nextlevel();
         }
 
 
@@ -120,6 +116,9 @@ namespace Breakout.BreakoutStates
             player.Move();
             BreakoutBus.GetBus().ProcessEvents();
             ball.UpdateBall(AllBlocks, player);
+            if (AllBlocks.CountEntities() == 0) {
+                AllBlocks = levelLoader.Nextlevel();
+            }
         }
     }
 }
