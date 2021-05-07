@@ -83,13 +83,11 @@ namespace Breakout.BreakoutStates {
                     if (action == KeyboardAction.KeyPress && activeMenuButton == 0) {
                         BreakoutBus.GetBus().RegisterEvent(
                              new GameEvent{EventType = GameEventType.GameStateEvent, 
-                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", StringArg2 = "MAINMENU"}
-                        );
+                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", StringArg2 = "MAINMENU"});
                     }
                     else if (action == KeyboardAction.KeyPress) {
                         BreakoutBus.GetBus().RegisterEvent(
-                             new GameEvent{EventType = GameEventType.WindowEvent, Message = "CLOSE_WINDOW"}
-                        );
+                             new GameEvent{EventType = GameEventType.WindowEvent, Message = "CLOSE_WINDOW"});
                     }
                     break;
             }

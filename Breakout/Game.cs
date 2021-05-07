@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DIKUArcade;
 using DIKUArcade.Events;
@@ -92,8 +93,12 @@ namespace Breakout
         }
 
         public void ProcessEvent(GameEvent gameEvent) {
-            if (gameEvent.Message == "CLOSE_WINDOW") {
+            if (gameEvent.EventType == GameEventType.WindowEvent) {
                 window.CloseWindow();
+            }
+            else if (gameEvent.EventType == GameEventType.TimedEvent) {
+                BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.GameStateEvent,
+                Message = "CHANGE_STATE", StringArg1 = "MAINMENU", StringArg2 = "GAME_RUNNING"});
             }
         }
     }
