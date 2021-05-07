@@ -45,7 +45,7 @@ namespace Breakout.BreakoutStates
             //Instantiates levelloader    
             levelLoader = new LevelLoader();
             
-            ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.005f, 0.006f)),
+            ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.002f, 0.005f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
 
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
