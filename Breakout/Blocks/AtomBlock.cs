@@ -29,7 +29,6 @@ namespace Breakout.Blocks {
             if (!unbreakable) {
                 if ((hitpoints -= decrementValue) < 1) {
                     this.DeleteEntity();
-                    Console.WriteLine(isHardened);
                     BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.StatusEvent,
                         Message = "INCREASE_SCORE",
                         StringArg2 = value.ToString(),

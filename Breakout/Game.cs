@@ -1,20 +1,13 @@
-using System;
 using System.Collections.Generic;
 using DIKUArcade;
 using DIKUArcade.Events;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using DIKUArcade.Timers;
-using Breakout.Players;
 using Breakout.BreakoutStates;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using System.IO;
-using Breakout.Levelloader;
-using Breakout.Blocks;
 
-namespace Breakout {
+namespace Breakout
+{
     public class Game : DIKUGame, IGameEventProcessor  {
         
         private StateMachine stateMachine;
@@ -24,9 +17,12 @@ namespace Breakout {
 
             //Intializing eventBus
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent, GameEventType.InputEvent, GameEventType.GameStateEvent});
+                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent,
+                    GameEventType.InputEvent, GameEventType.GameStateEvent});
             
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
+            
+            //Not used yet
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
 
             //Statemachine
@@ -40,12 +36,10 @@ namespace Breakout {
                     case KeyboardKey.Left:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    
                             EventType = GameEventType.InputEvent, Message = "KEY_LEFT"});
-                        //player.SetMoveLeft(true);
                         break;
                     case KeyboardKey.Right:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    
                             EventType = GameEventType.InputEvent, Message = "KEY_RIGHT"});
-                        //player.SetMoveRight(true);
                         break;
                     case KeyboardKey.Up:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent { 
@@ -64,9 +58,8 @@ namespace Breakout {
                     case KeyboardKey.Escape:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    
                             EventType = GameEventType.InputEvent, Message = "ESCAPE"});
-                        //window.CloseWindow();
                         break;
-                    //Used to count the time spent on a specific level 
+                    //Will be used to count the time spent on a specific level 
                     case KeyboardKey.Space:
                         BreakoutBus.GetBus().RegisterTimedEvent(
                             new GameEvent {EventType = GameEventType.TimedEvent, Message = "HELLO"},
@@ -75,17 +68,14 @@ namespace Breakout {
                     case KeyboardKey.Left:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    
                             EventType = GameEventType.InputEvent, Message = "KEY_LEFT_RELEASED"});
-                        //player.SetMoveLeft(false);
                         break;
                     case KeyboardKey.Right:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    
                             EventType = GameEventType.InputEvent, Message = "KEY_RIGHT_RELEASED"});
-                        //player.SetMoveRight(false);
                         break;
                     case KeyboardKey.Enter:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    
                             EventType = GameEventType.InputEvent, Message = "ENTER"});
-                        //player.SetMoveRight(false);
                         break;
                     default:
                         break;

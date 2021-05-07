@@ -24,7 +24,6 @@ namespace Breakout
         }
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.StatusEvent) {
-                Console.WriteLine("fanger den event");
                 switch (gameEvent.Message) {
                     case "INCREASE_SCORE":
                         AddPoints(System.Convert.ToInt32(gameEvent.StringArg2));
