@@ -15,6 +15,7 @@ using Breakout.Blocks;
 namespace Breakout.BreakoutStates
 {
     public class GameRunning : IGameState {
+        private CollisionHandler collisionHandler;
         private Player player;
         private Rewards gamescore;
         private LevelLoader levelLoader;
@@ -51,6 +52,7 @@ namespace Breakout.BreakoutStates
 
             //Levelloader can set level
             AllBlocks = levelLoader.Nextlevel();
+            collisionHandler = new CollisionHandler(player, ball, AllBlocks);
         }
 
 
@@ -114,10 +116,12 @@ namespace Breakout.BreakoutStates
         public void UpdateState()
         {
             player.Move();
+            ball.MoveBall();
             BreakoutBus.GetBus().ProcessEvents();
-            ball.UpdateBall(AllBlocks, player);
+            collisionHandler.HandleCollisions();
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
+                collisionHandler.InitializeCollisionHandler(AllBlocks);
             }
         }
     }
