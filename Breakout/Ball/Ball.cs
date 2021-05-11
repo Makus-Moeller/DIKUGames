@@ -56,29 +56,39 @@ namespace Breakout.Players {
         private void UpdateDirection(CollisionData collisiondata, Entity comparator) {
             if (comparator != null) {
                 switch (collisiondata.CollisionDir) {
+                    case (CollisionDirection.CollisionDirUp):
                     case (CollisionDirection.CollisionDirDown):
                         var dynamicDownCast = Shape.AsDynamicShape();
                         var factorOfChange = 1.0f + (comparator.Shape.Position.X + (comparator.Shape.Extent.X / 2.00f)) - Shape.Position.X;
-                        dynamicDownCast.Direction.Y = Math.Min(dynamicDownCast.Direction.Y * -factorOfChange, (float) speedOfBall-0.0005f);
+                        dynamicDownCast.Direction.Y = Math.Min(dynamicDownCast.Direction.Y * -factorOfChange, (float) speedOfBall - 0.0005f);
                         var negOrPos = 1.0f; 
                         if (dynamicDownCast.Direction.X < 0.00f) {
                             negOrPos = -1.0f;
                         }
                         dynamicDownCast.Direction.X = negOrPos * ((float) Math.Sqrt(Math.Pow(speedOfBall, 2.0) -  Math.Pow(dynamicDownCast.Direction.Y, 2.0)));
                         break;
-                    case (CollisionDirection.CollisionDirUp):
+                   /*
+                    
                         var dynamicDownCast1 = Shape.AsDynamicShape();
                         var factorOfChange1 = 1.0f + (comparator.Shape.Position.X + (comparator.Shape.Extent.X / 2.00f)) - Shape.Position.X;
                         dynamicDownCast1.Direction.Y = Math.Min(dynamicDownCast1.Direction.Y * -factorOfChange1, (float) speedOfBall-0.0005f);
-                        
                         var negOrPos1 = 1.0f; 
                         if (dynamicDownCast1.Direction.X < 0.00f) {
                             negOrPos1= -1.0f;
                         }
                         dynamicDownCast1.Direction.X = negOrPos1 * ((float) Math.Sqrt(Math.Pow(speedOfBall, 2.0) -  Math.Pow(dynamicDownCast1.Direction.Y, 2.0)));
                         break;
-                    case (CollisionDirection.CollisionDirLeft):
+                    */
                     case (CollisionDirection.CollisionDirRight):
+                    case (CollisionDirection.CollisionDirLeft):
+                        var dynamicDownCast2 = Shape.AsDynamicShape();
+                        var factorOfChange2 = 1.0f + (comparator.Shape.Position.X + (comparator.Shape.Extent.Y / 2.00f)) - Shape.Position.Y;
+                        dynamicDownCast2.Direction.X = Math.Min(dynamicDownCast2.Direction.X * -factorOfChange2, (float) speedOfBall - 0.0005f);
+                        var negOrPos2 = 1.0f; 
+                        if (dynamicDownCast2.Direction.Y < 0.00f) {
+                            negOrPos2 = -1.0f;
+                        }
+                        dynamicDownCast2.Direction.Y = negOrPos2 * ((float) Math.Sqrt(Math.Pow(speedOfBall, 2.0) -  Math.Pow(dynamicDownCast2.Direction.X, 2.0)));
                         break;
                     default:
                         break;
