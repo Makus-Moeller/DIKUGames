@@ -13,7 +13,7 @@ namespace Breakout.Levelloader {
         private char harden = ' ';
         private char unbreakable = ' ';
         public CharDefiners[] arrayOfCharDefiners {get; private set;}
-        public StringTxtInterpreter(IFileRexader reader) {
+        public StringTxtInterpreter(IFileReader reader) {
             this.reader = reader;
             
         }

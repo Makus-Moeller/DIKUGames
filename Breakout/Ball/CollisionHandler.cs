@@ -38,7 +38,7 @@ namespace Breakout.Players {
             }
         }
 
-        private void CalculateNewDirection(CollisionData collisiondata, Entity comparator) {
+        public void CalculateNewDirection(CollisionData collisiondata, Entity comparator) {
             switch (collisiondata.CollisionDir) {
                 case (CollisionDirection.CollisionDirUp):
                 case (CollisionDirection.CollisionDirDown):
