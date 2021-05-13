@@ -43,7 +43,7 @@ namespace Breakout.BreakoutStates
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
                     new RegularBuffState()); 
             //Instantiates levelloader    
-            levelLoader = new LevelLoader();
+            levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
             
             ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.002f, 0.005f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));

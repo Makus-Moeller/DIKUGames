@@ -36,7 +36,7 @@ namespace BreakoutTests
             StringTxtInterpreterOnPowerUpAndUnbreakable = 
                 new StringTxtInterpreter(new StreamReaderClass());
 
-            levelLoader = new LevelLoader();
+            levelLoader = new LevelLoader(Path.Combine("../../../..", "Breakout", "Assets"));
         }
 
         //
@@ -46,7 +46,7 @@ namespace BreakoutTests
             Assert.AreEqual((new string[0]).Length, StreamReader.ToStringArray(
                 Path.Combine("../../../..", "Breakout", "Assets", "Levels", "empty.txt"), 
                     "Map:", "Map/").Length);
-            Assert.AreEqual((new string[39]).Length, StreamReader.ToStringArray(
+            Assert.AreEqual((new string[37]).Length, StreamReader.ToStringArray(
                 Path.Combine("../../../..", "Breakout", "Assets", "Levels", "level1.txt"), 
                     "Map:", "Legend/").Length);
         }
@@ -70,7 +70,7 @@ namespace BreakoutTests
             Path.Combine("../../../..", "Breakout", "Assets", "Levels", "level3.txt"));
         
         //Checking that attributes are atributed accuratly using Level 1
-        Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[0].hardened);
+        Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[0].hardened);
         Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[1].hardened);
         Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[2].powerUp);
         Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[3].hardened);
@@ -84,7 +84,8 @@ namespace BreakoutTests
         Assert.True(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[4].unbreakable);
         Assert.False(StringTxtInterpreterOnPowerUpAndUnbreakable.CreateCharDefiners()[5].unbreakable);
         }
-
+        
+        /*
         [Test]
         public void LevelLoaderTest() {
             levelLoader.SetLevel(Path.Combine("../../../..", "Breakout", "Assets", "Levels", "level3.txt"),
@@ -95,5 +96,6 @@ namespace BreakoutTests
             }
             Assert.AreEqual(76, amountOfBLocks);
         }
+        */
     }
 }
