@@ -54,7 +54,7 @@ namespace Breakout.Players {
                 case (CollisionDirection.CollisionDirRight):
                 case (CollisionDirection.CollisionDirLeft):
                     var dynamicDownCast2 = ball.Shape.AsDynamicShape();
-                    var factorOfChange2 = 1.0f + (comparator.Shape.Position.X + (comparator.Shape.Extent.Y / 2.00f)) - ball.Shape.Position.Y;
+                    var factorOfChange2 = 1.0f + (comparator.Shape.Position.Y + (comparator.Shape.Extent.Y / 2.00f)) - ball.Shape.Position.Y;
                     dynamicDownCast2.Direction.X = Math.Min(dynamicDownCast2.Direction.X * -factorOfChange2, (float) ball.speedOfBall - 0.0005f);
                     var negOrPos2 = 1.0f; 
                     if (dynamicDownCast2.Direction.Y < 0.00f) {

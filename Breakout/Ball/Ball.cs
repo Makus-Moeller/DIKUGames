@@ -12,7 +12,7 @@ namespace Breakout.Players {
             speedOfBall = Math.Sqrt(Math.Pow(dyshape.Direction.X, 2.00f) + Math.Pow(dyshape.Direction.Y, 2.00f));
         }
 
-        private void HitWall() {
+        public void HitWall() {
             if (Shape.Position.X > 0.97f) {
                 Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
             }
