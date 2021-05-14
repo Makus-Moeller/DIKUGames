@@ -45,7 +45,7 @@ namespace BreakoutTests {
                 new DynamicShape(new Vec2F(0.4f, 0.08f), 
                 new Vec2F(1.0f/12.0f, 1.0f/24f)), 
                 new Image(
-                    Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")));
+                    Path.Combine("..", "Breakout", "Assets", "Images", "blue-block.png")), "blue-block.png");
                         
         }
 

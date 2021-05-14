@@ -49,6 +49,9 @@ namespace BreakoutTests {
             stateMachine.ProcessEvent(new GameEvent{EventType = GameEventType.InputEvent, 
                                 Message = "KEY_DOWN"});
             Assert.True(MainMenu.GetInstance().activeMenuButton == 1);
+            stateMachine.ProcessEvent(new GameEvent{EventType = GameEventType.InputEvent, 
+                                Message = "KEY_UP"});
+            Assert.True(MainMenu.GetInstance().activeMenuButton == 0);
         }
         
     }
