@@ -13,7 +13,7 @@ namespace Breakout.BreakoutStates {
         private static MainMenu instance = null;
         private Entity backGroundImage;
         private Text[] menuButtons = new Text[2];
-        private int activeMenuButton;
+        public int activeMenuButton {get; private set;}
 
         private MainMenu() {
             Text newgame = (new Text("New Game", new Vec2F(0.4f, 0.3f), new Vec2F(0.3f, 0.3f)));

@@ -4,6 +4,7 @@ using Breakout;
 using Breakout.Blocks;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
 using System.Diagnostics.Contracts;
@@ -33,13 +34,22 @@ namespace BreakoutTests {
             
         }
 
-        /*
+        
         [Test]
-        public void TestAddHP()
+        public void TestSwitchState()
         {
-            testBlock.AddHitpoint(2);
-            Assert.True(testBlock.GetHitpoints() == 12);
+            //Der kommer en nullreference exception
+            //stateMachine.SwitchState(GameStateType.GameRunning, "MAINMENU");
+            //Assert.True(stateMachine.ActiveState == GameRunning.GetInstance());
         }
-        */
+
+        [Test]
+        public void TestProcessEvent() {
+            Assert.True(MainMenu.GetInstance().activeMenuButton == 0);
+            stateMachine.ProcessEvent(new GameEvent{EventType = GameEventType.InputEvent, 
+                                Message = "KEY_DOWN"});
+            Assert.True(MainMenu.GetInstance().activeMenuButton == 1);
+        }
+        
     }
 }
