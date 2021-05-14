@@ -35,7 +35,8 @@ namespace Breakout.Levelloader {
         /// <param name="file">File to be read</param>
         /// <param name="interpreter">interpreter to chardefiners</param>
         /// <param name="blockCreator">interpreter of chardefiners</param>
-        public EntityContainer<AtomBlock> SetLevel(string file, IStringInterpreter interpreter, IBlockCreator blockCreator) {
+        public EntityContainer<AtomBlock> SetLevel(string file, IStringInterpreter interpreter, 
+                IBlockCreator blockCreator) {
             stringInterpreter = interpreter;
             this.blockCreator = blockCreator;
             stringInterpreter.ReadFile(file);

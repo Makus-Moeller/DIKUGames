@@ -35,11 +35,6 @@ namespace Breakout.BreakoutStates {
             return GamePaused.instance ?? (GamePaused.instance = new GamePaused());
         }
 
-        public void GameLoop()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Handle keyevents sent from statemachine.
         /// </summary>
@@ -69,11 +64,6 @@ namespace Breakout.BreakoutStates {
             }
         }
 
-        public void InitializeGameState()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// User interface for main menu. Render buttons and pause image.
         /// </summary>
@@ -101,10 +91,8 @@ namespace Breakout.BreakoutStates {
         {
             throw new NotImplementedException();
         }
-
         public void UpdateState()
         {
-            
         }
     }
 }

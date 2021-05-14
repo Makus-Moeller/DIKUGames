@@ -1,10 +1,9 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using DIKUArcade.Physics;
 using System;
-using Breakout.Blocks;
-namespace Breakout.Players {
+
+namespace Breakout.Players
+{
     /// <summary>
     /// The implementation of a moveable Ball
     /// Ball is in charge of moving itself 
@@ -14,7 +13,8 @@ namespace Breakout.Players {
         public readonly double speedOfBall;
         public Ball(Shape shape, IBaseImage image) : base(shape, image) {
             var dyshape = Shape.AsDynamicShape();
-            speedOfBall = Math.Sqrt(Math.Pow(dyshape.Direction.X, 2.00f) + Math.Pow(dyshape.Direction.Y, 2.00f));
+            speedOfBall = Math.Sqrt(Math.Pow(dyshape.Direction.X, 2.00f) + 
+                Math.Pow(dyshape.Direction.Y, 2.00f));
         }
 
         /// <summary>

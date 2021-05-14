@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using DIKUArcade.Math;
-namespace Breakout.Levelloader {
 
+namespace Breakout.Levelloader {
+    
     /// <summary>
     /// The different types of blocks are defined by this class
     /// </summary>

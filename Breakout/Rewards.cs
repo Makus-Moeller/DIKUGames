@@ -1,7 +1,7 @@
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
-using System;
+
 namespace Breakout {
     
     /// <summary>

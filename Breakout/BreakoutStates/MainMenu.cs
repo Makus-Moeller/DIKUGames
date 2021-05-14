@@ -5,7 +5,6 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using DIKUArcade.Events;
-using Breakout;
 using DIKUArcade.Input;
 
 namespace Breakout.BreakoutStates {
@@ -55,29 +54,6 @@ namespace Breakout.BreakoutStates {
             }
         }
 
-        public void UpdateGameLogic()
-        {
-           
-        }
-        public void GameLoop()
-        {
-            throw new System.NotImplementedException();
-        }
-         public void InitializeGameState()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ResetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateState()
-        {
-            
-        }
-
         /// <summary>
         /// Handle keyevents sent from statemachine.
         /// </summary>
@@ -104,6 +80,18 @@ namespace Breakout.BreakoutStates {
                     break;
             }
         }
+        public void UpdateGameLogic()
+        {
+           throw new System.NotImplementedException();
+        }
+
+        public void ResetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateState()
+        {
+        }
     }
 }
-

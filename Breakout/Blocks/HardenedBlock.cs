@@ -28,7 +28,8 @@ namespace Breakout.Blocks {
             Console.WriteLine((OriginalPath.Remove(OriginalPath.Length-4, 4) + "-damaged.png"));
             if (hitpoints - decrementValue < hitpoints / 2 + 1) {
                 Image = new Image(Path.Combine("..", "Breakout", 
-                            "Assets", "Images", (OriginalPath.Remove(OriginalPath.Length-4, 4) + "-damaged.png")));
+                            "Assets", "Images", (OriginalPath.Remove(OriginalPath.Length-4, 4) + 
+                                "-damaged.png")));
             } 
             if ((hitpoints -= decrementValue) < 1) {
                 this.DeleteEntity();

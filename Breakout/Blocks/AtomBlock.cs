@@ -1,13 +1,9 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using System;
 using DIKUArcade.Events;
 
 
 namespace Breakout.Blocks {
-
-
-    
     /// <summary>
     /// Superclass of blocks which have the basic functionality
     /// </summary>
@@ -38,7 +34,8 @@ namespace Breakout.Blocks {
             if (!unbreakable) {
                 if ((hitpoints -= decrementValue) < 1) {
                     this.DeleteEntity();
-                    BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.StatusEvent,
+                    BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = 
+                        GameEventType.StatusEvent,
                         Message = "INCREASE_SCORE",
                         StringArg2 = value.ToString(),
                         });

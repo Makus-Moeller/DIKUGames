@@ -1,9 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Events;
-using Breakout;
-using System;
 
 namespace Breakout.Players {
     public class Player : Entity {
@@ -20,7 +17,8 @@ namespace Breakout.Players {
             Shape.Extent = value.GetExtent();
             }
         }
-        public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState) : base(shape, image) {
+        public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState)
+             : base(shape, image) {
 
             moveLeft = 0.00f;
             moveRight = 0.00f;

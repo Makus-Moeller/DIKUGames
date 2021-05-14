@@ -4,10 +4,8 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
 using System;
-using System.Collections.Generic;
 using DIKUArcade.Events;
 using Breakout.Players;
-using Breakout;
 using Breakout.Levelloader;
 using DIKUArcade.Input;
 using Breakout.Blocks;
@@ -33,11 +31,6 @@ namespace Breakout.BreakoutStates
             
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
-        
-        public void GameLoop()
-        {
-            throw new NotImplementedException();
-        } 
 
         /// <summary>
         /// Initializes a new game. 
@@ -49,7 +42,8 @@ namespace Breakout.BreakoutStates
                     new RegularBuffState()); 
             //Instantiates levelloader, ball and rewards    
             levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
-            ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.002f, 0.005f)),
+            ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
+                new Vec2F(0.004f, 0.007f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
             //Levelloader can set level
@@ -117,12 +111,6 @@ namespace Breakout.BreakoutStates
             ball.RenderBall();
         }
 
-
-        public void ResetState()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Update dynamic states.
         /// </summary>
@@ -135,6 +123,11 @@ namespace Breakout.BreakoutStates
                 AllBlocks = levelLoader.Nextlevel();
                 collisionHandler.InitializeCollisionHandler(AllBlocks);
             }
+        }
+
+        public void ResetState()
+        {
+            throw new NotImplementedException();
         }
     }
 }

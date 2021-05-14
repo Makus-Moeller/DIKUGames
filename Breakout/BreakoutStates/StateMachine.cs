@@ -1,7 +1,6 @@
 using DIKUArcade.Events;
 using DIKUArcade.Input;
 using DIKUArcade.State;
-using Breakout;
 using System;
 
 namespace Breakout.BreakoutStates {

@@ -1,5 +1,4 @@
 using System.IO;
-using System.Collections.Generic;
 using Breakout.Blocks;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
@@ -11,7 +10,6 @@ namespace Breakout.Levelloader {
     ///Håndterer creation af blocks
     /// </summary>
     public class BlockCreator : IBlockCreator {
-
         private EntityContainer<AtomBlock> blocks = new EntityContainer<AtomBlock>();  
         
         /// <summary>
