@@ -1,5 +1,11 @@
 using System;
 namespace Breakout.Levelloader {
+    
+    /// <summary>
+    /// Reads a file and converts it to
+    /// an array containging only the information
+    /// you ask for
+    /// </summary>
     public class StreamReaderClass : IFileReader {
         private int CountNumberOfValidLines(string txtFile, 
             string startingpoint, string breakpoint) {

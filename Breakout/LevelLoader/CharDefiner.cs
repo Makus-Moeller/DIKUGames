@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using DIKUArcade.Math;
 namespace Breakout.Levelloader {
 
+    /// <summary>
+    /// The different types of blocks are defined by this class
+    /// </summary>
     public class CharDefiners {
         public char character;
         public string imagePath;

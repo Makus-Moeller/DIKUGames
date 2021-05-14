@@ -6,15 +6,18 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 
 namespace Breakout.Levelloader {
-
-    //Laver en liste af blocks
-    //Fordi vi laver et interface er fordi det kan være man vil lave en 
-    //generator der vil lave anden størelse eller hente billeder 
-    //fran en anden stig
+    
+    /// <summary>
+    ///Håndterer creation af blocks
+    /// </summary>
     public class BlockCreator : IBlockCreator {
 
         private EntityContainer<AtomBlock> blocks = new EntityContainer<AtomBlock>();  
         
+        /// <summary>
+        ///Creates a list of blocks based on chardefiners
+        /// </summary>
+        /// <param name="CharDefiners">The different type of blocks in a game</param>
         public EntityContainer<AtomBlock> CreateBlocks(CharDefiners[] charDefiners) {
             foreach (CharDefiners charDefiner in charDefiners) {
                 foreach (Vec2F position in charDefiner.listOfPostions) {

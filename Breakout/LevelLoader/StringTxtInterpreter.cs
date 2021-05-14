@@ -3,7 +3,9 @@ using System;
 
 namespace Breakout.Levelloader {
 
-    ///Laver Chardefinernse ved hjælp af en filereader.
+    /// <summary>
+    /// Interprets the read file
+    /// </summary>
     public class StringTxtInterpreter : IStringInterpreter {
         private IFileReader reader;
         private string[] legendData;
@@ -38,6 +40,11 @@ namespace Breakout.Levelloader {
             }
         }
 
+        /// <summary>
+        /// Main function of class. 
+        /// defines all the different chars
+        /// and assigns positions
+        /// </summary>
         public CharDefiners[] CreateCharDefiners() {
             DefineSpecialAttributes();
             int amountOfChars = legendData.Length;
@@ -60,7 +67,11 @@ namespace Breakout.Levelloader {
             GeneratePosition(arrayOfCharDefiners);
             return arrayOfCharDefiners; 
         }
-
+        
+        /// <summary>
+        /// adds the position of the chars based on the mapData
+        /// </summary>
+        /// <param name="arrayOfCharDefiners">All the found chars</param>
         private void GeneratePosition(CharDefiners[] arrayOfCharDefiners) {
             char currChar;
             for (int i = 0; i < mapData.Length; i++) {

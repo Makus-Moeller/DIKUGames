@@ -5,6 +5,11 @@ using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
 namespace Breakout.Players {
+    /// <summary>
+    /// The implementation of a moveable Ball
+    /// Ball is in charge of moving itself 
+    /// correctly
+    /// </summary>
     public class Ball : Entity {
         public readonly double speedOfBall;
         public Ball(Shape shape, IBaseImage image) : base(shape, image) {
@@ -12,6 +17,10 @@ namespace Breakout.Players {
             speedOfBall = Math.Sqrt(Math.Pow(dyshape.Direction.X, 2.00f) + Math.Pow(dyshape.Direction.Y, 2.00f));
         }
 
+        /// <summary>
+        /// Ensures that ball changes direction if it
+        /// Breaches the boundris of the map
+        /// </summary>
         public void HitWall() {
             if (Shape.Position.X > 0.97f) {
                 Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
@@ -27,6 +36,10 @@ namespace Breakout.Players {
             }
         }
 
+        /// <summary>
+        /// uses the dynamic shape of Entity
+        /// to move the ball along direction vector
+        /// </summary>
         public void MoveBall() {
             if (!IsDeleted()) {
                 Shape.AsDynamicShape().Move();
