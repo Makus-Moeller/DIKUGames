@@ -5,6 +5,9 @@ using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
 namespace Breakout.Players {
+    /// <summary>
+    /// Decides what the outcome of a collision should be
+    /// </summary>
     public class CollisionHandler {
         private Player player;
         private Ball ball;
@@ -14,10 +17,20 @@ namespace Breakout.Players {
             ball = onlyBall;
             InitializeCollisionHandler(blocks);
         }
+
+        /// <summary>
+        /// Allows you to update the blocks it checks
+        /// </summary>
         public void InitializeCollisionHandler(EntityContainer<AtomBlock> blocks) {
             comparator = blocks;
         }
 
+        /// <summary>
+        /// If an enitity has colidded
+        /// this checks if that collision should
+        /// be treated as a block collision
+        /// </summary>
+        /// <param name="possibleblock">entity that might be a block</param>
         private void IfBlockHit(Entity possibleblock) {
             AtomBlock block = null;
             if ((block = (possibleblock as AtomBlock)) != null) {
@@ -25,6 +38,12 @@ namespace Breakout.Players {
             }
         }
 
+        /// <summary>
+        /// Checks if the input has colided with the ball
+        /// And delegates outcome to methods that handle 
+        /// different cases
+        /// </summary>
+        /// <param name="comparator">Entity to check collision</param>
         private void HandleCollision(Entity comparator) {
             var dynamicDownCast = ball.Shape.AsDynamicShape();
             CollisionData collisiondata = CollisionDetection.Aabb(dynamicDownCast, comparator.Shape);
@@ -34,6 +53,12 @@ namespace Breakout.Players {
             }
         }
 
+        /// <summary>
+        /// uses trigonomitry to calculate new direction vector.
+        /// Note: this will not change speed of ball
+        /// </summary>
+        /// <param name="collisiondata">Contains the details of collision</param>
+        /// <param name="comparator">Entity that colided with ball</param>
         public void CalculateNewDirection(CollisionData collisiondata, Entity comparator) {
             switch (collisiondata.CollisionDir) {
                 case (CollisionDirection.CollisionDirUp):
@@ -62,6 +87,10 @@ namespace Breakout.Players {
                     break;
             }
         }
+
+        /// <summary>
+        /// simply checks all possible coliders
+        /// </summary>
         public void HandleCollisions() { 
             comparator.Iterate(block => HandleCollision(block));
             HandleCollision(player);

@@ -7,8 +7,12 @@ using DIKUArcade.Input;
 using DIKUArcade.Timers;
 using Breakout.BreakoutStates;
 
-namespace Breakout
-{
+namespace Breakout {
+
+    /// <summary>
+    /// Main class of the game. Handles windowevents and initializes gamebus
+    /// also updates game based on state
+    /// </summary>
     public class Game : DIKUGame, IGameEventProcessor  {
         
         private StateMachine stateMachine;
@@ -31,6 +35,11 @@ namespace Breakout
             stateMachine = new StateMachine();
         }
         
+        /// <summary>
+        /// Creates an event depending on input
+        /// </summary>
+        /// <param name="action">was a key pressed or released</param>
+        /// <param name="key">what key was involved</param>
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             if (action == KeyboardAction.KeyPress) {
                 switch (key) {
@@ -92,6 +101,10 @@ namespace Breakout
             stateMachine.ActiveState.UpdateState();
         }
 
+        /// <summary>
+        /// Handles window events and delegates to keyhandler
+        /// </summary>
+        /// <param name="gameEvent">The type of event</param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.WindowEvent) {
                 window.CloseWindow();

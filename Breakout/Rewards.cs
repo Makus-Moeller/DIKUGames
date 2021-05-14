@@ -2,8 +2,11 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
 using System;
-namespace Breakout 
-{
+namespace Breakout {
+    
+    /// <summary>
+    /// An eventhandler that controls the point System
+    /// </summary>
     public class Rewards : IGameEventProcessor {
         public int rewards {get; private set;}
         private Text display;
@@ -16,12 +19,21 @@ namespace Breakout
             display= new Text("Score: " + rewards, placement, width);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, this);
         }
-            
+        /// <summary>
+        /// Ads points
+        /// </summary>
+        /// <param name="addPoints">points to be added</param>  
         private void AddPoints(int addPoints) {
             rewards += addPoints;
             
 
         }
+
+        /// <summary>
+        /// handles status Events
+        /// and delegates effects to members
+        /// </summary>
+        /// <param name="gameEvent">The event raised</param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.StatusEvent) {
                 switch (gameEvent.Message) {

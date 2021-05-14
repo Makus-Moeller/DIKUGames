@@ -8,7 +8,9 @@ using System.IO;
 
 namespace Breakout.Levelloader {
 
-    //Inderholder funktionalitet til at 
+    /// <summary>
+    ///Handles the changing of levels
+    /// </summary>
     public class LevelLoader {
         private IStringInterpreter stringInterpreter;
         private CharDefiners[] charDefiners;
@@ -25,6 +27,14 @@ namespace Breakout.Levelloader {
             filenames = directoryReader.Readfiles(path);
             this.path = path;
         }
+
+        /// <summary>
+        /// Allows you to change level even though its a different type of file
+        /// or the chardefiners need to be interpreted different
+        /// </summary>
+        /// <param name="file">File to be read</param>
+        /// <param name="interpreter">interpreter to chardefiners</param>
+        /// <param name="blockCreator">interpreter of chardefiners</param>
         public EntityContainer<AtomBlock> SetLevel(string file, IStringInterpreter interpreter, IBlockCreator blockCreator) {
             stringInterpreter = interpreter;
             this.blockCreator = blockCreator;
@@ -32,7 +42,9 @@ namespace Breakout.Levelloader {
             charDefiners = stringInterpreter.CreateCharDefiners();
             return blockCreator.CreateBlocks(charDefiners);
         }
-
+        /// <summary>
+        ///changes to nex level
+        /// </summary>
         public EntityContainer<AtomBlock> Nextlevel() {
             EntityContainer<AtomBlock> levelBlocks;
             //When there are more levels. Load the next one
