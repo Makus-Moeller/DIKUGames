@@ -10,6 +10,10 @@ using Breakout;
 using DIKUArcade.Input;
 
 namespace Breakout.BreakoutStates {
+
+    /// <summary>
+    /// GamePaused class. Player can return to game or go to main menu.
+    /// </summary>
     public class GamePaused : IGameState {
         private static GamePaused instance = null;
         private Entity backGroundImage;
@@ -35,6 +39,12 @@ namespace Breakout.BreakoutStates {
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Handle keyevents sent from statemachine.
+        /// </summary>
+        /// <param name="action">Whether its a keypress or keyrelease</param>
+        /// <param name="key">The key</param>
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
             switch (key) {
@@ -64,6 +74,9 @@ namespace Breakout.BreakoutStates {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// User interface for main menu. Render buttons and pause image.
+        /// </summary>
         public void RenderState() {
                     backGroundImage.RenderEntity();
                     switch (activeMenuButton) {

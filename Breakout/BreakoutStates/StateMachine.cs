@@ -5,6 +5,11 @@ using Breakout;
 using System;
 
 namespace Breakout.BreakoutStates {
+
+    /// <summary>
+    /// Processes different gameevents and controls the game flow.
+    /// switches between states when nessecary.
+    /// </summary>
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState {get; private set;}
         public StateMachine() {
@@ -13,6 +18,11 @@ namespace Breakout.BreakoutStates {
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         }
 
+        /// <summary>
+        /// Switches between states.
+        /// </summary>
+        /// <param name="stateType">What state should be active</param>
+        /// <param name="sender">who sends the gamestateevent</param>
         public void SwitchState(GameStateType stateType, string sender) {
             switch (stateType) {
                 case GameStateType.MainMenu:
@@ -33,8 +43,10 @@ namespace Breakout.BreakoutStates {
             }
         }
 
-        //Vi Laver if statements for at tjekke eventypen og switcher for at tjekke præcis hvad den skal gøre
-        //Input event skal altid kunne håndteres af HandleKeyEvent så ingen grund til at switche. 
+        /// <summary>
+        /// Process gameevents that class is subscribed to.
+        /// </summary>
+        /// <param name="gamevent">GameEvent that should be processed</param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.GameStateEvent) {
                 switch (gameEvent.Message) {

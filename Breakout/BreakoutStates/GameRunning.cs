@@ -14,6 +14,9 @@ using Breakout.Blocks;
 
 namespace Breakout.BreakoutStates
 {
+    /// <summary>
+    /// GameRunning class. Where the breakout game is running.
+    /// </summary>
     public class GameRunning : IGameState {
         private CollisionHandler collisionHandler;
         private Player player;
@@ -35,21 +38,20 @@ namespace Breakout.BreakoutStates
         {
             throw new NotImplementedException();
         } 
+
+        /// <summary>
+        /// Initializes a new game. 
+        /// </summary>
         public void InitializeGameState() {
-            //Sætter Enemy count til 0 for at sikre den ikke tæller enemys fra tidligere spil
-            //når vi siger new game efter at have initializeret GameRunning første gang.
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
                     new RegularBuffState()); 
-            //Instantiates levelloader    
+            //Instantiates levelloader, ball and rewards    
             levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
-            
             ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), new Vec2F(0.002f, 0.005f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
-
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
-
             //Levelloader can set level
             AllBlocks = levelLoader.Nextlevel();
             collisionHandler = new CollisionHandler(player, ball, AllBlocks);
@@ -87,7 +89,11 @@ namespace Breakout.BreakoutStates
             }    
         }
 
-
+        /// <summary>
+        /// Handle keyevents sent from statemachine.
+        /// </summary>
+        /// <param name="action">Whether its a keypress or keyrelease</param>
+        /// <param name="key">The key</param>
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
             switch (action) {
                 case KeyboardAction.KeyPress:
@@ -100,6 +106,10 @@ namespace Breakout.BreakoutStates
                     break;
             }
         }
+
+        /// <summary>
+        /// Render objects on window.
+        /// </summary>
         public void RenderState() {
             gamescore.RenderScore();
             player.Render();
@@ -113,8 +123,10 @@ namespace Breakout.BreakoutStates
             throw new NotImplementedException();
         }
 
-        public void UpdateState()
-        {
+        /// <summary>
+        /// Update dynamic states.
+        /// </summary>
+        public void UpdateState() {
             player.Move();
             ball.MoveBall();
             BreakoutBus.GetBus().ProcessEvents();

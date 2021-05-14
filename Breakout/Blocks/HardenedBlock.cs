@@ -3,8 +3,11 @@ using DIKUArcade.Graphics;
 using System.IO;
 using DIKUArcade.Events;
 using System;
-namespace Breakout.Blocks {
 
+namespace Breakout.Blocks {
+    /// <summary>
+    /// A special hardened block
+    /// </summary>
     public class HardenedBlock : AtomBlock {
         private string OriginalPath {get;}
         
@@ -14,6 +17,12 @@ namespace Breakout.Blocks {
             value += 1;
             OriginalPath = path;
         }
+
+        /// <summary>
+        /// Hit block by certain amount. When histpoints are under Tresshold of 50%
+        /// Image is changed.
+        /// </summary>
+        /// <param name="decrementValue">Amount a block is hit by</param>
         public override void HitBlock(int decrementValue) {
             Console.WriteLine(OriginalPath);
             Console.WriteLine((OriginalPath.Remove(OriginalPath.Length-4, 4) + "-damaged.png"));

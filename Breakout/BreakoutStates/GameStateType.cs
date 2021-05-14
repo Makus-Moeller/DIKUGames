@@ -8,6 +8,9 @@ namespace Breakout.BreakoutStates {
         MainMenu
     }
 
+    /// <summary>
+    /// Static class used as adaptor to convert strings to Statetypes and vise versa.
+    /// </summary>
     public static class StateTransformer {
         public static GameStateType TransformStringToState(string state) {
             switch (state) {
