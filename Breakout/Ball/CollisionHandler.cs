@@ -18,14 +18,10 @@ namespace Breakout.Players {
             comparator = blocks;
         }
 
-        private AtomBlock ifBlockHit(Entity possibleblock) {
+        private void IfBlockHit(Entity possibleblock) {
             AtomBlock block = null;
             if ((block = (possibleblock as AtomBlock)) != null) {
                     block.HitBlock(10);
-                    return block;
-            }
-            else {
-                return null;
             }
         }
 
@@ -33,7 +29,7 @@ namespace Breakout.Players {
             var dynamicDownCast = ball.Shape.AsDynamicShape();
             CollisionData collisiondata = CollisionDetection.Aabb(dynamicDownCast, comparator.Shape);
             if(collisiondata.Collision) {
-                ifBlockHit(comparator);
+                IfBlockHit(comparator);
                 CalculateNewDirection(collisiondata, comparator);
             }
         }

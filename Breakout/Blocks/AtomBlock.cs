@@ -25,7 +25,7 @@ namespace Breakout.Blocks {
         }
 
 
-        public void HitBlock(int decrementValue) {
+        public virtual void HitBlock(int decrementValue) {
             if (!unbreakable) {
                 if ((hitpoints -= decrementValue) < 1) {
                     this.DeleteEntity();

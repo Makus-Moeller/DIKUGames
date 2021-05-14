@@ -5,6 +5,7 @@ namespace Breakout.Levelloader {
     public class CharDefiners {
         public char character;
         public string imagePath;
+        public string imagePath2;
         public bool powerUp;
         public bool hardened;
         public bool unbreakable;

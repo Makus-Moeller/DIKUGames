@@ -8,10 +8,10 @@ Map:
 ------------
 ------------
 ------------
+---CCCCCC---
 ------------
 ------------
-------------
-------------
+UggggggggggU
 ------------
 ------------
 ------------
@@ -27,8 +27,13 @@ Map/
 
 Meta:
 Name: LEVEL 4
+Hardened: g
+PowerUp: C
+Unbreakable: U
 Meta/
 
 Legend:
-
+g) red-block.png
+C) orange-block.png
+U) darkgreen-block.png
 Legend/
