@@ -1,9 +1,9 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-
+using DIKUArcade.Physics;
 namespace Breakout.Players {
-    public class Player : Entity {
+    public class Player : Entity, ICollidable {
         private float moveLeft, moveRight;
         private IPlayerBuffState playerBuffState;
         public IPlayerBuffState PlayerBuffState 
@@ -24,7 +24,22 @@ namespace Breakout.Players {
             moveRight = 0.00f;
             playerBuffState = buffState;
         }
-
+        
+        public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
+        /*
+            var powerUpItem = objectOfCollision as PowerUp;
+            if ((muligvis = objectOfCollision as PowerUp) != null) {
+                switch (powerUpItem.PowerUp) {
+                    case(PowerUpTypes.Elongate):
+                        playerBuffState = new ElongateBuffState();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            */
+        }
+        
         //Methods for movement. Render and update is in the entity baseclass
         
         public void Render() {

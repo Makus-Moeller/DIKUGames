@@ -1,13 +1,13 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
-
-
+using DIKUArcade.Physics;
+using Breakout.Players;
 namespace Breakout.Blocks {
     /// <summary>
     /// Superclass of blocks which have the basic functionality
     /// </summary>
-    public class AtomBlock : Entity {
+    public class AtomBlock : Entity, ICollidable {
         protected int hitpoints;
         protected bool unbreakable;
         protected bool isHardened;
@@ -53,6 +53,9 @@ namespace Breakout.Blocks {
         
         public bool IsHardened() {
             return isHardened;
+        }
+        public virtual void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
+            HitBlock(20);
         }
     }
 }
