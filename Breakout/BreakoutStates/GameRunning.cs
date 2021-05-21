@@ -18,10 +18,11 @@ namespace Breakout.BreakoutStates
     public class GameRunning : IGameState {
         private CollisionHandler collisionHandler;
         private Player player;
-        private Rewards gamescore;
+        public Rewards gamescore {get; private set;}
         private LevelLoader levelLoader;
         private EntityContainer<AtomBlock> AllBlocks;
         private EntityContainer<Ball> balls;
+        private PlayerLives playerLives;
         private static GameRunning instance = null;
         public GameRunning() {
             InitializeGameState();
@@ -50,6 +51,7 @@ namespace Breakout.BreakoutStates
             //Levelloader can set level
             AllBlocks = levelLoader.Nextlevel();
             collisionHandler = new CollisionHandler();
+            playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.3f, 0.3f), player);
         }
 
 
@@ -110,6 +112,7 @@ namespace Breakout.BreakoutStates
             player.Render();
             AllBlocks.RenderEntities();
             balls.RenderEntities();
+            playerLives.RenderLives();
         }
 
         /// <summary>
@@ -120,6 +123,7 @@ namespace Breakout.BreakoutStates
             balls.Iterate(ball => ball.MoveBall());
             BreakoutBus.GetBus().ProcessEvents();
             collisionHandler.HandleEntityCollisions(player, balls);
+            playerLives.UpdateLives();
             balls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();

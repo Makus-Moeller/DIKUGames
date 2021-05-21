@@ -13,6 +13,8 @@ namespace Breakout.Players {
         private Vec2F placement;
         private Vec2F width;
         private Player player;
+        
+    
         public PlayerLives (Vec2F position, Vec2F extent, Player player) {
             this.player = player;
             lives = player.lives;
