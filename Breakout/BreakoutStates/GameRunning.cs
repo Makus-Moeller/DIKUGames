@@ -21,7 +21,7 @@ namespace Breakout.BreakoutStates
         private Rewards gamescore;
         private LevelLoader levelLoader;
         private EntityContainer<AtomBlock> AllBlocks;
-        private Ball ball;
+        private EntityContainer<Ball> balls;
         private static GameRunning instance = null;
         public GameRunning() {
             InitializeGameState();
@@ -40,15 +40,16 @@ namespace Breakout.BreakoutStates
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
                     new RegularBuffState()); 
-            //Instantiates levelloader, ball and rewards    
+            //Instantiates levelloader, balls and rewards    
             levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
-            ball = new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
-                new Vec2F(0.004f, 0.007f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png")));
+            balls = new EntityContainer<Ball>();
+            balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
+                new Vec2F(0.01f, 0.02f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
             //Levelloader can set level
             AllBlocks = levelLoader.Nextlevel();
-            collisionHandler = new CollisionHandler(player, ball, AllBlocks);
+            collisionHandler = new CollisionHandler();
         }
 
 
@@ -108,7 +109,7 @@ namespace Breakout.BreakoutStates
             gamescore.RenderScore();
             player.Render();
             AllBlocks.RenderEntities();
-            ball.RenderBall();
+            balls.RenderEntities();
         }
 
         /// <summary>
@@ -116,12 +117,12 @@ namespace Breakout.BreakoutStates
         /// </summary>
         public void UpdateState() {
             player.Move();
-            ball.MoveBall();
+            balls.Iterate(ball => ball.MoveBall());
             BreakoutBus.GetBus().ProcessEvents();
-            collisionHandler.HandleCollisions();
+            collisionHandler.HandleEntityCollisions(player, balls);
+            balls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
-                collisionHandler.InitializeCollisionHandler(AllBlocks);
             }
         }
 
