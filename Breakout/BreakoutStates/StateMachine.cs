@@ -37,6 +37,12 @@ namespace Breakout.BreakoutStates {
                 case GameStateType.GamePaused:
                     ActiveState = GamePaused.GetInstance();
                     break;
+                case GameStateType.GameWon:
+                    ActiveState = GameWon.GetInstance();
+                    break;
+                case GameStateType.GameLost:
+                    ActiveState = GameLost.GetInstance();
+                    break;
                 default:
                     throw new ArgumentException("Not valid State");
             }

@@ -6,7 +6,6 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Physics;
 using DIKUArcade.Math;
-using DIKUArcade.Entities;
 using System.IO;
 using System.Diagnostics.Contracts;
 using Breakout.Blocks;

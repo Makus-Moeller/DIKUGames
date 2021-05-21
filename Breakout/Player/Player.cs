@@ -1,11 +1,14 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Events;
 
 namespace Breakout.Players {
     public class Player : Entity {
         private float moveLeft, moveRight;
         private IPlayerBuffState playerBuffState;
+        public int lives {get; private set;}
+        public bool IsDead;
         public IPlayerBuffState PlayerBuffState 
         {
             get
@@ -23,6 +26,7 @@ namespace Breakout.Players {
             moveLeft = 0.00f;
             moveRight = 0.00f;
             playerBuffState = buffState;
+            lives = 2;
         }
 
         //Methods for movement. Render and update is in the entity baseclass
@@ -67,6 +71,13 @@ namespace Breakout.Players {
 
         public Vec2F GetPosition() {
             return Shape.AsDynamicShape().Position;
+        }
+
+        public void DecrementLives() {
+            if (lives == 1) {
+                IsDead = true; 
+            }
+            else lives--;
         }
     }
 } 

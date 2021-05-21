@@ -25,8 +25,6 @@ namespace Breakout {
         /// <param name="addPoints">points to be added</param>  
         private void AddPoints(int addPoints) {
             rewards += addPoints;
-            
-
         }
 
         /// <summary>

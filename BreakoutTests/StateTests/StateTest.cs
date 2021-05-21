@@ -9,15 +9,20 @@ using DIKUArcade.Math;
 using System.IO;
 using System.Diagnostics.Contracts;
 using Breakout.BreakoutStates;
+using System.Collections.Generic;
 
 namespace BreakoutTests {
 
     public class StateTests {
-    
-        private StateMachine stateMachine;
-
-
-
+        public StateMachine stateMachine;
+        public GameEventBus eventbus;
+        public StateTests() {
+            eventbus = BreakoutBus.GetBus();
+            BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
+                GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent,
+                    GameEventType.InputEvent, GameEventType.GameStateEvent});
+        }
+        
 
         [SetUp]
         public void Setup()
@@ -39,8 +44,8 @@ namespace BreakoutTests {
         public void TestSwitchState()
         {
             //Der kommer en nullreference exception
-            //stateMachine.SwitchState(GameStateType.GameRunning, "MAINMENU");
-            //Assert.True(stateMachine.ActiveState == GameRunning.GetInstance());
+            stateMachine.SwitchState(GameStateType.GameRunning, "MAINMENU");
+            Assert.True(stateMachine.ActiveState == GameRunning.GetInstance());
         }
 
         [Test]
@@ -53,6 +58,8 @@ namespace BreakoutTests {
                                 Message = "KEY_UP"});
             Assert.True(MainMenu.GetInstance().activeMenuButton == 0);
         }
+
+        //Test TransformStringToState og StateToString
         
     }
 }

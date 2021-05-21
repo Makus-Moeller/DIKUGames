@@ -111,7 +111,7 @@ namespace Breakout {
             }
             else if (gameEvent.EventType == GameEventType.TimedEvent) {
                 BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.GameStateEvent,
-                Message = "CHANGE_STATE", StringArg1 = "MAINMENU", StringArg2 = "GAME_RUNNING"});
+                Message = "CHANGE_STATE", StringArg1 = "GAME_WON", StringArg2 = "GAME_RUNNING"});
             }
         }
     }
