@@ -56,7 +56,7 @@ namespace Breakout.Levelloader {
                 return levelBlocks; 
             }
             else
-            //When levellist is empty change state to MainMenu
+            //When levellist is empty change state to GameWon
                 levelBlocks = SetLevel(Path.Combine(path, "empty.txt"), 
                     new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
                 BreakoutBus.GetBus().RegisterTimedEvent(

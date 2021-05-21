@@ -90,7 +90,7 @@ namespace Breakout.Players {
         }
 
         public void DecrementLives() {
-            if (lives == 1) {
+            if (lives == 0) {
                 IsDead = true; 
             }
             else lives--;

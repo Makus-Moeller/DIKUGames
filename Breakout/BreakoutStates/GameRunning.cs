@@ -128,6 +128,18 @@ namespace Breakout.BreakoutStates
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
             }
+            if (balls.CountEntities() == 0) {
+                player.DecrementLives();
+                balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
+                new Vec2F(0.01f, 0.02f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+            }
+            if (player.IsDead) {
+                BreakoutBus.GetBus().RegisterEvent(
+                            new GameEvent{EventType = GameEventType.GameStateEvent, 
+                            Message = "CHANGE_STATE", StringArg1 = "GAME_LOST", StringArg2 = "GAME_RUNNING"});
+            }
+            
         }
 
         public void ResetState()

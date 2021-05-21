@@ -2,7 +2,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
-using System;
+
 namespace Breakout.Players {
 
     /// <summary>
