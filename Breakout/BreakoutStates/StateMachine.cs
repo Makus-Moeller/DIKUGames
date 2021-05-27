@@ -97,6 +97,10 @@ namespace Breakout.BreakoutStates {
                     case "ESCAPE":
                         key = KeyboardKey.Escape;
                         break;
+                    case "KEY_SPACE_RELEASED":
+                        key = KeyboardKey.Space;
+                        action = KeyboardAction.KeyRelease;
+                        break;
                     default:
                         key = KeyboardKey.Unknown;
                         break;

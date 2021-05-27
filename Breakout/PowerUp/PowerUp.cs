@@ -29,10 +29,16 @@ namespace Breakout.PowerUpSpace {
                 BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.ControlEvent, 
                     Message = "HandlePowerUp",
                     StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp)});
-                
-                BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
-                    Message = "HandlePowerUp",
-                    StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 1 }, TimePeriod.NewSeconds(10.0));
+                if (ThisPowerUp == PowerUps.Laser) {
+                    BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
+                        Message = "HandlePowerUp",
+                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 3 }, TimePeriod.NewSeconds(10.0));
+                }
+                else {
+                    BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
+                        Message = "HandlePowerUp",
+                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 1 }, TimePeriod.NewSeconds(10.0));
+                }
             }    
         }
 

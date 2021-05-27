@@ -53,6 +53,12 @@ namespace Breakout.PowerUpSpace {
                                     new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
                                     new Image(Path.Combine("..", "Breakout", "Assets", "Images", "SplitPowerUp.png")), PowerUps.Split));
                                 break;
+                            case 5:
+                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                    float.Parse(gameEvent.StringArg2)), 
+                                    new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
+                                    new Image(Path.Combine("..", "Breakout", "Assets", "Images", "DamagePickUp.png")), PowerUps.Laser));
+                                    break;
                             default:
                                 break;
                         }
