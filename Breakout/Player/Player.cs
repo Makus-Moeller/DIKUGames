@@ -11,7 +11,9 @@ namespace Breakout.Players {
         private float moveLeft, moveRight;
         private IBuffState playerBuffState;
         public int lives {get; private set;}
+        public float ExtentX {get; private set;}
         public bool IsDead;
+        public bool LaserAvailable {get; private set;} 
         public IBuffState PlayerBuffState 
         {
             get
@@ -32,6 +34,7 @@ namespace Breakout.Players {
             moveRight = 0.00f;
             playerBuffState = buffState;
             lives = 4;
+            ExtentX = shape.Extent.X;
         }
 
         public void ProcessEvent(GameEvent gameEvent) {
@@ -58,6 +61,14 @@ namespace Breakout.Players {
                             if (lives > 5) {}
                             else {lives++;}
                             break;
+                        case PowerUps.Laser:
+                            if (LaserAvailable) {
+                                BreakoutBus.GetBus().ResetTimedEvent(3, TimePeriod.NewSeconds(10.0));
+                            }
+                            else {
+                                LaserAvailable = true;
+                            }
+                            break;
                         default:
                             break;
                     }  
@@ -73,6 +84,9 @@ namespace Breakout.Players {
                             if (PlayerBuffState is ElongateBuffState) {
                                 PlayerBuffState = new RegularBuffState();
                             }
+                            break;
+                        case PowerUps.Laser:
+                            LaserAvailable = false;
                             break;
                         default:
                             break;

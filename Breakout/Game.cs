@@ -71,9 +71,8 @@ namespace Breakout {
                         break;
                     //Will be used to count the time spent on a specific level 
                     case KeyboardKey.Space:
-                        BreakoutBus.GetBus().RegisterTimedEvent(
-                            new GameEvent {EventType = GameEventType.TimedEvent, Message = "HELLO"},
-                                TimePeriod.NewSeconds(2.0));
+                        BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                            EventType = GameEventType.InputEvent, Message = "KEY_SPACE_RELEASED"});
                         break;
                     case KeyboardKey.Left:
                         BreakoutBus.GetBus().RegisterEvent(new GameEvent {    

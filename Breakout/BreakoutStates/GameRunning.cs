@@ -28,6 +28,8 @@ namespace Breakout.BreakoutStates {
         private Wall wall;
         
         //private Timer timer;
+        private EntityContainer<PlayerShot> playerShots;
+        private IBaseImage playerShotImage;
         private static GameRunning instance = null;
         public GameRunning() {
             new StaticTimer();
@@ -62,6 +64,9 @@ namespace Breakout.BreakoutStates {
             
             collisionHandler = new CollisionHandler();
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
+            //Playershots and image
+            playerShots = new EntityContainer<PlayerShot>();
+            playerShotImage = new Image(Path.Combine("..", "Breakout", "Assets", "Images", "BulletRed2.png"));
         }
 
 
@@ -91,6 +96,13 @@ namespace Breakout.BreakoutStates {
                 case KeyboardKey.Right:
                     player.SetMoveRight(false);
                     break;
+                case KeyboardKey.Space:
+                    if (player.LaserAvailable) {
+                        playerShots.AddEntity(new PlayerShot(
+                        new Vec2F(player.GetPosition().X + (player.ExtentX / 2), 
+                        player.GetPosition().Y), playerShotImage));
+                    }
+                    break;
                 default:
                     break;
             }    
@@ -114,6 +126,17 @@ namespace Breakout.BreakoutStates {
             }
         }
 
+         private void IterateShots() {
+            playerShots.Iterate(shot => {
+                //move the shots shape
+                shot.Shape.Move();
+                if (shot.Shape.Position.Y > 1.0f) {
+                    //Delete shot
+                    shot.DeleteEntity();
+                }
+            });
+        }
+
         /// <summary>
         /// Render objects on window.
         /// </summary>
@@ -126,6 +149,7 @@ namespace Breakout.BreakoutStates {
             levelLoader.timer.RenderTime();
             powerUpManger.RenderPowerUps();
             wall.RenderWall();
+            playerShots.RenderEntities();
         }
 
         /// <summary>
@@ -145,6 +169,8 @@ namespace Breakout.BreakoutStates {
             if (wall.IsActive) {
                 collisionHandler.HandleEntityCollisions(wall, balls.allBalls);    
             }
+            playerShots.Iterate(playerShot => collisionHandler.HandleEntityCollisions(playerShot, AllBlocks));
+            IterateShots();
 
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
