@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Events;
 using DIKUArcade.Physics;
 using Breakout.PowerUpSpace;
+using DIKUArcade.Timers;
 
 namespace Breakout.Players {
     public class Player : Entity, IGameEventProcessor {
@@ -22,10 +23,11 @@ namespace Breakout.Players {
             Shape.Extent = value.GetExtent();
             }
         }
+
         public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState)
              : base(shape, image) {
-            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, this);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
             moveLeft = 0.00f;
             moveRight = 0.00f;
             playerBuffState = buffState;
@@ -37,10 +39,20 @@ namespace Breakout.Players {
                 if (gameEvent.EventType ==  GameEventType.ControlEvent) {
                     switch (PowerUpTransformer.TransformStringToPowerUp(gameEvent.StringArg1)) {
                         case PowerUps.Elongate:
-                            PlayerBuffState = new ElongateBuffState();
+                            if (PlayerBuffState is ElongateBuffState){
+                                BreakoutBus.GetBus().ResetTimedEvent(1, TimePeriod.NewSeconds(10.0));
+                            }
+                            else {
+                                PlayerBuffState = new ElongateBuffState();
+                            }
                             break;
                         case PowerUps.SpeedBuff:
-                            PlayerBuffState = new SpeedBuffState();
+                            if (PlayerBuffState is SpeedBuffState) {
+                                BreakoutBus.GetBus().ResetTimedEvent(1, TimePeriod.NewSeconds(10.0));
+                            }
+                            else {
+                                PlayerBuffState = new SpeedBuffState();
+                            }
                             break;
                         default:
                             break;
@@ -49,8 +61,14 @@ namespace Breakout.Players {
                 else if (gameEvent.EventType == GameEventType.TimedEvent) {
                     switch (PowerUpTransformer.TransformStringToPowerUp(gameEvent.StringArg1)) {
                         case PowerUps.SpeedBuff:
+                            if (PlayerBuffState is SpeedBuffState) {
+                                PlayerBuffState = new RegularBuffState();
+                            }
+                            break;
                         case PowerUps.Elongate:
-                            PlayerBuffState = new RegularBuffState();
+                            if (PlayerBuffState is ElongateBuffState) {
+                                PlayerBuffState = new RegularBuffState();
+                            }
                             break;
                         default:
                             break;
