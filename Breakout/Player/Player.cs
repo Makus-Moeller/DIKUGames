@@ -9,10 +9,10 @@ using DIKUArcade.Timers;
 namespace Breakout.Players {
     public class Player : Entity, IGameEventProcessor {
         private float moveLeft, moveRight;
-        private IPlayerBuffState playerBuffState;
+        private IBuffState playerBuffState;
         public int lives {get; private set;}
         public bool IsDead;
-        public IPlayerBuffState PlayerBuffState 
+        public IBuffState PlayerBuffState 
         {
             get
             {
@@ -24,7 +24,7 @@ namespace Breakout.Players {
             }
         }
 
-        public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState)
+        public Player(DynamicShape shape, IBaseImage image, IBuffState buffState)
              : base(shape, image) {
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
