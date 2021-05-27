@@ -3,9 +3,10 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
 using DIKUArcade.Physics;
+using Breakout.PowerUpSpace;
 
 namespace Breakout.Players {
-    public class Player : Entity, ICollidable {
+    public class Player : Entity, IGameEventProcessor {
         private float moveLeft, moveRight;
         private IPlayerBuffState playerBuffState;
         public int lives {get; private set;}
@@ -23,26 +24,39 @@ namespace Breakout.Players {
         }
         public Player(DynamicShape shape, IBaseImage image, IPlayerBuffState buffState)
              : base(shape, image) {
-
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, this);
             moveLeft = 0.00f;
             moveRight = 0.00f;
             playerBuffState = buffState;
             lives = 4;
         }
-        
-        public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
-        /*
-            var powerUpItem = objectOfCollision as PowerUp;
-            if ((muligvis = objectOfCollision as PowerUp) != null) {
-                switch (powerUpItem.PowerUp) {
-                    case(PowerUpTypes.Elongate):
-                        playerBuffState = new ElongateBuffState();
-                        break;
-                    default:
-                        break;
+
+        public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.Message == "HandlePowerUp") {
+                if (gameEvent.EventType ==  GameEventType.ControlEvent) {
+                    switch (PowerUpTransformer.TransformStringToPowerUp(gameEvent.StringArg1)) {
+                        case PowerUps.Elongate:
+                            PlayerBuffState = new ElongateBuffState();
+                            break;
+                        case PowerUps.SpeedBuff:
+                            PlayerBuffState = new SpeedBuffState();
+                            break;
+                        default:
+                            break;
+                    }  
+                }
+                else if (gameEvent.EventType == GameEventType.TimedEvent) {
+                    switch (PowerUpTransformer.TransformStringToPowerUp(gameEvent.StringArg1)) {
+                        case PowerUps.SpeedBuff:
+                        case PowerUps.Elongate:
+                            PlayerBuffState = new RegularBuffState();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-        */
         }
         
         //Methods for movement. Render and update is in the entity baseclass
@@ -62,7 +76,7 @@ namespace Breakout.Players {
 
         public void SetMoveLeft(bool val) {
             if (val) {
-                moveLeft = -(playerBuffState.Getspeed());
+                moveLeft = -(playerBuffState.GetSpeed());
             }
             else {
                 moveLeft = 0.00f;
@@ -73,7 +87,7 @@ namespace Breakout.Players {
         public void SetMoveRight(bool val) {
             if (val) {
                 
-                moveRight = playerBuffState.Getspeed();       
+                moveRight = playerBuffState.GetSpeed();       
             }      
             else {
                 moveRight = 0.00f;

@@ -11,7 +11,6 @@ namespace Breakout.Blocks {
         protected int hitpoints;
         protected bool unbreakable;
         protected bool isHardened;
-        protected Entity PowerUpItem;
         protected int value;
 
         public AtomBlock(Shape shape, IBaseImage image) : base(shape, image) {
