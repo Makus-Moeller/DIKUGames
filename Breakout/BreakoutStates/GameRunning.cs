@@ -22,7 +22,7 @@ namespace Breakout.BreakoutStates {
         public Rewards gamescore {get; private set;}
         private LevelLoader levelLoader;
         private EntityContainer<AtomBlock> AllBlocks;
-        private EntityContainer<Ball> balls;
+        private BallManager balls;
         private PlayerLives playerLives;
         private PowerUpManager powerUpManger;
         
@@ -49,10 +49,8 @@ namespace Breakout.BreakoutStates {
                     new RegularBuffState()); 
             //Instantiates levelloader, balls and rewards    
             levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
-            balls = new EntityContainer<Ball>();
-            balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
-                new Vec2F(0.01f, 0.02f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+            balls = new BallManager();
+            balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
             //Levelloader can set level
             AllBlocks = levelLoader.Nextlevel();
@@ -117,7 +115,7 @@ namespace Breakout.BreakoutStates {
             gamescore.RenderScore();
             player.Render();
             AllBlocks.RenderEntities();
-            balls.RenderEntities();
+            balls.allBalls.RenderEntities();
             playerLives.RenderLives();
             levelLoader.timer.RenderTime();
             powerUpManger.RenderPowerUps();
@@ -128,28 +126,25 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void UpdateState() {
             player.Move();
-            balls.Iterate(ball => ball.MoveBall());
+            balls.allBalls.Iterate(ball => ball.MoveBall());
             BreakoutBus.GetBus().ProcessEvents();
-            collisionHandler.HandleEntityCollisions(player, balls);
+            collisionHandler.HandleEntityCollisions(player, balls.allBalls);
             playerLives.UpdateLives();
             powerUpManger.Update();
             collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
-            balls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
+            balls.allBalls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
             levelLoader.timer.UpdateTimeRemaining();
+            
 
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
-                balls.ClearContainer();
-                balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
-                    new Vec2F(0.01f, 0.02f)),
-                    new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+                balls.allBalls.ClearContainer();
+                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
 
             }
-            if (balls.CountEntities() == 0) {
+            if (balls.allBalls.CountEntities() == 0) {
                 player.DecrementLives();
-                balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
-                    new Vec2F(0.01f, 0.02f)),
-                    new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
             }
             if (player.IsDead || levelLoader.timer.IsTimesUp()) {
                 BreakoutBus.GetBus().RegisterEvent(

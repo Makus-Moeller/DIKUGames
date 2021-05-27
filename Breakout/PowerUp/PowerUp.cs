@@ -33,8 +33,6 @@ namespace Breakout.PowerUpSpace {
                 BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
                     Message = "HandlePowerUp",
                     StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 1 }, TimePeriod.NewSeconds(10.0));
-                    
-                
             }    
         }
 

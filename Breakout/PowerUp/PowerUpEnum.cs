@@ -3,7 +3,8 @@ namespace Breakout.PowerUpSpace {
     public enum PowerUps {
         Elongate,
         SpeedBuff,
-        ExtraLife
+        ExtraLife,
+        Split
     }
 
     public static class PowerUpTransformer {
@@ -15,6 +16,8 @@ namespace Breakout.PowerUpSpace {
                     return PowerUps.SpeedBuff;
                 case "ExtraLife":
                     return PowerUps.ExtraLife;
+                case "Split":
+                    return PowerUps.Split;
                 default:
                     throw new ArgumentException("Not valid PowerUp"); 
             }
@@ -28,6 +31,8 @@ namespace Breakout.PowerUpSpace {
                     return "SpeedBuff";
                 case PowerUps.ExtraLife:
                     return "ExtraLife";
+                case PowerUps.Split:
+                    return "Split";
                 default:
                     throw new ArgumentException("Not valid PowerUp");
             }

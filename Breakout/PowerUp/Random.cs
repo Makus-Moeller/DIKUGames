@@ -6,7 +6,7 @@ namespace Breakout.PowerUpSpace {
         private Random random;
         public RandomNumberGenerator() {
             random = new Random();
-            number = random.Next(1, 4); 
+            number = random.Next(1, 5); 
         } 
 
        public int GetNumber() {
