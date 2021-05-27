@@ -10,9 +10,9 @@ using Breakout.Levelloader;
 using DIKUArcade.Input;
 using DIKUArcade.Timers;
 using Breakout.Blocks;
+using Breakout.PowerUpSpace;
 
-namespace Breakout.BreakoutStates
-{
+namespace Breakout.BreakoutStates {
     /// <summary>
     /// GameRunning class. Where the breakout game is running.
     /// </summary>
@@ -24,6 +24,7 @@ namespace Breakout.BreakoutStates
         private EntityContainer<AtomBlock> AllBlocks;
         private EntityContainer<Ball> balls;
         private PlayerLives playerLives;
+        private PowerUpManager powerUpManger;
         
         //private Timer timer;
         private static GameRunning instance = null;
@@ -56,6 +57,7 @@ namespace Breakout.BreakoutStates
             AllBlocks = levelLoader.Nextlevel();
             collisionHandler = new CollisionHandler();
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
+            powerUpManger = new PowerUpManager();
         }
 
 
@@ -118,6 +120,7 @@ namespace Breakout.BreakoutStates
             balls.RenderEntities();
             playerLives.RenderLives();
             levelLoader.timer.RenderTime();
+            powerUpManger.RenderPowerUps();
         }
 
         /// <summary>
@@ -129,6 +132,8 @@ namespace Breakout.BreakoutStates
             BreakoutBus.GetBus().ProcessEvents();
             collisionHandler.HandleEntityCollisions(player, balls);
             playerLives.UpdateLives();
+            powerUpManger.Update();
+            collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
             balls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
             levelLoader.timer.UpdateTimeRemaining();
 
