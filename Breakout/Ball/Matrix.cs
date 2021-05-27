@@ -1,7 +1,8 @@
 using DIKUArcade.Math;
 using System;
-namespace Breakout.Players
-{
+
+namespace Breakout {
+
     /// <summary>
     /// Matrix til vector manipulation
     /// </summary>
@@ -26,6 +27,11 @@ namespace Breakout.Players
             matrix[0,1] = (float) -Math.Sin(factor * Math.PI/180.0);
             matrix[1,0] = (float) Math.Sin(factor * Math.PI/180.0);
             matrix[1,1] = (float) Math.Cos(factor * Math.PI/180.0);
+        }
+
+        public float GetIndexOfArray(int i, int j)
+        {
+            return matrix[i,j];
         }
     }
 }

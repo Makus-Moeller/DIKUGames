@@ -37,7 +37,7 @@ namespace BreakoutTests {
 
         [Test]
         public void HitWallRightAndLeftBoundryTest() {
-            ball.Shape.Position.X = 0.98f;
+            ball.Shape.Position.X = 0.999f;
             ball.HitWall();
             Assert.True(1.0E-7 > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
             ball.Shape.Position.X = -0.01f;

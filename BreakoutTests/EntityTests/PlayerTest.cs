@@ -12,7 +12,6 @@ namespace BreakoutTests {
     public class PlayerTests {
         private Player player;
         private Player TestRightLimitPlayer;
-
         private Player TestLeftLimitPlayer;
 
         [SetUp]
@@ -41,7 +40,7 @@ namespace BreakoutTests {
         public void TestPlayerMoveRight() {
             player.SetMoveRight(true);
             player.Move();
-            Assert.True(10E-8f > player.GetPosition().X - 0.465f);
+            Assert.True(10E-8f < player.GetPosition().X - 0.465f);
         }
         [Test]
         public void TestPlayerMoveLeft() {
