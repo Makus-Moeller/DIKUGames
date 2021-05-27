@@ -87,5 +87,10 @@ namespace Breakout.Levelloader {
                 }
             }
         }
+
+        public string[] GetMetaData()
+        {
+            return metaData;
+        }
     }
 }

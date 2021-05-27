@@ -27,7 +27,7 @@ namespace Breakout.Players {
             moveLeft = 0.00f;
             moveRight = 0.00f;
             playerBuffState = buffState;
-            lives = 2;
+            lives = 4;
         }
         
         public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
@@ -90,7 +90,7 @@ namespace Breakout.Players {
         }
 
         public void DecrementLives() {
-            if (lives == 0) {
+            if (lives == 1) {
                 IsDead = true; 
             }
             else lives--;
