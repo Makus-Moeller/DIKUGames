@@ -1,6 +1,7 @@
 using DIKUArcade.Events;
 using DIKUArcade.Input;
 using DIKUArcade.State;
+using DIKUArcade.Timers;
 using System;
 
 namespace Breakout.BreakoutStates {
@@ -30,11 +31,14 @@ namespace Breakout.BreakoutStates {
                 case GameStateType.GameRunning:
                     //Hvis afsender er MainMenu skal den genstarte spillet
                     if (sender == "MAINMENU") {
+                        StaticTimer.RestartTimer();
                         GameRunning.GetInstance().InitializeGameState();
                     }
+                    StaticTimer.ResumeTimer();
                     ActiveState = GameRunning.GetInstance();
                     break;
                 case GameStateType.GamePaused:
+                    StaticTimer.PauseTimer();
                     ActiveState = GamePaused.GetInstance();
                     break;
                 case GameStateType.GameWon:

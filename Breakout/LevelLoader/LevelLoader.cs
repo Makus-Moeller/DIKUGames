@@ -16,7 +16,9 @@ namespace Breakout.Levelloader {
         private CharDefiners[] charDefiners;
         private IBlockCreator blockCreator;
         private List<string> filenames;
-        private DirectoryReader directoryReader;
+        private DirectoryReader directoryReader; 
+        public Timer timer {get; private set;}
+
         private string path;
         //Hvis du vil sætte levelet skal du fortælle den :
         //Hvad det er baseret på, hvordan den skal læse og fortolke den
@@ -26,6 +28,7 @@ namespace Breakout.Levelloader {
             directoryReader = new DirectoryReader();
             filenames = directoryReader.Readfiles(path);
             this.path = path;
+            timer = new Timer();
         }
 
         /// <summary>
@@ -41,6 +44,8 @@ namespace Breakout.Levelloader {
             this.blockCreator = blockCreator;
             stringInterpreter.ReadFile(file);
             charDefiners = stringInterpreter.CreateCharDefiners();
+            timer.SetLevelTime(interpreter);
+            StaticTimer.RestartTimer();
             return blockCreator.CreateBlocks(charDefiners);
         }
         /// <summary>

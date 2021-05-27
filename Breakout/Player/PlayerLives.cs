@@ -20,17 +20,16 @@ namespace Breakout.Players {
             lives = player.lives;
             placement = position;
             width = extent;
-            display= new Text("Lives: " + lives, placement, width);
+            display = new Text("Lives: " + lives.ToString(), placement, width);
         }
 
         public void RenderLives() {
-            display.SetText("Lives : " + lives.ToString());
             display.SetColor(new Vec3I(191, 0, 255));
             display.RenderText();
         }
         public void UpdateLives() {
             lives = player.lives;
-            display= new Text("Lives: " + lives, placement, width);
+            display.SetText("Lives: " + lives.ToString()); 
             RenderLives();
         }
     }

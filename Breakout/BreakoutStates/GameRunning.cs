@@ -8,6 +8,7 @@ using DIKUArcade.Events;
 using Breakout.Players;
 using Breakout.Levelloader;
 using DIKUArcade.Input;
+using DIKUArcade.Timers;
 using Breakout.Blocks;
 
 namespace Breakout.BreakoutStates
@@ -23,8 +24,11 @@ namespace Breakout.BreakoutStates
         private EntityContainer<AtomBlock> AllBlocks;
         private EntityContainer<Ball> balls;
         private PlayerLives playerLives;
+        
+        //private Timer timer;
         private static GameRunning instance = null;
         public GameRunning() {
+            new StaticTimer();
             InitializeGameState();
         }
 
@@ -51,7 +55,7 @@ namespace Breakout.BreakoutStates
             //Levelloader can set level
             AllBlocks = levelLoader.Nextlevel();
             collisionHandler = new CollisionHandler();
-            playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.3f, 0.3f), player);
+            playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
         }
 
 
@@ -113,6 +117,7 @@ namespace Breakout.BreakoutStates
             AllBlocks.RenderEntities();
             balls.RenderEntities();
             playerLives.RenderLives();
+            levelLoader.timer.RenderTime();
         }
 
         /// <summary>
@@ -125,8 +130,15 @@ namespace Breakout.BreakoutStates
             collisionHandler.HandleEntityCollisions(player, balls);
             playerLives.UpdateLives();
             balls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
+            levelLoader.timer.UpdateTimeRemaining();
+
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
+                balls.ClearContainer();
+                balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
+                new Vec2F(0.01f, 0.02f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+
             }
             if (balls.CountEntities() == 0) {
                 player.DecrementLives();
@@ -134,12 +146,11 @@ namespace Breakout.BreakoutStates
                 new Vec2F(0.01f, 0.02f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
             }
-            if (player.IsDead) {
+            if (player.IsDead || levelLoader.timer.IsTimesUp()) {
                 BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent{EventType = GameEventType.GameStateEvent, 
                             Message = "CHANGE_STATE", StringArg1 = "GAME_LOST", StringArg2 = "GAME_RUNNING"});
             }
-            
         }
 
         public void ResetState()
