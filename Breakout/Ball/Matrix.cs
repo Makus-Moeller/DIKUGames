@@ -29,6 +29,7 @@ namespace Breakout {
             matrix[1,1] = (float) Math.Cos(factor * Math.PI/180.0);
         }
 
+        //Only used for testing
         public float GetIndexOfArray(int i, int j)
         {
             return matrix[i,j];
