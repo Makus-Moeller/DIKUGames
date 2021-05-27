@@ -42,6 +42,7 @@ namespace Breakout.BreakoutStates {
         /// Initializes a new game. 
         /// </summary>
         public void InitializeGameState() {
+            powerUpManger = new PowerUpManager();
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
@@ -57,7 +58,6 @@ namespace Breakout.BreakoutStates {
             AllBlocks = levelLoader.Nextlevel();
             collisionHandler = new CollisionHandler();
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
-            powerUpManger = new PowerUpManager();
         }
 
 

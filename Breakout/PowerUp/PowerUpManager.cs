@@ -29,10 +29,10 @@ namespace Breakout.PowerUpSpace {
                         int randomBuff = new RandomNumberGenerator().GetNumber();
                         Console.WriteLine(randomBuff);
                         switch (randomBuff) {
-                            case 1 :
+                            case 1:
                                 CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), float.Parse(gameEvent.StringArg2)), new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), new Image(Path.Combine("..", "Breakout", "Assets", "Images", "WidePowerUp.png")), PowerUps.Elongate));
                                 break;
-                            case 2 :
+                            case 2:
                                 CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), float.Parse(gameEvent.StringArg2)), new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), new Image(Path.Combine("..", "Breakout", "Assets", "Images", "SpeedPickUp.png")), PowerUps.SpeedBuff));
                                 break;
                             default:
