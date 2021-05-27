@@ -1,7 +1,9 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using DIKUArcade.Events;
+using DIKUArcade.Physics;
+using Breakout.Players;
 using DIKUArcade.Math;
-using System.IO;
 
 namespace Breakout.Blocks {
     
@@ -15,6 +17,10 @@ namespace Breakout.Blocks {
                     new Image(Path.Combine("..", "Breakout", 
                         "Assets", "Images", "BigPowerUp.png")));
             value += 2;
+        }
+        
+        public override void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
+            HitBlock(20);
         } 
     }   
 }

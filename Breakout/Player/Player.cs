@@ -42,7 +42,7 @@ namespace Breakout.Players {
                         break;
                 }
             }
-            */
+        */
         }
         
         //Methods for movement. Render and update is in the entity baseclass
