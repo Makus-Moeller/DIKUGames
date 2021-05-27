@@ -54,6 +54,10 @@ namespace Breakout.Players {
                                 PlayerBuffState = new SpeedBuffState();
                             }
                             break;
+                        case PowerUps.ExtraLife:
+                            if (lives > 5) {}
+                            else {lives++;}
+                            break;
                         default:
                             break;
                     }  

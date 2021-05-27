@@ -141,15 +141,15 @@ namespace Breakout.BreakoutStates {
                 AllBlocks = levelLoader.Nextlevel();
                 balls.ClearContainer();
                 balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
-                new Vec2F(0.01f, 0.02f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+                    new Vec2F(0.01f, 0.02f)),
+                    new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
 
             }
             if (balls.CountEntities() == 0) {
                 player.DecrementLives();
                 balls.AddEntity(new Ball(new DynamicShape(new Vec2F(0.50f, 0.08f), new Vec2F(0.04f, 0.04f), 
-                new Vec2F(0.01f, 0.02f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
+                    new Vec2F(0.01f, 0.02f)),
+                    new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball.png"))));
             }
             if (player.IsDead || levelLoader.timer.IsTimesUp()) {
                 BreakoutBus.GetBus().RegisterEvent(
