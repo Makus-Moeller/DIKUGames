@@ -35,12 +35,6 @@ namespace Breakout.Players {
                             break;
                     }
                 }
-                else if (gameEvent.EventType ==  GameEventType.TimedEvent) {
-                    switch (PowerUpTransformer.TransformStringToPowerUp(gameEvent.StringArg1)) {
-                        default:
-                            break;
-                    }
-                }
             }
         }
 

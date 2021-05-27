@@ -25,6 +25,7 @@ namespace Breakout.BreakoutStates {
         private BallManager balls;
         private PlayerLives playerLives;
         private PowerUpManager powerUpManger;
+        private Wall wall;
         
         //private Timer timer;
         private static GameRunning instance = null;
@@ -43,17 +44,22 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void InitializeGameState() {
             powerUpManger = new PowerUpManager();
+            levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
+            AllBlocks = levelLoader.Nextlevel();
+            wall = new Wall(new StationaryShape(new Vec2F(0.0f, 0.15f), new Vec2F(1.0f, 0.05f)),
+                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "Wall.png")));
+
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
                     new RegularBuffState()); 
             //Instantiates levelloader, balls and rewards    
-            levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
+
             balls = new BallManager();
             balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
             //Levelloader can set level
-            AllBlocks = levelLoader.Nextlevel();
+            
             collisionHandler = new CollisionHandler();
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
         }
@@ -119,6 +125,7 @@ namespace Breakout.BreakoutStates {
             playerLives.RenderLives();
             levelLoader.timer.RenderTime();
             powerUpManger.RenderPowerUps();
+            wall.RenderWall();
         }
 
         /// <summary>
@@ -135,6 +142,9 @@ namespace Breakout.BreakoutStates {
             balls.allBalls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
             levelLoader.timer.UpdateTimeRemaining();
             
+            if (wall.IsActive) {
+                collisionHandler.HandleEntityCollisions(wall, balls.allBalls);    
+            }
 
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
