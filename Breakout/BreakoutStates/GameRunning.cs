@@ -49,11 +49,11 @@ namespace Breakout.BreakoutStates {
             levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
             AllBlocks = levelLoader.Nextlevel();
             wall = new Wall(new StationaryShape(new Vec2F(0.0f, 0.01f), new Vec2F(1.0f, 0.05f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "Wall.png")));
+                new Image(Path.Combine("Assets", "Images", "Wall.png")));
 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
-                new Image(Path.Combine("..", "Breakout", "Assets", "Images", "player.png")), 
+                new Image(Path.Combine("Assets", "Images", "player.png")), 
                     new RegularBuffState()); 
             //Instantiates levelloader, balls and rewards    
 
@@ -66,7 +66,7 @@ namespace Breakout.BreakoutStates {
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
             //Playershots and image
             playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine("..", "Breakout", "Assets", "Images", "BulletRed2.png"));
+            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
         }
 
 

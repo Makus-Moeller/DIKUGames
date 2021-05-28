@@ -41,7 +41,7 @@ namespace Breakout.Players {
         public void AddBall(Vec2F position, Vec2F direction) {
             allBalls.AddEntity(new Ball(new DynamicShape(position, new Vec2F(0.04f, 0.04f), 
                     direction),
-                    new Image(Path.Combine("..", "Breakout", "Assets", "Images", "ball2.png"))));
+                    new Image(Path.Combine("Assets", "Images", "ball2.png"))));
         }
     }
 }
