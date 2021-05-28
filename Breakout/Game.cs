@@ -96,7 +96,7 @@ namespace Breakout {
         }
 
         public override void Update() {   
-            BreakoutBus.GetBus().ProcessEvents();
+            BreakoutBus.GetBus().ProcessEventsSequentially(); 
             stateMachine.ActiveState.UpdateState();
         }
 

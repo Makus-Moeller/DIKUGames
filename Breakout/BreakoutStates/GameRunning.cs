@@ -48,7 +48,7 @@ namespace Breakout.BreakoutStates {
             powerUpManger = new PowerUpManager();
             levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
             AllBlocks = levelLoader.Nextlevel();
-            wall = new Wall(new StationaryShape(new Vec2F(0.0f, 0.15f), new Vec2F(1.0f, 0.05f)),
+            wall = new Wall(new StationaryShape(new Vec2F(0.0f, 0.01f), new Vec2F(1.0f, 0.05f)),
                 new Image(Path.Combine("..", "Breakout", "Assets", "Images", "Wall.png")));
 
             player = new Player(
@@ -187,6 +187,7 @@ namespace Breakout.BreakoutStates {
                             new GameEvent{EventType = GameEventType.GameStateEvent, 
                             Message = "CHANGE_STATE", StringArg1 = "GAME_LOST", StringArg2 = "GAME_RUNNING"});
             }
+            
         }
 
         public void ResetState()

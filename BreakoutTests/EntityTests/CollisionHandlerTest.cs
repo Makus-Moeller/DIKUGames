@@ -64,11 +64,19 @@ namespace BreakoutTests {
 
         }
 
-        /*
+        
 
         [Test]
-        public void TestBranchTwo() {
+        public void TestBranchOne() {
             ball.Shape.AsDynamicShape().Direction = new Vec2F(-0.002f, 0.005f);
+            ball.HandleCollision.CalculateNewDirection(collisiondataBranch2, entityForBranchOneAndTwo);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - -0.0046f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.0028f);
+        }
+        
+        [Test]
+        public void TestBranchTwo() {
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(-0.002f, -0.005f);
             collisionHandler.CalculateNewDirection(collisiondataBranch2, entityForBranchOneAndTwo);
             Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - -0.0046f);
             Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.0028f);
@@ -76,6 +84,7 @@ namespace BreakoutTests {
 
         [Test]
         public void TestBranchThree() {
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
             collisionHandler.CalculateNewDirection(collisiondataBranch3, entityForBranchThreeAndFour);
             Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
             Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
@@ -84,11 +93,49 @@ namespace BreakoutTests {
         [Test]
         public void TestBranchFour() {
             collisionHandler.CalculateNewDirection(collisiondataBranch4, entityForBranchThreeAndFour);
-            ball.Shape.AsDynamicShape().Direction = new Vec2F(-0.002f, 0.005f);
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
             Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
             Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
-            
         }
-        */
+
+        [Test]
+        public void TestBranchFive() {
+            collisionHandler.CalculateNewDirection(collisiondataBranch4, entityForBranchThreeAndFour);
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
+        }
+
+        [Test]
+        public void TestBranchSeks() {
+            collisionHandler.CalculateNewDirection(collisiondataBranch4, entityForBranchThreeAndFour);
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
+        }
+
+        [Test]
+        public void TestBranchSeven() {
+            collisionHandler.CalculateNewDirection(collisiondataBranch4, entityForBranchThreeAndFour);
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
+        }
+
+        [Test]
+        public void TestBranchFour() {
+            collisionHandler.CalculateNewDirection(collisiondataBranch4, entityForBranchThreeAndFour);
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
+        }
+
+        [Test]
+        public void TestBranchFour() {
+            collisionHandler.CalculateNewDirection(collisiondataBranch4, entityForBranchThreeAndFour);
+            ball.Shape.AsDynamicShape().Direction = new Vec2F(0.002f, -0.005f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
+            Assert.True(1.0E-6f > ball.Shape.AsDynamicShape().Direction.Y - 0.005f);
+        }
     }
 }
