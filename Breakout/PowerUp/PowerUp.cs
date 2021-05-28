@@ -1,20 +1,16 @@
-using DIKUArcade.State;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using System.IO;
-using System;
 using DIKUArcade.Events;
 using Breakout.Players;
-using Breakout.Levelloader;
-using DIKUArcade.Input;
 using DIKUArcade.Timers;
-using Breakout.Blocks;
 using DIKUArcade.Physics;
 
 
-namespace Breakout.PowerUpSpace {
-    
+namespace Breakout.PowerUpSpace
+{
+    /// <summary>
+    /// Power up entity, which a player can pick up and gain new attributes.
+    /// </summary>
     public class PowerUp : Entity, ICollidable {
         public PowerUps ThisPowerUp {get; set;}
 
@@ -22,6 +18,12 @@ namespace Breakout.PowerUpSpace {
             ThisPowerUp = powerUpType;
             
         }
+
+        /// <summary>
+        /// Handles collision between this object and another.
+        /// </summary>
+        /// <param name="data">colissiondata such as position, and direction of objects</param>
+        /// <param name="objectOfCollision">The object this collides with</param>
 
         public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
             if ((objectOfCollision as Player) != null) {
