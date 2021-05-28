@@ -72,14 +72,14 @@ namespace Breakout.BreakoutStates {
                     backGroundImage.RenderEntity();
                     switch (activeMenuButton) {
                         case (0):
-                            menuButtons[0].SetColor(120, 255, 0, 0);
-                            menuButtons[1].SetColor(120, 0, 0, 255);
+                            menuButtons[0].SetColor(255, 255, 0, 0);
+                            menuButtons[1].SetColor(255, 0, 0, 255);
                             menuButtons[0].RenderText();
                             menuButtons[1].RenderText();
                             break;
                         case (1):
-                            menuButtons[0].SetColor(120, 0, 0, 255);
-                            menuButtons[1].SetColor(120, 255, 0, 0);
+                            menuButtons[0].SetColor(255, 0, 0, 255);
+                            menuButtons[1].SetColor(255, 255, 0, 0);
                             menuButtons[0].RenderText();
                             menuButtons[1].RenderText();
                             break;

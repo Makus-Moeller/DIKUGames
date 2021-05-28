@@ -11,6 +11,7 @@ using DIKUArcade.Input;
 using DIKUArcade.Timers;
 using Breakout.Blocks;
 using Breakout.PowerUpSpace;
+using DIKUArcade.Utilities;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
@@ -46,14 +47,14 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void InitializeGameState() {
             powerUpManger = new PowerUpManager();
-            levelLoader = new LevelLoader(Path.Combine("Assets", "Levels"));
+            levelLoader = new LevelLoader(Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels"));
             AllBlocks = levelLoader.Nextlevel();
             wall = new Wall(new StationaryShape(new Vec2F(0.0f, 0.01f), new Vec2F(1.0f, 0.05f)),
-                new Image(Path.Combine("Assets", "Images", "Wall.png")));
+                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "wall.png")));
 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.08f), new Vec2F(0.2f, 0.03f)),
-                new Image(Path.Combine("Assets", "Images", "player.png")), 
+                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")), 
                     new RegularBuffState()); 
             //Instantiates levelloader, balls and rewards    
 
@@ -66,7 +67,7 @@ namespace Breakout.BreakoutStates {
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
             //Playershots and image
             playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+            playerShotImage = new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BulletRed2.png"));
         }
 
 
