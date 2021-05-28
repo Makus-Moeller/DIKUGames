@@ -1,9 +1,9 @@
 Map:
-------------
------1------
------1------
------1------
------1-1----
+--------0000
+-----1--0000
+-----1--0000
+000--1--0000
+ddd222222ddd
 ------------
 ------------
 ------------
@@ -29,11 +29,12 @@ Meta:
 Name: LEVEL 1
 Time: 300
 PowerUp: 2
+Unbreakable: d
 Meta/
 
 Legend:
-#) teal-block.png
-1) blue-block.png
-2) green-block.png
-q) darkgreen-block.png
+2) teal-block.png
+0) blue-block.png
+1) green-block.png
+d) darkgreen-block.png
 Legend/
