@@ -3,6 +3,7 @@ using Breakout.Blocks;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
+using DIKUArcade.Utilities;
 
 namespace Breakout.Levelloader {
     
@@ -23,22 +24,22 @@ namespace Breakout.Levelloader {
                         string path = charDefiner.imagePath;
                         blocks.AddEntity(new HardenedBlock(new DynamicShape(position, 
                         new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                        new Image(Path.Combine("Assets", "Images", path)), path));
+                        new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", path)), path));
                     }
                     else if (charDefiner.powerUp) {
                         blocks.AddEntity(new PowerUpBlock(new DynamicShape(position, 
                         new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                        new Image(Path.Combine( "Assets", "Images", charDefiner.imagePath))));
+                        new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", charDefiner.imagePath))));
                     }
                     else if (charDefiner.unbreakable) {
                         blocks.AddEntity(new UnbreakableBlock(new DynamicShape(position, 
                         new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                        new Image(Path.Combine( "Assets", "Images", charDefiner.imagePath))));
+                        new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", charDefiner.imagePath))));
                      }
                     else {
                         blocks.AddEntity(new AtomBlock(new DynamicShape(position, 
                             new Vec2F(1.0f/12.0f, 1.0f/24f)), 
-                            new Image(Path.Combine("Assets", "Images", charDefiner.imagePath))));
+                            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", charDefiner.imagePath))));
                     }
                 }
             }

@@ -8,6 +8,7 @@ using System;
 using DIKUArcade.Events;
 using Breakout;
 using DIKUArcade.Input;
+using DIKUArcade.Utilities;
 
 namespace Breakout.BreakoutStates {
 
@@ -27,7 +28,7 @@ namespace Breakout.BreakoutStates {
             menuButtons[1] = MainMenu;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
                 new Vec2F(1.0f, 1.0f)), 
-                new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
+                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BreakoutTitleScreen.png")));
         }
 
         public static GamePaused GetInstance() {
