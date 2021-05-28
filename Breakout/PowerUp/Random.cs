@@ -1,6 +1,10 @@
 using System;
 
 namespace Breakout.PowerUpSpace {
+
+    /// <summary>
+    /// Random number generator to generate random powerUps.
+    /// </summary>
     public class RandomNumberGenerator {
         private int number;
         private Random random;
@@ -9,8 +13,11 @@ namespace Breakout.PowerUpSpace {
             number = random.Next(1, 7); 
         } 
 
-       public int GetNumber() {
-           return number;
-       }
+        /// <summary>
+        /// Gets a random number.
+        /// </summary>
+        public int GetNumber() {
+            return number;
+        }
     }
 }

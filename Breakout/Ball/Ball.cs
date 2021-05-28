@@ -24,7 +24,15 @@ namespace Breakout.Players {
         /// Breaches the boundris of the map
         /// </summary>
         public void HitWall() {
-            if (Shape.Position.X > 0.99f) {
+            if (Shape.Position.X > 0.98f && Shape.Position.Y > 0.98f) {
+                Shape.AsDynamicShape().Direction.X = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
+                Shape.AsDynamicShape().Direction.Y = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
+            }
+            else if (Shape.Position.X < 0.02f && Shape.Position.Y > 0.98f) {
+                Shape.AsDynamicShape().Direction.X = (float) ((speedOfBall*Math.Sqrt(2.0))/2.0);
+                Shape.AsDynamicShape().Direction.Y = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
+            }
+            else if (Shape.Position.X > 0.98f) {
                 Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
             }
             else if (Shape.Position.X < 0.00f) {

@@ -1,18 +1,14 @@
-using DIKUArcade.State;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.IO;
-using System;
 using DIKUArcade.Events;
-using Breakout.Players;
-using Breakout.Levelloader;
-using DIKUArcade.Input;
-using DIKUArcade.Timers;
-using Breakout.Blocks;
 
-namespace Breakout.PowerUpSpace {
-
+namespace Breakout.PowerUpSpace
+{
+     /// <summary>
+    /// PowerUp manager. Control events activated by powerup items.
+    /// </summary>
     public class PowerUpManager : IGameEventProcessor {
 
         public EntityContainer<PowerUp> CurrentPowerUps;
@@ -21,7 +17,11 @@ namespace Breakout.PowerUpSpace {
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, this);
             CurrentPowerUps = new EntityContainer<PowerUp>();
         }
-        
+
+        /// <summary>
+        /// Process gameevents that class is subscribed to. 
+        /// </summary>
+        /// <param name="gamevent">GameEvent that should be processed</param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType ==  GameEventType.ControlEvent) {
                 switch (gameEvent.Message) {
@@ -78,6 +78,9 @@ namespace Breakout.PowerUpSpace {
             CurrentPowerUps.Iterate(powerUp => powerUp.Update());
         }
 
+        /// <summary>
+        /// Render images of the powerUps.
+        /// </summary>
         public void RenderPowerUps() {
             CurrentPowerUps.Iterate(powerUp => powerUp.RenderPowerUp());
         }

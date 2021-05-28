@@ -1,5 +1,9 @@
 using System;
 namespace Breakout.PowerUpSpace {
+
+    /// <summary>
+    /// PowerUp types.
+    /// </summary>
     public enum PowerUps {
         Elongate,
         SpeedBuff,
@@ -9,6 +13,9 @@ namespace Breakout.PowerUpSpace {
         Laser
     }
 
+    /// <summary>
+    /// Static class used as adaptor to convert strings to Statetypes and vise versa.
+    /// </summary>
     public static class PowerUpTransformer {
         public static PowerUps TransformStringToPowerUp(string powerUp) {
             switch (powerUp) {

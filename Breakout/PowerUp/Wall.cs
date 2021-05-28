@@ -4,6 +4,9 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Timers;
 namespace Breakout.PowerUpSpace {
     
+    /// <summary>
+    /// A wall entity that prevents the ball to leave screen. 
+    /// </summary>
     public class Wall : Entity, IGameEventProcessor {
 
         public bool IsActive{get; private set;}
@@ -14,6 +17,10 @@ namespace Breakout.PowerUpSpace {
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
         }
 
+        /// <summary>
+        /// Process gameevents that class is subscribed to. 
+        /// </summary>
+        /// <param name="gamevent">GameEvent that should be processed</param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.Message == "HandlePowerUp") {
                 if (gameEvent.EventType ==  GameEventType.ControlEvent) {
@@ -41,12 +48,11 @@ namespace Breakout.PowerUpSpace {
                 }
             }
         }
-
+        
         public void RenderWall() {
             if (IsActive) {
                 RenderEntity();
             }
         }
-
     }
 }
