@@ -24,8 +24,10 @@ namespace Breakout.BreakoutStates {
             Text quit = (new Text("Quit", (new Vec2F(0.4f, 0.2f)), new Vec2F(0.3f, 0.3f)));
             menuButtons[0] = newgame;
             menuButtons[1] = quit;
-            backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)), 
-                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BreakoutTitleScreen.png")));
+            backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
+                new Vec2F(1.0f, 1.0f)), 
+                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
+                    "BreakoutTitleScreen.png")));
         }
 
         public static MainMenu GetInstance() {
@@ -72,11 +74,13 @@ namespace Breakout.BreakoutStates {
                     if (action == KeyboardAction.KeyPress && activeMenuButton == 0) {
                         BreakoutBus.GetBus().RegisterEvent(
                              new GameEvent{EventType = GameEventType.GameStateEvent, 
-                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", StringArg2 = "MAINMENU"});
+                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", 
+                                StringArg2 = "MAINMENU"});
                     }
                     else if (action == KeyboardAction.KeyPress) {
                         BreakoutBus.GetBus().RegisterEvent(
-                             new GameEvent{EventType = GameEventType.WindowEvent, Message = "CLOSE_WINDOW"});
+                             new GameEvent{EventType = GameEventType.WindowEvent, 
+                             Message = "CLOSE_WINDOW"});
                     }
                     break;
             }

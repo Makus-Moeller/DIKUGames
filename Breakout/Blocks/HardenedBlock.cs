@@ -13,7 +13,7 @@ namespace Breakout.Blocks {
         
         public HardenedBlock(Shape shape, IBaseImage image, string path) : base(shape, image) {
             isHardened = true;
-            hitpoints += 4; 
+            hitpoints += 11; 
             value += 1;
             OriginalPath = path;
         }

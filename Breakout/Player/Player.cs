@@ -7,6 +7,9 @@ using Breakout.PowerUpSpace;
 using DIKUArcade.Timers;
 
 namespace Breakout.Players {
+    /// <summary>
+    /// A player classe with different attributes.
+    /// </summary>
     public class Player : Entity, IGameEventProcessor {
         private float moveLeft, moveRight;
         private IBuffState playerBuffState;
@@ -37,6 +40,10 @@ namespace Breakout.Players {
             ExtentX = shape.Extent.X;
         }
 
+        /// <summary>
+        /// Process gameevents that class is subscribed to.
+        /// </summary>
+        /// <param name="gamevent">GameEvent that should be processed</param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.Message == "HandlePowerUp") {
                 if (gameEvent.EventType ==  GameEventType.ControlEvent) {
@@ -101,13 +108,15 @@ namespace Breakout.Players {
             RenderEntity();
         }
         
+        /// <summary>
+        /// Move player unless the movement violates window boundary.
+        /// </summary>
         public void Move() {
             if (GetPosition().X < 0.0f && Shape.AsDynamicShape().Direction.X < 0.01f) {} 
             else if (GetPosition().X > 0.8f && Shape.AsDynamicShape().Direction.X > 0.01f) {}
             else {
                 Shape.AsDynamicShape().Move();
             } 
-            //Ensure at ændrignen er indenfor intervallet
         }
 
         public void SetMoveLeft(bool val) {
@@ -138,7 +147,10 @@ namespace Breakout.Players {
         public Vec2F GetPosition() {
             return Shape.AsDynamicShape().Position;
         }
-
+        
+        /// <summary>
+        /// Decrement players lives.
+        /// </summary>
         public void DecrementLives() {
             if (lives == 1) {
                 IsDead = true; 

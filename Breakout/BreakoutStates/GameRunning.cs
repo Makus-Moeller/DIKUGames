@@ -11,6 +11,7 @@ using DIKUArcade.Input;
 using DIKUArcade.Timers;
 using Breakout.Blocks;
 using Breakout.PowerUpSpace;
+using Breakout.Balls;
 using DIKUArcade.Utilities;
 
 namespace Breakout.BreakoutStates {
@@ -59,7 +60,7 @@ namespace Breakout.BreakoutStates {
             //Instantiates levelloader, balls and rewards    
 
             balls = new BallManager();
-            balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
+            balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
             gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
             //Levelloader can set level
             
@@ -67,7 +68,8 @@ namespace Breakout.BreakoutStates {
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
             //Playershots and image
             playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BulletRed2.png"));
+            playerShotImage = new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
+                "BulletRed2.png"));
         }
 
 
@@ -176,12 +178,12 @@ namespace Breakout.BreakoutStates {
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
                 balls.allBalls.ClearContainer();
-                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
+                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
 
             }
             if (balls.allBalls.CountEntities() == 0) {
                 player.DecrementLives();
-                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.01f, 0.02f));
+                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
             }
             if (player.IsDead || levelLoader.timer.IsTimesUp()) {
                 BreakoutBus.GetBus().RegisterEvent(

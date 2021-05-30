@@ -23,7 +23,8 @@ namespace Breakout {
             //Intializing eventBus
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
                 GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent,
-                    GameEventType.InputEvent, GameEventType.GameStateEvent, GameEventType.ControlEvent});
+                    GameEventType.InputEvent, GameEventType.GameStateEvent, 
+                    GameEventType.ControlEvent});
             
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
             
@@ -110,8 +111,9 @@ namespace Breakout {
             }
             else if (gameEvent.EventType == GameEventType.TimedEvent) {
                 if (gameEvent.Message == "END_GAME") {
-                    BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.GameStateEvent,
-                    Message = "CHANGE_STATE", StringArg1 = "GAME_WON", StringArg2 = "GAME_RUNNING"});    
+                    BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent{EventType = GameEventType.GameStateEvent,
+                        Message = "CHANGE_STATE", StringArg1 = "GAME_WON", StringArg2 = "GAME_RUNNING"});    
                 }
             }
         }

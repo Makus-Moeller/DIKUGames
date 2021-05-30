@@ -1,9 +1,10 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
-using Breakout.Players;
 using DIKUArcade.Timers;
 using DIKUArcade.Physics;
+using Breakout.Players;
+using Breakout.Balls;
 
 
 namespace Breakout.PowerUpSpace
@@ -33,19 +34,25 @@ namespace Breakout.PowerUpSpace
                     StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp)});
                 
                 if (ThisPowerUp == PowerUps.Wall) {
-                    BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
-                    Message = "HandlePowerUp",
-                    StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 2}, TimePeriod.NewSeconds(10.0));
+                    BreakoutBus.GetBus().RegisterTimedEvent(
+                        new GameEvent{EventType = GameEventType.TimedEvent, 
+                        Message = "HandlePowerUp",
+                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 2}, 
+                        TimePeriod.NewSeconds(10.0));
                 }
                 else if (ThisPowerUp == PowerUps.Laser) {
-                    BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
+                    BreakoutBus.GetBus().RegisterTimedEvent(
+                        new GameEvent{EventType = GameEventType.TimedEvent, 
                         Message = "HandlePowerUp",
-                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 3 }, TimePeriod.NewSeconds(10.0));
+                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 3 }, 
+                        TimePeriod.NewSeconds(10.0));
                 }
                 else {
-                    BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent{EventType = GameEventType.TimedEvent, 
+                    BreakoutBus.GetBus().RegisterTimedEvent(
+                        new GameEvent{EventType = GameEventType.TimedEvent, 
                         Message = "HandlePowerUp",
-                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 1 }, TimePeriod.NewSeconds(10.0));
+                        StringArg1 = PowerUpTransformer.TransformPowerUpToString(ThisPowerUp), Id = 1 }, 
+                        TimePeriod.NewSeconds(10.0));
                 }
             }    
         }

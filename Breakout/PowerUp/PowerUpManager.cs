@@ -30,40 +30,59 @@ namespace Breakout.PowerUpSpace
                         int randomBuff = new RandomNumberGenerator().GetNumber();
                         switch (randomBuff) {
                             case 1:
-                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
-                                    float.Parse(gameEvent.StringArg2)), new Vec2F(1.0f/12.0f, 1.0f/24.0f), 
+                                CurrentPowerUps.AddEntity(new PowerUp(
+                                    new DynamicShape(
+                                        new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                        float.Parse(gameEvent.StringArg2)), 
+                                    new Vec2F(1.0f/12.0f, 1.0f/24.0f), 
                                     new Vec2F(0.0f, -0.01f)), 
-                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "WidePowerUp.png")), PowerUps.Elongate));
+                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets",
+                                        "Images", "WidePowerUp.png")), PowerUps.Elongate));
                                 break;
                             case 2:
-                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
-                                    float.Parse(gameEvent.StringArg2)), 
+                                CurrentPowerUps.AddEntity(new PowerUp(
+                                    new DynamicShape(
+                                        new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                        float.Parse(gameEvent.StringArg2)), 
                                     new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
-                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "SpeedPickUp.png")), PowerUps.SpeedBuff));
+                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", 
+                                        "Images", "SpeedPickUp.png")), PowerUps.SpeedBuff));
                                 break;
                             case 3:
-                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
-                                    float.Parse(gameEvent.StringArg2)), 
+                                CurrentPowerUps.AddEntity(new PowerUp(
+                                    new DynamicShape(
+                                        new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                        float.Parse(gameEvent.StringArg2)), 
                                     new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
-                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "LifePickUp.png")), PowerUps.ExtraLife));
+                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets",
+                                        "Images", "LifePickUp.png")), PowerUps.ExtraLife));
                                 break;
                             case 4:
-                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
-                                    float.Parse(gameEvent.StringArg2)), 
+                                CurrentPowerUps.AddEntity(new PowerUp(
+                                    new DynamicShape(
+                                        new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                        float.Parse(gameEvent.StringArg2)), 
                                     new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
-                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "SplitPowerUp.png")), PowerUps.Split));
+                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets",
+                                        "Images", "SplitPowerUp.png")), PowerUps.Split));
                                 break;
                             case 5:
-                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
-                                    float.Parse(gameEvent.StringArg2)), 
+                                CurrentPowerUps.AddEntity(new PowerUp(
+                                    new DynamicShape(
+                                        new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                        float.Parse(gameEvent.StringArg2)), 
                                     new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
-                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "WallPowerUp.png")), PowerUps.Wall));
+                                    new Image(Path.Combine(FileIO.GetProjectPath(), 
+                                        "Assets", "Images", "WallPowerUp.png")), PowerUps.Wall));
                                 break;
                             case 6:
-                                CurrentPowerUps.AddEntity(new PowerUp(new DynamicShape(new Vec2F(float.Parse(gameEvent.StringArg1), 
-                                    float.Parse(gameEvent.StringArg2)), 
+                                CurrentPowerUps.AddEntity(new PowerUp(
+                                    new DynamicShape(
+                                        new Vec2F(float.Parse(gameEvent.StringArg1), 
+                                        float.Parse(gameEvent.StringArg2)), 
                                     new Vec2F(1.0f/12.0f, 1.0f/24.0f), new Vec2F(0.0f, -0.01f)), 
-                                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "DamagePickUp.png")), PowerUps.Laser));
+                                    new Image(Path.Combine(FileIO.GetProjectPath(), 
+                                        "Assets", "Images", "DamagePickUp.png")), PowerUps.Laser));
                                 break;
                             default:
                                 break;

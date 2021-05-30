@@ -3,7 +3,7 @@ using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
 
-namespace Breakout.Players {
+namespace Breakout.Balls {
 
     /// <summary>
     /// Decides what the outcome of a collision should be
@@ -33,9 +33,9 @@ namespace Breakout.Players {
         /// <summary>
         /// simply checks all possible coliders
         /// </summary>
-        public void HandleEntityCollisions<T>(Entity collidingEntity, EntityContainer<T> AllpossibleCollisions) where T: Entity { 
-            AllpossibleCollisions.Iterate(entity => HandleCollision(collidingEntity, entity));
-            
+        public void HandleEntityCollisions<T>(Entity collidingEntity, 
+            EntityContainer<T> AllpossibleCollisions) where T: Entity { 
+                AllpossibleCollisions.Iterate(entity => HandleCollision(collidingEntity, entity));
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
 namespace Breakout.Levelloader {
 
-    ///Reads a txtfil and returns usefu content in array of strings
+    /// <summary>
+    /// Reads a txtfil and returns useful content in array of strings.    
+    /// </summary>
     public interface IFileReader {
         string[] ToStringArray(string File, string startingpoint, string breakpoint);
     }        

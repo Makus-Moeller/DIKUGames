@@ -3,7 +3,7 @@ using DIKUArcade.Physics;
 using System;
 using Breakout.Blocks;
 
-namespace Breakout.Players {
+namespace Breakout.Balls {
     public interface ICollidable {
         void HandleThisCollision(CollisionData data, Entity objectOfCollision);
     }

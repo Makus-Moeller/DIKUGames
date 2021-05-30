@@ -3,6 +3,8 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Events;
 using DIKUArcade.Physics;
 using Breakout.Players;
+using Breakout.Balls;
+
 namespace Breakout.Blocks {
     /// <summary>
     /// Superclass of blocks which have the basic functionality
@@ -54,6 +56,7 @@ namespace Breakout.Blocks {
             return isHardened;
         }
         public virtual void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
+            //Vi skal have indført at skudene skader mindre 
             HitBlock(20);
         }
     }

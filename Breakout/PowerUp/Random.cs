@@ -10,7 +10,7 @@ namespace Breakout.PowerUpSpace {
         private Random random;
         public RandomNumberGenerator() {
             random = new Random();
-            number = random.Next(6, 7); 
+            number = random.Next(1, 7); 
         } 
 
         /// <summary>

@@ -3,7 +3,7 @@ using DIKUArcade.Graphics;
 using System;
 using DIKUArcade.Physics;
 
-namespace Breakout.Players {
+namespace Breakout.Balls {
     
     /// <summary>
     /// The implementation of a moveable Ball
@@ -59,52 +59,76 @@ namespace Breakout.Players {
                     ///Hvis bevæger sig mod højre
                     if(Shape.AsDynamicShape().Direction.X > 0.0f) {
                         ///Hvis den rammer på halvdelen tættest på sig selv
-                        if(Shape.Position.X < (objectOfCollision.Shape.Position.X + (objectOfCollision.Shape.Extent.X / 2.0f))) {
-                            matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) - 10);
+                        if(Shape.Position.X < (objectOfCollision.Shape.Position.X + 
+                            (objectOfCollision.Shape.Extent.X / 2.0f))) {
+                                matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - 
+                                (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) 
+                                * 180.0/Math.PI))) - 10);
                         } 
                         ///Hvis den rammer på halvdelen længst på sig selv
                         else {
-                            matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) + 10);
+                            matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - 
+                            (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                            180.0/Math.PI))) + 10);
                         }
-                        Shape.AsDynamicShape().Direction = matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
+                        Shape.AsDynamicShape().Direction = 
+                            matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
                     } 
                     ///Hvis den bevæger sig mod venstre
                     else {
                         ///Hvis den rammer på halvdelen tættest på sig selv
-                        if(Shape.Position.X > (objectOfCollision.Shape.Position.X + (objectOfCollision.Shape.Extent.X / 2.0f))) {
-                            matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) + 10);
+                        if(Shape.Position.X > (objectOfCollision.Shape.Position.X + 
+                            (objectOfCollision.Shape.Extent.X / 2.0f))) {
+                                matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - 
+                                    (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                                    180.0/Math.PI))) + 10);
                         } 
                         ///Hvis den rammer på halvdelen længst på sig selv
                         else {
-                            matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) - 10);
+                            matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - 
+                                (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                                180.0/Math.PI))) - 10);
                         }
-                        Shape.AsDynamicShape().Direction = matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
+                        Shape.AsDynamicShape().Direction = 
+                            matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
                     }   
                     break;
                 case (CollisionDirection.CollisionDirUp):
                     ///Hvis bevæger sig mod højre
                     if(Shape.AsDynamicShape().Direction.X > 0.0f) {
                         ///Hvis den rammer på halvdelen tættest fra sig selv
-                        if(Shape.Position.X < (objectOfCollision.Shape.Position.X + (objectOfCollision.Shape.Extent.X / 2.0f))) {
-                            matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) + 10);
+                        if(Shape.Position.X < (objectOfCollision.Shape.Position.X + 
+                            (objectOfCollision.Shape.Extent.X / 2.0f))) {
+                                matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - 
+                                    (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                                    180.0/Math.PI))) + 10);
                         } 
                         ///Hvis den rammer på halvdelen længst på sig selv
                         else {
-                            matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) - 10);
+                            matrix.CreateRoationMatrix(((180.0 - 2*(90.0 - 
+                                (Math.Acos(Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                                180.0/Math.PI))) - 10);
                         }
-                        Shape.AsDynamicShape().Direction = matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
+                        Shape.AsDynamicShape().Direction = 
+                            matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
                     }
                     ///Hvis den bevæger sig mod venstre
                     else {
                         ///Hvis den rammer på halvdelen tættest fra sig selv
-                        if(Shape.Position.X > (objectOfCollision.Shape.Position.X + (objectOfCollision.Shape.Extent.X / 2.0f))) {
-                            matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) - 10);
+                        if(Shape.Position.X > (objectOfCollision.Shape.Position.X +
+                             (objectOfCollision.Shape.Extent.X / 2.0f))) {
+                                matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - 
+                                    (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                                    180.0/Math.PI))) - 10);
                         } 
                         ///Hvis den rammer på halvdelen længst på sig selv
                         else {
-                            matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 180.0/Math.PI))) + 10);
+                            matrix.CreateRoationMatrix(-((180.0 - 2*(90.0 - 
+                                (Math.Acos(-Shape.AsDynamicShape().Direction.X / speedOfBall)) * 
+                                180.0/Math.PI))) + 10);
                         }
-                        Shape.AsDynamicShape().Direction = matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
+                        Shape.AsDynamicShape().Direction = 
+                            matrix.multiplyByVector(Shape.AsDynamicShape().Direction);
                     }   
                     break;
                 case (CollisionDirection.CollisionDirRight):

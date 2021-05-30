@@ -22,7 +22,8 @@ namespace Breakout.BreakoutStates {
         private int activeMenuButton;
 
         private GameLost() {
-            Losetext = (new Text("Game Over! \n  Score:  " + GameRunning.GetInstance().gamescore.rewards, 
+            Losetext = (new Text("Game Over! \n  Score:  " + 
+                GameRunning.GetInstance().gamescore.rewards, 
                 new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
             Losetext.SetColor(new Vec3I(204, 230, 244));
             Text Quit = (new Text("Quit", new Vec2F(0.4f, 0.2f), new Vec2F(0.3f, 0.3f)));
@@ -31,7 +32,8 @@ namespace Breakout.BreakoutStates {
             menuButtons[1] = MainMenu;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
                 new Vec2F(1.0f, 1.0f)), 
-                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BreakoutTitleScreen.png")));
+                new Image(Path.Combine(
+                    FileIO.GetProjectPath(), "Assets", "Images", "BreakoutTitleScreen.png")));
         }
 
         public static GameLost GetInstance() {
@@ -56,12 +58,14 @@ namespace Breakout.BreakoutStates {
                 case KeyboardKey.Enter:
                     if (activeMenuButton == 0) {
                         BreakoutBus.GetBus().RegisterEvent(
-                        new GameEvent{EventType = GameEventType.WindowEvent, Message = "CLOSE_WINDOW"});   
+                        new GameEvent{EventType = 
+                            GameEventType.WindowEvent, Message = "CLOSE_WINDOW"});   
                     }
                     else {
                         BreakoutBus.GetBus().RegisterEvent(
-                            new GameEvent{EventType = GameEventType.GameStateEvent, 
-                                Message = "CHANGE_STATE", StringArg1 = "MAINMENU", StringArg2 = "GAME_PAUSED"});
+                            new GameEvent{EventType = 
+                                GameEventType.GameStateEvent, Message = "CHANGE_STATE", 
+                                StringArg1 = "MAINMENU", StringArg2 = "GAME_PAUSED"});
                     }
                     break;
             }

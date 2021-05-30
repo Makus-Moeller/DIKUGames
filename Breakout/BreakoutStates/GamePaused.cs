@@ -28,7 +28,8 @@ namespace Breakout.BreakoutStates {
             menuButtons[1] = MainMenu;
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f), 
                 new Vec2F(1.0f, 1.0f)), 
-                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BreakoutTitleScreen.png")));
+                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
+                    "BreakoutTitleScreen.png")));
         }
 
         public static GamePaused GetInstance() {
@@ -54,12 +55,14 @@ namespace Breakout.BreakoutStates {
                     if (activeMenuButton == 0) {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent{EventType = GameEventType.GameStateEvent, 
-                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", StringArg2 = "GAME_PAUSED"});   
+                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", 
+                                StringArg2 = "GAME_PAUSED"});   
                     }
                     else {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent{EventType = GameEventType.GameStateEvent, 
-                                Message = "CHANGE_STATE", StringArg1 = "MAINMENU", StringArg2 = "GAME_PAUSED"});
+                                Message = "CHANGE_STATE", StringArg1 = "MAINMENU", 
+                                StringArg2 = "GAME_PAUSED"});
                     }
                     break;
             }
