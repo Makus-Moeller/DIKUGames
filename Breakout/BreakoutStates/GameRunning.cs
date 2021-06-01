@@ -29,8 +29,6 @@ namespace Breakout.BreakoutStates {
         private Wall wall;
         
         //private Timer timer;
-        private EntityContainer<PlayerShot> playerShots;
-        private IBaseImage playerShotImage;
         private static GameRunning instance = null;
         public GameRunning() {
             new StaticTimer();
@@ -65,10 +63,6 @@ namespace Breakout.BreakoutStates {
             
             collisionHandler = new CollisionHandler();
 
-            //Playershots and image
-            playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
-                "BulletRed2.png"));
         }
 
 
@@ -99,11 +93,7 @@ namespace Breakout.BreakoutStates {
                     player.SetMoveRight(false);
                     break;
                 case KeyboardKey.Space:
-                    if (player.LaserAvailable) {
-                        playerShots.AddEntity(new PlayerShot(
-                        new Vec2F(player.GetPosition().X + (player.ExtentX / 2), 
-                        player.GetPosition().Y), playerShotImage));
-                    }
+                    player.Shoot(player.GetPosition(), player.Shape.Extent);
                     break;
                 default:
                     break;
@@ -128,17 +118,6 @@ namespace Breakout.BreakoutStates {
             }
         }
 
-         private void IterateShots() {
-            playerShots.Iterate(shot => {
-                //move the shots shape
-                shot.Shape.Move();
-                if (shot.Shape.Position.Y > 1.0f) {
-                    //Delete shot
-                    shot.DeleteEntity();
-                }
-            });
-        }
-
         /// <summary>
         /// Render objects on window.
         /// </summary>
@@ -150,14 +129,13 @@ namespace Breakout.BreakoutStates {
             levelLoader.timer.RenderTime();
             powerUpManger.RenderPowerUps();
             wall.RenderWall();
-            playerShots.RenderEntities();
         }
 
         /// <summary>
         /// Update dynamic states.
         /// </summary>
         public void UpdateState() {
-            
+            BreakoutBus.GetBus().ProcessEvents();
             player.Move();
             balls.allBalls.Iterate(ball => {
                 ball.MoveBall();
@@ -167,20 +145,16 @@ namespace Breakout.BreakoutStates {
             if (wall.IsActive) {
                 collisionHandler.HandleEntityCollisions(wall, balls.allBalls);    
             }
-            else {
-                collisionHandler.HandleEntityCollisions(player, balls.allBalls);
-            }
-
+            
+            collisionHandler.HandleEntityCollisions(player, balls.allBalls);
             collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
+            
+            player.Weapon.AllShots.Iterate(playerShot => {
+                collisionHandler.HandleEntityCollisions(playerShot, AllBlocks);
+                });
 
             powerUpManger.Update();
             levelLoader.timer.UpdateTimeRemaining();
-            BreakoutBus.GetBus().ProcessEvents();
-            
-            
-            playerShots.Iterate(playerShot => collisionHandler.HandleEntityCollisions(playerShot, AllBlocks));
-            IterateShots();
-
             if (AllBlocks.CountEntities() == 0) {
                 AllBlocks = levelLoader.Nextlevel();
                 balls.allBalls.ClearContainer();
@@ -195,8 +169,7 @@ namespace Breakout.BreakoutStates {
                 BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent{EventType = GameEventType.GameStateEvent, 
                             Message = "CHANGE_STATE", StringArg1 = "GAME_LOST", StringArg2 = "GAME_RUNNING"});
-            }
-            
+            } 
         }
 
         public void ResetState()

@@ -14,9 +14,8 @@ namespace Breakout.Players {
         private float moveLeft, moveRight;
         private IBuffState playerBuffState;
         public PlayerLives playerLives {get; private set;}
-        public float ExtentX {get; private set;}
         public bool IsDead;
-        public bool LaserAvailable {get; private set;} 
+        public ShotsWeapon Weapon {get; private set;} 
         public IBuffState PlayerBuffState 
         {
             get
@@ -37,7 +36,7 @@ namespace Breakout.Players {
             moveRight = 0.00f;
             playerBuffState = buffState;
             playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f));
-            ExtentX = shape.Extent.X;
+            Weapon = new ShotsWeapon();
         }
 
         /// <summary>
@@ -69,11 +68,12 @@ namespace Breakout.Players {
                             else {playerLives.addLife();}
                             break;
                         case PowerUps.Laser:
-                            if (LaserAvailable) {
+                            if (Weapon.Active) {
                                 BreakoutBus.GetBus().ResetTimedEvent(3, TimePeriod.NewSeconds(10.0));
                             }
                             else {
-                                LaserAvailable = true;
+                                Weapon = new ShotsWeapon();
+                                Weapon.Active = true;
                             }
                             break;
                         default:
@@ -93,7 +93,7 @@ namespace Breakout.Players {
                             }
                             break;
                         case PowerUps.Laser:
-                            LaserAvailable = false;
+                            Weapon.Active = false;
                             break;
                         default:
                             break;
@@ -107,6 +107,7 @@ namespace Breakout.Players {
         public void Render() {
             playerLives.RenderLives();
             RenderEntity();
+            Weapon.Render();
         }
         
         /// <summary>
@@ -119,6 +120,7 @@ namespace Breakout.Players {
                 Shape.AsDynamicShape().Move();
             }
             playerLives.UpdateLives();
+            Weapon.Update();
         }
 
         public void SetMoveLeft(bool val) {
@@ -157,6 +159,10 @@ namespace Breakout.Players {
             playerLives.DecrementLives();
             if (playerLives.Lives == 0)
                 IsDead = true; 
+        }
+
+        public void Shoot(Vec2F position, Vec2F extent) {
+            Weapon.Fire(position, extent);
         }
     }
 } 

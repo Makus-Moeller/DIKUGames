@@ -22,9 +22,16 @@ namespace Breakout.Players {
             return 3;
         }
 
-        public void HandleThisCollision(CollisionData data, Entity objectOfCollision)
-        {
+        public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
             this.DeleteEntity();
+        }
+
+        public void UpdateShot() { 
+            Shape.Move();
+            if (Shape.Position.Y > 1.0f) {
+                //Delete shot
+                DeleteEntity();
+            }
         }
     }
 }
