@@ -62,7 +62,6 @@ namespace Breakout.BreakoutStates {
             //Levelloader can set level
             
             collisionHandler = new CollisionHandler();
-
         }
 
 
@@ -118,6 +117,35 @@ namespace Breakout.BreakoutStates {
             }
         }
 
+        public void ShouldSwitchLevels() {
+            if (AllBlocks.CountEntities() == 0) {
+                AllBlocks = levelLoader.Nextlevel();
+                balls.allBalls.ClearContainer();
+                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
+            }
+        }
+
+        public void ShouldRestartBall() {
+            if (balls.IsEmpty()) {
+                player.DecrementLives();
+                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
+            }
+        }
+
+        public void ShouldEndGame() {
+            if (player.IsDead || levelLoader.timer.IsTimesUp()) {
+                BreakoutBus.GetBus().RegisterEvent(
+                            new GameEvent{EventType = GameEventType.GameStateEvent, 
+                            Message = "CHANGE_STATE", StringArg1 = "GAME_LOST", StringArg2 = "GAME_RUNNING"});
+            } 
+        }
+
+        public void ShouldCollideWithWall() {
+            if (wall.IsActive) {
+                collisionHandler.HandleEntityCollisions(wall, balls.allBalls);    
+            }
+        }
+
         /// <summary>
         /// Render objects on window.
         /// </summary>
@@ -135,41 +163,19 @@ namespace Breakout.BreakoutStates {
         /// Update dynamic states.
         /// </summary>
         public void UpdateState() {
+            ShouldEndGame();
+            ShouldSwitchLevels();
+            ShouldRestartBall();
             BreakoutBus.GetBus().ProcessEvents();
             player.Move();
-            balls.allBalls.Iterate(ball => {
-                ball.MoveBall();
-                collisionHandler.HandleEntityCollisions(ball, AllBlocks);
-            });
-            
-            if (wall.IsActive) {
-                collisionHandler.HandleEntityCollisions(wall, balls.allBalls);    
-            }
-            
-            collisionHandler.HandleEntityCollisions(player, balls.allBalls);
-            collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
-            
-            player.Weapon.AllShots.Iterate(playerShot => {
-                collisionHandler.HandleEntityCollisions(playerShot, AllBlocks);
-                });
-
+            balls.MoveBalls();
             powerUpManger.Update();
             levelLoader.timer.UpdateTimeRemaining();
-            if (AllBlocks.CountEntities() == 0) {
-                AllBlocks = levelLoader.Nextlevel();
-                balls.allBalls.ClearContainer();
-                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
-
-            }
-            if (balls.allBalls.CountEntities() == 0) {
-                player.DecrementLives();
-                balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
-            }
-            if (player.IsDead || levelLoader.timer.IsTimesUp()) {
-                BreakoutBus.GetBus().RegisterEvent(
-                            new GameEvent{EventType = GameEventType.GameStateEvent, 
-                            Message = "CHANGE_STATE", StringArg1 = "GAME_LOST", StringArg2 = "GAME_RUNNING"});
-            } 
+            collisionHandler.HandleEntityCollisions(player, balls.allBalls);
+            collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
+            collisionHandler.HandleMultiEntityCollisions(player.Weapon.AllShots, AllBlocks);
+            collisionHandler.HandleMultiEntityCollisions(balls.allBalls, AllBlocks);
+            ShouldCollideWithWall();
         }
 
         public void ResetState()

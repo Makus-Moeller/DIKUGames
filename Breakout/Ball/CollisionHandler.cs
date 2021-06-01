@@ -39,6 +39,19 @@ namespace Breakout.Balls {
         }
 
         /// <summary>
+        /// Checks both multiple colliding entities and multiple coliders
+        /// IE. The same as HandleEntityCollisions but iterates over the 
+        /// first argument as well.
+        /// </summary>
+        public void HandleMultiEntityCollisions<T, S>(EntityContainer<T> collidingEntities, 
+            EntityContainer<S> AllpossibleCollisions) where T : Entity where S : Entity {
+                collidingEntities.Iterate(collidingEntity => 
+                    AllpossibleCollisions.Iterate(entity => 
+                        HandleCollision(collidingEntity, entity)));
+        }
+
+        
+        /// <summary>
         /// checks if the entity is an implementation of Icollidable
         /// That is can it collide with others
         /// </summary>

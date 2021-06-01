@@ -64,8 +64,7 @@ namespace Breakout.Players {
                             }
                             break;
                         case PowerUps.ExtraLife:
-                            if (playerLives.Lives > 5) {}
-                            else {playerLives.addLife();}
+                            playerLives.addLife();
                             break;
                         case PowerUps.Laser:
                             if (Weapon.Active) {
