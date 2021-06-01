@@ -25,7 +25,7 @@ namespace Breakout.BreakoutStates {
             Losetext = (new Text("Game Over! \n  Score:  " + 
                 GameRunning.GetInstance().gamescore.rewards, 
                 new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
-            Losetext.SetColor(new Vec3I(204, 230, 244));
+            Losetext.SetColor(new Vec3I(255, 217, 25));
             Text Quit = (new Text("Quit", new Vec2F(0.4f, 0.2f), new Vec2F(0.3f, 0.3f)));
             Text MainMenu = (new Text("MainMenu", (new Vec2F(0.4f, 0.1f)), new Vec2F(0.3f, 0.3f)));
             menuButtons[0] = Quit;

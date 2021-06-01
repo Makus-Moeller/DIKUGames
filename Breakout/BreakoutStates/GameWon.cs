@@ -5,7 +5,6 @@ using DIKUArcade.Math;
 using System.IO;
 using System;
 using DIKUArcade.Events;
-using Breakout;
 using DIKUArcade.Input;
 using DIKUArcade.Utilities;
 
@@ -25,7 +24,7 @@ namespace Breakout.BreakoutStates {
             Wintext = (new Text("Congratulations you won the game \nScore: " + 
                 GameRunning.GetInstance().gamescore.rewards, 
                 new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
-            Wintext.SetColor(new Vec3I(204, 230, 244));
+            Wintext.SetColor(new Vec3I(255, 217, 25));
             Text Quit = (new Text("Quit", new Vec2F(0.4f, 0.2f), new Vec2F(0.3f, 0.3f)));
             Text MainMenu = (new Text("MainMenu", (new Vec2F(0.4f, 0.1f)), new Vec2F(0.3f, 0.3f)));
             menuButtons[0] = Quit;
