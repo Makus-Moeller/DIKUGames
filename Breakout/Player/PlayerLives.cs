@@ -1,6 +1,9 @@
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
+using System.IO;
+using DIKUArcade.Utilities;
+using DIKUArcade.Entities;
 
 namespace Breakout.Players {
     
@@ -9,16 +12,9 @@ namespace Breakout.Players {
     /// </summary>
     public class PlayerLives {
         public int Lives {get; private set;}
-        private Text display;
-        private Vec2F placement;
-        private Vec2F width;
         
-    
         public PlayerLives (Vec2F position, Vec2F extent) {
             Lives = 4;
-            placement = position;
-            width = extent;
-            display = new Text("Lives: " + Lives.ToString(), placement, width);
         }
 
         public void addLife() {
@@ -29,11 +25,17 @@ namespace Breakout.Players {
             Lives--;
         }
         public void RenderLives() {
-            display.SetColor(new Vec3I(191, 0, 255));
-            display.RenderText();
+            float Xposition = 0.02f;
+            for (int i = 0; i < Lives; i++) {
+                Entity heart = new Entity(new StationaryShape(new Vec2F(Xposition, 0.97f), 
+                    new Vec2F(0.1f, 0.022f)), 
+                    new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
+                        "heart_filled.png")));
+                heart.RenderEntity();
+                Xposition += 0.08f;
+            } 
         }
         public void UpdateLives() {
-            display.SetText("Lives: " + Lives.ToString()); 
             RenderLives();
         }
     }

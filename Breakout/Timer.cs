@@ -2,6 +2,10 @@ using Breakout.Levelloader;
 using DIKUArcade.Timers;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Entities;
+using DIKUArcade.Utilities;
+using System.IO;
+
 
 namespace Breakout{
 
@@ -12,13 +16,17 @@ namespace Breakout{
     /// </summary>
     public class Timer {
         private Text display;
+        private Text timeleft;  
         private double levelTime;
         private int timeRemaining;
 
         public Timer() {
             levelTime = 0.0D;
-            display = new Text("Time left: " + timeRemaining.ToString(), 
-                new Vec2F(0.7f, 0.01f), new Vec2F(0.2f, 0.2f));
+            timeleft = new Text("Time Left: ", 
+                new Vec2F(0.4f, 0.834f), new Vec2F(0.25f, 0.16f));
+            display = new Text(timeRemaining.ToString(), 
+                new Vec2F(0.6f, 0.834f), new Vec2F(0.25f, 0.16f));
+            
         }
         
         /// <summary>
@@ -38,15 +46,17 @@ namespace Breakout{
         }
 
         public void RenderTime() {
-            display.SetColor(new Vec3I(191, 0, 255));
+            display.SetColor(new Vec3I(255, 180, 25));
+            timeleft.SetColor(new Vec3I(255, 180, 25));
             if (levelTime > 0.0D) {
+                timeleft.RenderText();
                 display.RenderText();
             }
         }
 
         public void UpdateTimeRemaining() {
             timeRemaining =  (int) (levelTime - StaticTimer.GetElapsedSeconds());
-            display.SetText("Time left: " + timeRemaining.ToString()); 
+            display.SetText(timeRemaining.ToString()); 
             RenderTime();
         }
         
