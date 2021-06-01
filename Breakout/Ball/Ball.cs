@@ -10,7 +10,7 @@ namespace Breakout.Balls {
     /// Ball is in charge of moving itself 
     /// correctly
     /// </summary>
-    public class Ball : Entity, ICollidable {
+    public class Ball : Entity, ICollidable, IDamager {
         public readonly double speedOfBall;
 
         public Ball(Shape shape, IBaseImage image) : base(shape, image) {
@@ -155,6 +155,10 @@ namespace Breakout.Balls {
             if (!IsDeleted()) {
                 RenderEntity();
             }
+        }
+
+        public int DamageOfObject() {
+            return 10;
         }
     }
 }

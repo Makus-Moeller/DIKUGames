@@ -8,28 +8,32 @@ namespace Breakout.Players {
     /// An eventhandler that controls the point System
     /// </summary>
     public class PlayerLives {
-        public int lives {get; private set;}
+        public int Lives {get; private set;}
         private Text display;
         private Vec2F placement;
         private Vec2F width;
-        private Player player;
         
     
-        public PlayerLives (Vec2F position, Vec2F extent, Player player) {
-            this.player = player;
-            lives = player.lives;
+        public PlayerLives (Vec2F position, Vec2F extent) {
+            Lives = 4;
             placement = position;
             width = extent;
-            display = new Text("Lives: " + lives.ToString(), placement, width);
+            display = new Text("Lives: " + Lives.ToString(), placement, width);
         }
 
+        public void addLife() {
+            Lives++;
+        }
+
+        public void DecrementLives() {
+            Lives--;
+        }
         public void RenderLives() {
             display.SetColor(new Vec3I(191, 0, 255));
             display.RenderText();
         }
         public void UpdateLives() {
-            lives = player.lives;
-            display.SetText("Lives: " + lives.ToString()); 
+            display.SetText("Lives: " + Lives.ToString()); 
             RenderLives();
         }
     }

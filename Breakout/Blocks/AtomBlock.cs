@@ -19,13 +19,6 @@ namespace Breakout.Blocks {
             hitpoints = 10;
             value = 1;
         }
-        
-        /// <summary>
-        /// Returns a blockobjects hitpoints
-        /// </summary>
-        public int GetHitpoints() {
-            return hitpoints;
-        }
 
         /// <summary>
         /// Hit block with certain amount
@@ -44,20 +37,12 @@ namespace Breakout.Blocks {
             }
         }
 
-        /// <summary>
-        /// Add hitpoints to block with certain amount
-        /// </summary>
-        /// <param name="amount">Amount hitpoints increased</param>
-        public void AddHitpoint(int amount) {
-            hitpoints += amount;
-        }
-        
-        public bool IsHardened() {
-            return isHardened;
-        }
-        public virtual void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
-            //Vi skal have indført at skudene skader mindre 
-            HitBlock(20);
+
+        public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
+            IDamager damager;
+            if ((damager = objectOfCollision as IDamager) != null) {
+                HitBlock(damager.DamageOfObject());
+            }
         }
     }
 }
