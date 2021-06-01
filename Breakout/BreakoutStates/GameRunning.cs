@@ -61,7 +61,7 @@ namespace Breakout.BreakoutStates {
 
             balls = new BallManager();
             balls.AddBall(new Vec2F(0.50f, 0.08f), new Vec2F(0.005f, 0.015f));
-            gamescore = new Rewards(new Vec2F(0.01f, 0.8f), new Vec2F(0.2f,0.2f));
+            gamescore = new Rewards();
             //Levelloader can set level
             
             collisionHandler = new CollisionHandler();

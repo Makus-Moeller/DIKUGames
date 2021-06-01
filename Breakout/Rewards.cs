@@ -1,6 +1,9 @@
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
+using DIKUArcade.Entities;
+using System.IO;
+using DIKUArcade.Utilities;
 
 namespace Breakout {
     
@@ -10,14 +13,16 @@ namespace Breakout {
     public class Rewards : IGameEventProcessor {
         public int rewards {get; private set;}
         private Text display;
-        private Vec2F placement;
-        private Vec2F width;
-        public Rewards (Vec2F position, Vec2F extent) {
+        private Entity scoreImage;
+        public Rewards() {
             rewards = 0;
-            placement = position;
-            width = extent;
-            display= new Text("Score: " + rewards, placement, width);
+            display= new Text("+" + rewards.ToString(), new Vec2F(0.85f, 0.834f), 
+                new Vec2F(0.25f, 0.16f));
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, this);
+            scoreImage = new Entity(new StationaryShape(new Vec2F(0.8f, 0.96f), 
+                new Vec2F(0.2f, 0.037f)), 
+                new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
+                    "emptyPoint.png")));
         }
         /// <summary>
         /// Ads points
@@ -45,12 +50,13 @@ namespace Breakout {
         }
 
         public void RenderScore() {
-            display.SetText("Score : " + rewards.ToString());
-            display.SetColor(new Vec3I(191, 0, 255));
+            scoreImage.RenderEntity();
+            display.SetText("+" + rewards.ToString());
+            display.SetColor(new Vec3I(255, 217, 25));
             display.RenderText();
         }
         public void UpdateScore() {
-            display= new Text("Score: " + rewards, placement, width);
+            display.SetText(rewards.ToString());
         }
     }
 }
