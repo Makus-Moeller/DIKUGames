@@ -15,16 +15,23 @@ namespace Breakout.Blocks {
             value += 2;
         }
         
-        public override void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
-            //Lav Event Her Til PowerUpHandler
-            HitBlock(20);
-            if (IsDeleted()) {
-                BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = GameEventType.ControlEvent,
-                    Message = "CreatePowerUp", 
+        public override void HitBlock(int decrementValue) {
+            if (!unbreakable) {
+                if ((hitpoints -= decrementValue) < 1) {
+                    this.DeleteEntity();
+                    BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = 
+                        GameEventType.StatusEvent,
+                        Message = "INCREASE_SCORE",
+                        StringArg2 = value.ToString(),
+                        });
+                    BreakoutBus.GetBus().RegisterEvent(new GameEvent{EventType = 
+                        GameEventType.ControlEvent,
+                        Message = "CreatePowerUp", 
                         StringArg1 = Shape.Position.X.ToString(), 
-                            StringArg2 = Shape.Position.Y.ToString()});
-            
+                        StringArg2 = Shape.Position.Y.ToString()
+                        });
+                }
             }
-        } 
+        }
     }   
 }

@@ -13,7 +13,7 @@ namespace Breakout.Players {
     public class Player : Entity, IGameEventProcessor {
         private float moveLeft, moveRight;
         private IBuffState playerBuffState;
-        public int lives {get; private set;}
+        public PlayerLives playerLives {get; private set;}
         public float ExtentX {get; private set;}
         public bool IsDead;
         public bool LaserAvailable {get; private set;} 
@@ -36,7 +36,7 @@ namespace Breakout.Players {
             moveLeft = 0.00f;
             moveRight = 0.00f;
             playerBuffState = buffState;
-            lives = 4;
+            playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f));
             ExtentX = shape.Extent.X;
         }
 
@@ -65,8 +65,8 @@ namespace Breakout.Players {
                             }
                             break;
                         case PowerUps.ExtraLife:
-                            if (lives > 5) {}
-                            else {lives++;}
+                            if (playerLives.Lives > 5) {}
+                            else {playerLives.addLife();}
                             break;
                         case PowerUps.Laser:
                             if (LaserAvailable) {
@@ -105,6 +105,7 @@ namespace Breakout.Players {
         //Methods for movement. Render and update is in the entity baseclass
         
         public void Render() {
+            playerLives.RenderLives();
             RenderEntity();
         }
         
@@ -116,7 +117,8 @@ namespace Breakout.Players {
             else if (GetPosition().X > 0.8f && Shape.AsDynamicShape().Direction.X > 0.01f) {}
             else {
                 Shape.AsDynamicShape().Move();
-            } 
+            }
+            playerLives.UpdateLives();
         }
 
         public void SetMoveLeft(bool val) {
@@ -152,10 +154,9 @@ namespace Breakout.Players {
         /// Decrement players lives.
         /// </summary>
         public void DecrementLives() {
-            if (lives == 1) {
+            playerLives.DecrementLives();
+            if (playerLives.Lives == 0)
                 IsDead = true; 
-            }
-            else lives--;
         }
     }
 } 

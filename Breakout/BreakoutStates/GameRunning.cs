@@ -25,7 +25,6 @@ namespace Breakout.BreakoutStates {
         private LevelLoader levelLoader;
         private EntityContainer<AtomBlock> AllBlocks;
         private BallManager balls;
-        private PlayerLives playerLives;
         private PowerUpManager powerUpManger;
         private Wall wall;
         
@@ -65,7 +64,7 @@ namespace Breakout.BreakoutStates {
             //Levelloader can set level
             
             collisionHandler = new CollisionHandler();
-            playerLives = new PlayerLives(new Vec2F(0.03f, 0.01f), new Vec2F(0.2f, 0.2f), player);
+
             //Playershots and image
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
@@ -148,7 +147,6 @@ namespace Breakout.BreakoutStates {
             player.Render();
             AllBlocks.RenderEntities();
             balls.allBalls.RenderEntities();
-            playerLives.RenderLives();
             levelLoader.timer.RenderTime();
             powerUpManger.RenderPowerUps();
             wall.RenderWall();
@@ -159,19 +157,27 @@ namespace Breakout.BreakoutStates {
         /// Update dynamic states.
         /// </summary>
         public void UpdateState() {
+            
             player.Move();
-            balls.allBalls.Iterate(ball => ball.MoveBall());
-            BreakoutBus.GetBus().ProcessEvents();
-            collisionHandler.HandleEntityCollisions(player, balls.allBalls);
-            playerLives.UpdateLives();
-            powerUpManger.Update();
-            collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
-            balls.allBalls.Iterate(ball => collisionHandler.HandleEntityCollisions(ball, AllBlocks));
-            levelLoader.timer.UpdateTimeRemaining();
+            balls.allBalls.Iterate(ball => {
+                ball.MoveBall();
+                collisionHandler.HandleEntityCollisions(ball, AllBlocks);
+            });
             
             if (wall.IsActive) {
                 collisionHandler.HandleEntityCollisions(wall, balls.allBalls);    
             }
+            else {
+                collisionHandler.HandleEntityCollisions(player, balls.allBalls);
+            }
+
+            collisionHandler.HandleEntityCollisions(player, powerUpManger.CurrentPowerUps);
+
+            powerUpManger.Update();
+            levelLoader.timer.UpdateTimeRemaining();
+            BreakoutBus.GetBus().ProcessEvents();
+            
+            
             playerShots.Iterate(playerShot => collisionHandler.HandleEntityCollisions(playerShot, AllBlocks));
             IterateShots();
 
