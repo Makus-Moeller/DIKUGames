@@ -8,9 +8,13 @@ namespace Breakout.PowerUpSpace {
     public class RandomNumberGenerator {
         private int number;
         private Random random;
-        public RandomNumberGenerator() {
+        /// <summary>
+        /// Process gameevents that class is subscribed to.
+        /// </summary>
+        /// <param name="i">max number in interval to get random number from</param>
+        public RandomNumberGenerator(int i) {
             random = new Random();
-            number = random.Next(1, 7); 
+            number = random.Next(1, i+1); 
         } 
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Breakout.PowerUpSpace
             if (gameEvent.EventType ==  GameEventType.ControlEvent) {
                 switch (gameEvent.Message) {
                     case "CreatePowerUp":
-                        int randomBuff = new RandomNumberGenerator().GetNumber();
+                        int randomBuff = new RandomNumberGenerator(6).GetNumber();
                         switch (randomBuff) {
                             case 1:
                                 CurrentPowerUps.AddEntity(new PowerUp(
