@@ -24,7 +24,7 @@ namespace Breakout.Levelloader {
         }
         public override string ToString()
         {
-            return "char: " + character + "positions" + listOfPostions;
+            return "char: " + character + " PowerUp: " + powerUp + " hardened: " + hardened + " unbreakable:" + unbreakable;
         }
     }
 

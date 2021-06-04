@@ -1,5 +1,5 @@
 using DIKUArcade.Math;
-
+using System;
 namespace Breakout.Levelloader {
 
     /// <summary>
@@ -9,10 +9,10 @@ namespace Breakout.Levelloader {
         private IFileReader reader;
         private string[] legendData;
         private string[] mapData;
-        private string[] metaData;
+        public string[] metaData;
         private char powerup = ' ';
         private char harden = ' ';
-        private char unbreakable = ' ';
+        public char unbreakable = ' ';
         public CharDefiners[] arrayOfCharDefiners {get; private set;}
         public StringTxtInterpreter(IFileReader reader) {
             this.reader = reader;
@@ -27,14 +27,18 @@ namespace Breakout.Levelloader {
             int amountOfChars = legendData.Length;
             arrayOfCharDefiners = new CharDefiners[amountOfChars];
             for (int i = 0; i < metaData.Length; i++) {
+                Console.WriteLine(metaData[i][0]);
                 if (metaData[i][0] == 'P') {
                     powerup = metaData[i][9];
+                    Console.WriteLine("powerup: " + metaData[i]);
                 }
                 if (metaData[i][0] == 'H') {
                     harden = metaData[i][10];
+                    Console.WriteLine("harden: " + metaData[i]);
                 }
                 if (metaData[i][0] == 'U') {
                     unbreakable = metaData[i][13];
+                    Console.WriteLine("unbreakable: " + metaData[i]);
                 }
             }
         }
