@@ -18,7 +18,9 @@ namespace Breakout.Players {
         }
 
         public void addLife() {
-            Lives++;
+            if (Lives < 5) {
+                Lives++;
+            }
         }
 
         public void DecrementLives() {

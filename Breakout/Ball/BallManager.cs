@@ -57,5 +57,13 @@ namespace Breakout.Balls {
                     direction),
                     new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "ball2.png"))));
         }
+
+        public void MoveBalls() {
+            allBalls.Iterate(ball => ball.MoveBall());
+        }
+
+        public bool IsEmpty() {
+            return (allBalls.CountEntities() == 0);
+        }
     }
 }
