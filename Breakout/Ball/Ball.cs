@@ -12,7 +12,7 @@ namespace Breakout.Balls {
     /// </summary>
     public class Ball : Entity, ICollidable, IDamager {
         public readonly double speedOfBall;
-        private int counter;
+        public int counter = - 1;
 
         public Ball(Shape shape, IBaseImage image) : base(shape, image) {
             var dyshape = Shape.AsDynamicShape();
@@ -28,17 +28,7 @@ namespace Breakout.Balls {
             counter++;
             if (counter < 2){}
             else {
-                if (Shape.Position.X > 0.98f && Shape.Position.Y > 0.98f) {
-                    Shape.AsDynamicShape().Direction.X = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
-                    Shape.AsDynamicShape().Direction.Y = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
-                    counter = 0;
-                }
-                else if (Shape.Position.X < 0.02f && Shape.Position.Y > 0.98f) {
-                    Shape.AsDynamicShape().Direction.X = (float) ((speedOfBall*Math.Sqrt(2.0))/2.0);
-                    Shape.AsDynamicShape().Direction.Y = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
-                    counter = 0;
-                }
-                else if (Shape.Position.X > 0.98f) {
+                if (Shape.Position.X > 0.98f) {
                     Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
                     counter = 0;
                 }

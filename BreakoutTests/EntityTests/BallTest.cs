@@ -38,9 +38,11 @@ namespace BreakoutTests {
 
         [Test]
         public void HitWallRightAndLeftBoundryTest() {
+            ball.counter = 10;
             ball.Shape.Position.X = 0.999f;
             ball.HitWall();
             Assert.True(1.0E-7 > ball.Shape.AsDynamicShape().Direction.X - -0.002f);
+            ball.counter = 10;
             ball.Shape.Position.X = -0.01f;
             ball.HitWall();
             Assert.True(1.0E-7 > ball.Shape.AsDynamicShape().Direction.X - 0.002f);
@@ -48,12 +50,14 @@ namespace BreakoutTests {
 
         [Test]
         public void HitWallUpperBoundryTest() {
+            ball.counter = 10;
             ball.Shape.Position.Y = 0.98f;
             ball.HitWall();
             Assert.True(1.0E-7 > ball.Shape.AsDynamicShape().Direction.Y - -0.005f);
         } 
         [Test]
         public void HitWallLowerBoundryTest() {
+            ball.counter = 10;
             ball.Shape.Position.Y = 0.0f;
             ball.HitWall();
             Assert.True(ball.IsDeleted());
