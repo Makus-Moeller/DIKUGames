@@ -27,18 +27,14 @@ namespace Breakout.Levelloader {
             int amountOfChars = legendData.Length;
             arrayOfCharDefiners = new CharDefiners[amountOfChars];
             for (int i = 0; i < metaData.Length; i++) {
-                Console.WriteLine(metaData[i][0]);
                 if (metaData[i][0] == 'P') {
                     powerup = metaData[i][9];
-                    Console.WriteLine("powerup: " + metaData[i]);
                 }
                 if (metaData[i][0] == 'H') {
                     harden = metaData[i][10];
-                    Console.WriteLine("harden: " + metaData[i]);
                 }
                 if (metaData[i][0] == 'U') {
                     unbreakable = metaData[i][13];
-                    Console.WriteLine("unbreakable: " + metaData[i]);
                 }
             }
         }
