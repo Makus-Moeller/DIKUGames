@@ -14,13 +14,13 @@ using System;
 
 namespace BreakoutTests {
     [TestFixture]
-    public class CollisionHandlerTest {
+    public class BallHandleThisCollisionTest {
         private Ball ball;
         private CollisionData collisiondataBranchUp;
         private CollisionData collisiondataBranchDown;
         private CollisionData collisiondataBranchLeft;
           
-        public CollisionHandlerTest() {
+        public BallHandleThisCollisionTest() {
             collisiondataBranchUp = new CollisionData();
             collisiondataBranchUp.Collision = true;
             collisiondataBranchUp.CollisionDir = CollisionDirection.CollisionDirUp;    
