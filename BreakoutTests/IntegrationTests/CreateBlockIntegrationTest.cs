@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace BreakoutTests {
 
     [TestFixture]    
-    public class CreateBlockBranchTest {
+    public class CreateBlockIntegrationTest {
         private StreamReaderClass streamReader;
         private StringTxtInterpreter txtInterpreter;
         private BlockCreator blockCreator;
