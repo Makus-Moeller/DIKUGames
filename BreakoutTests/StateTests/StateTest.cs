@@ -20,7 +20,7 @@ namespace BreakoutTests {
             eventbus = BreakoutBus.GetBus();
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
                 GameEventType.WindowEvent, GameEventType.TimedEvent, GameEventType.StatusEvent,
-                    GameEventType.InputEvent, GameEventType.GameStateEvent});
+                    GameEventType.InputEvent, GameEventType.GameStateEvent, GameEventType.ControlEvent});
         }
         
 

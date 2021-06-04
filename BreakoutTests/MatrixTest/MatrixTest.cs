@@ -2,6 +2,7 @@ using NUnit.Framework;
 using Breakout.Players;
 using Breakout;
 using Breakout.Blocks;
+using Breakout.Balls;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;

@@ -56,17 +56,11 @@ namespace BreakoutTests {
             Assert.True(testBlock.GetHitpoints() == 9);
         }
 
-        [Test]
-        public void TestAddHP()
-        {
-            testBlock.AddHitpoint(2);
-            Assert.True(testBlock.GetHitpoints() == 12);
-        }
 
         [Test]
         public void TestHardenedBlockHP()
         {
-            Assert.True(testHardenedBlock.GetHitpoints() == 14);
+            Assert.AreEqual(testHardenedBlock.GetHitpoints(), 14);
         }
 
         [Test]

@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Breakout.Players;
 using Breakout;
+using Breakout.Balls;
 using Breakout.Levelloader;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;

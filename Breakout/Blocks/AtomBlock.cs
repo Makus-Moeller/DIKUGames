@@ -44,5 +44,15 @@ namespace Breakout.Blocks {
                 HitBlock(damager.DamageOfObject());
             }
         }
+
+        //Method used for testing        
+        public int GetHitpoints() {
+            return hitpoints;
+        }
+
+        //Method used for testing        
+        public bool IsHardened () {
+            return isHardened;
+        }
     }
 }

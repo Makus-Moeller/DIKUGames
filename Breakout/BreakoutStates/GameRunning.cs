@@ -36,7 +36,6 @@ namespace Breakout.BreakoutStates {
         }
 
         public static GameRunning GetInstance() {
-            
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
 
