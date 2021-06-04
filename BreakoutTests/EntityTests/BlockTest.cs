@@ -10,16 +10,11 @@ using System.Diagnostics.Contracts;
 
 namespace BreakoutTests {
 
-    public class BlockTests {
-    
+    public class BlockTests {    
         private AtomBlock testBlock;
-
         private PowerUpBlock testPowerBlock;
-
         private UnbreakableBlock testUnbreakableBlock;
-
         private HardenedBlock testHardenedBlock;
-
 
         [SetUp]
         public void Setup()
@@ -56,11 +51,10 @@ namespace BreakoutTests {
             Assert.True(testBlock.GetHitpoints() == 9);
         }
 
-
         [Test]
         public void TestHardenedBlockHP()
         {
-            Assert.AreEqual(testHardenedBlock.GetHitpoints(), 14);
+            Assert.AreEqual(testHardenedBlock.GetHitpoints(), 21);
         }
 
         [Test]

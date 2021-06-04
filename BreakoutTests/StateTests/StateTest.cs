@@ -28,28 +28,29 @@ namespace BreakoutTests {
         public void Setup()
         {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
-            stateMachine = new StateMachine();
-                        
+            stateMachine = new StateMachine();       
         }
 
         [Test]
         public void TestInitialState()
         {
             Assert.True(stateMachine.ActiveState == MainMenu.GetInstance());
-            
         }
 
         
         [Test]
         public void TestSwitchState()
         {
-            //Der kommer en nullreference exception
             stateMachine.SwitchState(GameStateType.GameRunning, "MAINMENU");
             Assert.True(stateMachine.ActiveState == GameRunning.GetInstance());
+            stateMachine.SwitchState(GameStateType.GamePaused, "GAME_RUNNING");
+            Assert.True(stateMachine.ActiveState == GamePaused.GetInstance());
+            stateMachine.SwitchState(GameStateType.GameWon, "GAME");
+            Assert.True(stateMachine.ActiveState == GameWon.GetInstance());
         }
 
         [Test]
-        public void TestProcessEvent() {
+        public void TestProcessInputEvent() {
             Assert.True(MainMenu.GetInstance().activeMenuButton == 0);
             stateMachine.ProcessEvent(new GameEvent{EventType = GameEventType.InputEvent, 
                                 Message = "KEY_DOWN"});
@@ -59,7 +60,12 @@ namespace BreakoutTests {
             Assert.True(MainMenu.GetInstance().activeMenuButton == 0);
         }
 
-        //Test TransformStringToState og StateToString
-        
+        [Test]
+        public void TestProcessGameStateEvent() {
+            stateMachine.ProcessEvent(new GameEvent{EventType = GameEventType.GameStateEvent, 
+                                Message = "CHANGE_STATE", StringArg1 = "GAME_RUNNING", 
+                                StringArg2 = "MAINMENU"});
+            Assert.True(stateMachine.ActiveState == GameRunning.GetInstance());
+        }
     }
 }

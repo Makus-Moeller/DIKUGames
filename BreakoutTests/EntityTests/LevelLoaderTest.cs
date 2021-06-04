@@ -72,8 +72,8 @@ namespace BreakoutTests
         //Checking that attributes are atributed accuratly using Level 1
         Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[0].hardened);
         Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[1].hardened);
-        Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[2].powerUp);
-        Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[3].hardened);
+        Assert.True(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[3].powerUp);
+        Assert.False(StringTxtInterpreterOnPowerUpAndHardened.CreateCharDefiners()[2].hardened);
 
 
         //Checking that attributes are atributed accuratly using level 3

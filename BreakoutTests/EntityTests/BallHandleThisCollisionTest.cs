@@ -15,15 +15,11 @@ using System;
 namespace BreakoutTests {
     [TestFixture]
     public class CollisionHandlerTest {
-        private CollisionHandler collisionHandler;
-        private EntityContainer<AtomBlock> blocks;
-        private Player player;
         private Ball ball;
         private CollisionData collisiondataBranchUp;
         private CollisionData collisiondataBranchDown;
         private CollisionData collisiondataBranchLeft;
-        private Entity entityForBranchOneAndTwo;
-        private Entity entityForBranchThreeAndFour;    
+          
         public CollisionHandlerTest() {
             collisiondataBranchUp = new CollisionData();
             collisiondataBranchUp.Collision = true;

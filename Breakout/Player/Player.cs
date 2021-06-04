@@ -12,7 +12,7 @@ namespace Breakout.Players {
     /// </summary>
     public class Player : Entity, IGameEventProcessor {
         private float moveLeft, moveRight;
-        private IBuffState playerBuffState;
+        public IBuffState playerBuffState {get; private set;}
         public PlayerLives playerLives {get; private set;}
         public bool IsDead;
         public ShotsWeapon Weapon {get; private set;} 
