@@ -12,7 +12,7 @@ namespace Breakout.Balls {
     /// </summary>
     public class Ball : Entity, ICollidable, IDamager {
         public readonly double speedOfBall;
-        private int counter = - 1;
+        public int counter = - 1;
 
         public Ball(Shape shape, IBaseImage image) : base(shape, image) {
             var dyshape = Shape.AsDynamicShape();
