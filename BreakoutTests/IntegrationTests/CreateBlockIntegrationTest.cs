@@ -46,6 +46,7 @@ namespace BreakoutTests {
             Assert.True(charDefiners[2].powerUp);
             Assert.AreEqual("green-block.png", charDefiners[2].imagePath); 
         }
+        
         [Test]
         public void IntegrateStreamReadertxtInterpreterBlockCreator() {
             txtInterpreter.ReadFile(Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels", "FakeMapForTesting.txt"));

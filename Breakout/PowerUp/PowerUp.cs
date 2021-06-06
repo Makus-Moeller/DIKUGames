@@ -25,7 +25,6 @@ namespace Breakout.PowerUpSpace
         /// </summary>
         /// <param name="data">colissiondata such as position, and direction of objects</param>
         /// <param name="objectOfCollision">The object this collides with</param>
-
         public void HandleThisCollision(CollisionData data, Entity objectOfCollision) {
             if ((objectOfCollision as Player) != null) {
                 DeleteEntity();
@@ -59,6 +58,9 @@ namespace Breakout.PowerUpSpace
 
         public void Update() {
             Shape.AsDynamicShape().Move();
+            if (Shape.Position.Y < 0.0f){
+              DeleteEntity();  
+            }
         }
 
         public void RenderPowerUp() {

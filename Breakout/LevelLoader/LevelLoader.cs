@@ -59,9 +59,9 @@ namespace Breakout.Levelloader {
                 levelBlocks = SetLevel(Path.Combine(path, filenames[0]), 
                     new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
                 filenames.Remove(filenames[0]);
-                BreakoutBus.GetBus().ResetTimedEvent(1, TimePeriod.NewSeconds(0.0));
-                BreakoutBus.GetBus().ResetTimedEvent(2, TimePeriod.NewSeconds(0.0));
-                BreakoutBus.GetBus().ResetTimedEvent(3, TimePeriod.NewSeconds(0.0));
+                BreakoutBus.GetBus().ResetTimedEvent(1, TimePeriod.NewSeconds(0.3));
+                BreakoutBus.GetBus().ResetTimedEvent(2, TimePeriod.NewSeconds(0.3));
+                BreakoutBus.GetBus().ResetTimedEvent(3, TimePeriod.NewSeconds(0.3));
                 return levelBlocks; 
             }
             else
