@@ -25,25 +25,28 @@ namespace Breakout.Balls {
         /// Breaches the boundris of the map
         /// </summary>
         public void HitWall() {
-            counter++;
-            if (counter < 2){}
-            else {
-                if (Shape.Position.X > 0.98f) {
-                    Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
-                    counter = 0;
-                }
-                else if (Shape.Position.X < 0.00f) {
-                    Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
-                    counter = 0;
-                }
-                else if (Shape.Position.Y > 0.97f) {
-                    Shape.AsDynamicShape().Direction.Y = -Shape.AsDynamicShape().Direction.Y;
-                    counter = 0;
-                }
-                else if (Shape.Position.Y < 0.01f) {
-                    this.DeleteEntity();
-                }
+    
+            if (Shape.Position.X > 0.97f && Shape.Position.Y > 0.96f) {
+                Shape.AsDynamicShape().Direction.X = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
+                Shape.AsDynamicShape().Direction.Y = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
             }
+            else if (Shape.Position.X < 0.04f && Shape.Position.Y > 0.96f) {
+                Shape.AsDynamicShape().Direction.X = (float) ((speedOfBall*Math.Sqrt(2.0))/2.0);
+                Shape.AsDynamicShape().Direction.Y = (float) -((speedOfBall*Math.Sqrt(2.0))/2.0);
+            }    
+            else if (Shape.Position.X > 0.98f) {
+                Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
+            }
+            else if (Shape.Position.X < 0.00f) {
+                Shape.AsDynamicShape().Direction.X = -Shape.AsDynamicShape().Direction.X;
+            }
+            else if (Shape.Position.Y > 0.98) {
+                Shape.AsDynamicShape().Direction.Y = -Shape.AsDynamicShape().Direction.Y;
+            }
+            else if (Shape.Position.Y < 0.01f) {
+                this.DeleteEntity();
+            }
+
         }
 
         /// <summary>
