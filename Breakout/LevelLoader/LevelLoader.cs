@@ -48,6 +48,7 @@ namespace Breakout.Levelloader {
             StaticTimer.RestartTimer();
             return blockCreator.CreateBlocks(charDefiners);
         }
+
         /// <summary>
         ///changes to nex level
         /// </summary>
@@ -58,6 +59,9 @@ namespace Breakout.Levelloader {
                 levelBlocks = SetLevel(Path.Combine(path, filenames[0]), 
                     new StringTxtInterpreter(new StreamReaderClass()), new BlockCreator());
                 filenames.Remove(filenames[0]);
+                BreakoutBus.GetBus().ResetTimedEvent(1, TimePeriod.NewSeconds(0.0));
+                BreakoutBus.GetBus().ResetTimedEvent(2, TimePeriod.NewSeconds(0.0));
+                BreakoutBus.GetBus().ResetTimedEvent(3, TimePeriod.NewSeconds(0.0));
                 return levelBlocks; 
             }
             else
@@ -69,6 +73,5 @@ namespace Breakout.Levelloader {
                     TimePeriod.NewSeconds(2.0));
                 return levelBlocks;  
         }
-        
     }
 }
