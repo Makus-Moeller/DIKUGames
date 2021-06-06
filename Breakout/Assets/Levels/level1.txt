@@ -1,8 +1,8 @@
 Map:
 ------------
 ------------
---111qq111--
-------------
+-qqqqqqqqqq-
+-qqqqqqqqqq-
 -111----111-
 -111-##-111-
 -111-22-111-
@@ -28,7 +28,7 @@ Map/
 Meta:
 Name: LEVEL 1
 Time: 300
-PowerUp: q
+PowerUp: 2
 Meta/
 
 Legend:
