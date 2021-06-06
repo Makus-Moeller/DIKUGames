@@ -22,7 +22,7 @@ namespace Breakout.BreakoutStates {
         private int activeMenuButton;
 
         private GameLost() {
-            Losetext = (new Text("Game Over! \n  Score:  " + 
+            Losetext = (new Text("Game Over! \n  Score: " + 
                 GameRunning.GetInstance().gamescore.rewards, 
                 new Vec2F(0.4f, 0.4f), new Vec2F(0.3f, 0.3f)));
             Losetext.SetColor(new Vec3I(255, 217, 25));
