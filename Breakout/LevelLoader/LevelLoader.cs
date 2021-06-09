@@ -23,7 +23,6 @@ namespace Breakout.Levelloader {
         //Hvis du vil sætte levelet skal du fortælle den :
         //Hvad det er baseret på, hvordan den skal læse og fortolke den
         //Og hvordan den skal genere entities ud fra det den læser.
-        
         public LevelLoader(string path) {
             directoryReader = new DirectoryReader();
             filenames = directoryReader.Readfiles(path);
