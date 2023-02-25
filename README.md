@@ -4,7 +4,7 @@
 <br>
 
 # DIKUGames
-Repo for solving assignments with DIKUArcade for DIKU course Software Development
+Repo for arcade games developed as part of the DIKU course Software Development.
 
-To start working on the assignments, follow the instructions in the assignment description
-to create a **duplication** of this repository.
+To play Galaga and Breakout clone repo and submodules (Obs. Dikuarcade might have restricted access). Enter dotnet build and dotnet run in your commad line and you should be up running. 
+
