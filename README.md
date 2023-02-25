@@ -6,5 +6,5 @@
 # DIKUGames
 Repo for arcade games developed as part of the DIKU course Software Development.
 
-To play Galaga and Breakout clone repo and submodules (Obs. Dikuarcade might have restricted access). Enter dotnet build and dotnet run in your commad line and you should be up running. 
+To play Galaga and Breakout clone repo and submodules (Obs. DIKU arcade might have restricted access). Enter dotnet build and dotnet run in your commad line and you should be up running. 
 
